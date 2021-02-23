@@ -16,8 +16,9 @@ import os.path
 import string
 
 #import PySimpleGUI as sg
-#https://stackoverflow.com/questions/10937350/how-to-check-type-of-files-without-extensions-in-pythonimport magic
-class Checker(object):
+#https://stackoverflow.com/questions/10937350/
+#how-to-check-type-of-files-without-extensions-in-pythonimport magic
+class Checker():
     '''
     A collection of various tools attached to a file
     '''
@@ -153,12 +154,12 @@ class Checker(object):
                 Windows CRLF checking only makes sense on text files
         '''
         if self._ext not in kwargs.get('flatfile', []) or not self._istext:
-            return None 
+            return None
         self._fobj_bin.seek(0)
         for text in self._fobj_bin:
             if b'\r\n' in text:
                 return True
-        return None 
+        return None
 
     def _report(self, **kwargs) -> dict:
         '''
@@ -190,14 +191,14 @@ class Checker(object):
                 List of filetypes which are considered rectangular.
                 Default ['txt', 'dat', 'csv', 'tab', 'asc']
         '''
-        #print(f'_report {kwargs}') 
+        #print(f'_report {kwargs}')
         out = {'filename': self.fname}
         digest = kwargs.get('digest', 'md5')
-        nonascii = kwargs.get('nonascii', True)
+        #nonascii = kwargs.get('nonascii', True)
         dos = kwargs.get('dos', True)
-        flat = kwargs.get('flat', True)
+        #flat = kwargs.get('flat', True)
         flatfile = kwargs.get('flatfile')
-        
+
         out.update({'digestType' : digest})
         out.update({'digest' : self.produce_digest(digest)})
         out.update({'flat': self.flat_tester(**kwargs)}, flatfile=flatfile)
@@ -232,8 +233,9 @@ class Checker(object):
             textout += flatout
         if output.get('nonascii'):
             nonascii = 'Non-ASCII characters found: \n'
-            nonascii += '\n'.join([(f"{x['char']} in row {x['row']}, "
-                                    f"column {x['col']}") for x in output['nonascii']])
+            msg = [(f"{x['char']} in row {x['row']}, column {x['col']}")
+                   for x in output['nonascii']]
+            nonascii += '\n'.join(msg)
             textout += 60 * '-' + '\n'
             textout += nonascii + '\n'
             textout += 60 * '-' + '\n'
@@ -387,7 +389,7 @@ def main():
     if not args.recur:
         files = [x for x in args.files if os.path.isfile(x)]
     else:
-        files = recurse_files(args.files) 
+        files = recurse_files(args.files)
     #print(files)
     #print(args.noflat)
     for num, fil in enumerate(files):
