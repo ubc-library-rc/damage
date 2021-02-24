@@ -51,7 +51,7 @@ By default, the program will spit its results to the screen. To send the output 
 
 `stcman -o csv -r ./ > C:\temp\output.csv`
 
-####Program options
+#### Program options
 
 ```
 usage: stc_manifest_generator.py [-h] [-o OUT] [-n] [-r] files [files ...]
