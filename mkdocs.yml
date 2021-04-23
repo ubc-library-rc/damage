@@ -1,0 +1,14 @@
+site_name: mgen 
+docs_dir: 'docs'
+nav:
+  - mgen: index.md
+  - Credits: credits.md
+
+markdown_extensions:
+  - smarty
+  - toc:
+      permalink: True
+  - codehilite
+  - attr_list
+
+theme: readthedocs
