@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>damage/fcheck</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "File manifest tools damage and fcheck";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> damage/fcheck</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">File manifest tools damage and fcheck</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#but-thats-not-all">But that's not all!</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#why-would-i-need-this">Why would I need this?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#obtaining-the-softwareinstallation">Obtaining the software/installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#binary-files">Binary files</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#windows-users">Windows users</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mac-users">Mac users</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installing-with-pip">Installing with pip</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#source-code">Source code</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="how_to_use_damage/">How to use the damage utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="building_damage_binary/">Building damage as standalone application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="api_reference/">API reference for fcheck</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="faq/">Frequently asked questions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="credits/">Credits</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">damage/fcheck</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>File manifest tools damage and fcheck</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="file-manifest-tools-damage-and-fcheck">File manifest tools: Damage and FCheck<a class="headerlink" href="#file-manifest-tools-damage-and-fcheck" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><strong>Damage</strong> (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. A created manifest includes, for all file types:</p>
+<ul>
+<li>The file name</li>
+<li>Checksum in your choice of hash for the file. Current flavours of hashes are: sha1, sha224, sha256, sha384, sha512, blake2b, blake2s, md5 </li>
+<li>Encoding, if available (ie, utf-8, windows-1252, etc.)</li>
+</ul>
+<p>For <strong>plain text files</strong>, often used for microdata, the utility also produces information on:</p>
+<ul>
+<li>Minimum line length</li>
+<li>Maximum line length</li>
+<li>Number of records</li>
+<li>Constant records flag (ie, all lines are of the same length)</li>
+<li>Row and column of non-ASCII characters</li>
+<li>Flag for DOS/Windows formatting (ie, carriage return + line feed as opposed to just a line feed).</li>
+</ul>
+<p>For files in <strong>SAS, SPSS and Stata formats</strong> (ie, .sas7bdat, .sav and .dta) the utility will provide information on:</p>
+<ul>
+<li>Number of cases (reported as rows)</li>
+<li>Number of variables (reported as columns)</li>
+</ul>
+<p>Note that statistical package files will always be reported as rectangular due to the limitations of parsing them.</p>
+<p>Output formats are:</p>
+<ul>
+<li>Plain text</li>
+<li>Comma Separated Value (ie, a spreadsheet)</li>
+<li>JSON. This JSON doesn&rsquo;t conform to any particular standard, but is valid JSON object — one object for all the files. The command line program will produce output in the format of:</li>
+</ul>
+<pre class="codehilite"><code>{&quot;files&quot;:[{file1medata}, {file2metadata}, ...{fileNmetadata}]}
+</code></pre>
+
+<h3 id="but-thats-not-all">But that&rsquo;s not all!<a class="headerlink" href="#but-thats-not-all" title="Permanent link">&para;</a></h3>
+<p>While <em>damage</em> is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module which you can use in your own software.</p>
+<h2 id="why-would-i-need-this">Why would I need this?<a class="headerlink" href="#why-would-i-need-this" title="Permanent link">&para;</a></h2>
+<p>More than ever, the world today revolves around data sharing. Knowing the data that you&rsquo;ve downloaded is <em>correct</em> is key.</p>
+<p><strong>For data distributors</strong></p>
+<ul>
+<li><em>damage</em> output can be included as a text file with your data so that you and end users can verify and identify what they&rsquo;ve downloaded</li>
+<li>Create detailed version notes with one command</li>
+<li>Manage changes in file structure using digests which are unique to a particular version of a file, instead of relying on easily changeable file names</li>
+<li>Easily find duplicate files</li>
+</ul>
+<p><strong>For researchers</strong></p>
+<ul>
+<li><em>damage</em> and <em>fcheck</em> can help with creating descriptive documentation which is required for your research data deposit</li>
+<li><em>damage</em> output ensures the integrity of your data set when used by others</li>
+</ul>
+<h2 id="obtaining-the-softwareinstallation">Obtaining the software/installation<a class="headerlink" href="#obtaining-the-softwareinstallation" title="Permanent link">&para;</a></h2>
+<h3 id="binary-files">Binary files<a class="headerlink" href="#binary-files" title="Permanent link">&para;</a></h3>
+<p>Console binaries are available for Windows and Mac (Intel) at <a href="https://github.com/ubc-library-rc/fcheck/tree/master/bin">https://github.com/ubc-library-rc/fcheck/tree/master/bin</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
+<p>These files don&rsquo;t need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.</p>
+<h4 id="windows-users">Windows users<a class="headerlink" href="#windows-users" title="Permanent link">&para;</a></h4>
+<p>The download should be in a directory that is listed in the <code>%PATH%</code> environment variable. </p>
+<p>The easiest way to do this is to use the Start menu and type &ldquo;Environment&rdquo;, then select &ldquo;Edit Environment variables for your account&rdquo;. Either place the binary file into a directory listed in <code>Path</code>, or add a new directory to your path using the GUI.</p>
+<h4 id="mac-users">Mac users<a class="headerlink" href="#mac-users" title="Permanent link">&para;</a></h4>
+<p>The easiest way to make this available system wide is simply to copy the Mac executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it.</p>
+<h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
+<p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
+<pre class="codehilite"><code>git clone https://github.com/ubc-library-rc/fcheck.git
+cd fcheck 
+pip install .
+</code></pre>
+
+<p>This second method installs the <em>damage</em> command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional <code>import fcheck</code> sort of way. If you don&rsquo;t care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.</p>
+<h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
+<p>As you may have surmised frotm the example above, source code is available at <a href="https://github.com/ubc-library-rc/fcheck">https://github.com/ubc-library-rc/fcheck</a>, along with all of the documentation and binary files.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="how_to_use_damage/" class="btn btn-neutral float-right" title="How to use the damage utility">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="how_to_use_damage/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2021-05-06 18:16:18.635640+00:00
+-->
