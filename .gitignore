@@ -1,10 +1,14 @@
 *~
-__pycache__
 __pycache__/**
-mgen.egg-info
+__pycache__
+**/__pycache__
+*.egg-info
 build
 build/**
 dist
 dist/**
 *.spec
-
+notes
+notes/**
+**/.DS_Store
+.DS_Store
