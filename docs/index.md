@@ -64,7 +64,7 @@ More than ever, the world today revolves around data sharing. Knowing the data t
 
 ### Binary files 
 
-Console binaries are available for Windows and Mac (Intel) at <https://github.com/ubc-library-rc/fcheck/tree/master/bin>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
+Console binaries are available for Windows and Mac (Intel) at <https://github.com/ubc-library-rc/fcheck/tree/master/binaries>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
 
 These files don't need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.
 
