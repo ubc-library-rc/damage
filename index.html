@@ -158,8 +158,9 @@
 <li>Comma Separated Value (ie, a spreadsheet)</li>
 <li>JSON. This JSON doesn&rsquo;t conform to any particular standard, but is valid JSON object — one object for all the files. The command line program will produce output in the format of:</li>
 </ul>
-<pre class="codehilite"><code>{&quot;files&quot;:[{file1medata}, {file2metadata}, ...{fileNmetadata}]}
-</code></pre>
+<div class="codehilite"><pre><span></span><code>{&quot;files&quot;:[{file1medata}, {file2metadata}, ...{fileNmetadata}]}
+</code></pre></div>
+
 
 <h3 id="but-thats-not-all">But that&rsquo;s not all!<a class="headerlink" href="#but-thats-not-all" title="Permanent link">&para;</a></h3>
 <p>While <em>damage</em> is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module which you can use in your own software.</p>
@@ -179,7 +180,7 @@
 </ul>
 <h2 id="obtaining-the-softwareinstallation">Obtaining the software/installation<a class="headerlink" href="#obtaining-the-softwareinstallation" title="Permanent link">&para;</a></h2>
 <h3 id="binary-files">Binary files<a class="headerlink" href="#binary-files" title="Permanent link">&para;</a></h3>
-<p>Console binaries are available for Windows and Mac (Intel) at <a href="https://github.com/ubc-library-rc/fcheck/tree/master/bin">https://github.com/ubc-library-rc/fcheck/tree/master/bin</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
+<p>Console binaries are available for Windows and Mac (Intel) at <a href="https://github.com/ubc-library-rc/fcheck/tree/master/binaries">https://github.com/ubc-library-rc/fcheck/tree/master/binaries</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
 <p>These files don&rsquo;t need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.</p>
 <h4 id="windows-users">Windows users<a class="headerlink" href="#windows-users" title="Permanent link">&para;</a></h4>
 <p>The download should be in a directory that is listed in the <code>%PATH%</code> environment variable. </p>
@@ -188,10 +189,11 @@
 <p>The easiest way to make this available system wide is simply to copy the Mac executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it.</p>
 <h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
 <p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
-<pre class="codehilite"><code>git clone https://github.com/ubc-library-rc/fcheck.git
+<div class="codehilite"><pre><span></span><code>git clone https://github.com/ubc-library-rc/fcheck.git
 cd fcheck 
 pip install .
-</code></pre>
+</code></pre></div>
+
 
 <p>This second method installs the <em>damage</em> command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional <code>import fcheck</code> sort of way. If you don&rsquo;t care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.</p>
 <h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
@@ -249,5 +251,5 @@ pip install .
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-05-06 18:16:18.635640+00:00
+Build Date UTC : 2021-05-28 22:25:48.771695+00:00
 -->

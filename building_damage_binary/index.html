@@ -114,7 +114,7 @@
 <p>Depending on your Python installation, you may need to build with a virtual environment (which you should probably do anyway).</p>
 <p>Damage doesn&rsquo;t have a lot of dependencies; you really only need pyreadstat, which installs pandas and numpy as dependencies.</p>
 <p>or, as the output of <code>pip freeze</code>:</p>
-<pre class="codehilite"><code>altgraph==0.17
+<div class="codehilite"><pre><span></span><code>altgraph==0.17
 importlib-metadata==4.0.1
 macholib==1.14
 numpy==1.20.2
@@ -127,14 +127,17 @@ pytz==2021.1
 six==1.15.0
 typing-extensions==3.10.0.0
 zipp==3.4.1
-</code></pre>
+</code></pre></div>
 
-<pre class="codehilite"><code>pyinstaller -F --additional-hooks-dir ./  --hidden-import pyreadstat._readstat_writer --hidden-import pandas --hidden-import pyreadstat.worker --hidden-import multiprocessing /path/to/damage.py
-</code></pre>
+
+<div class="codehilite"><pre><span></span><code><span class="n">pyinstaller</span> <span class="o">-</span><span class="n">F</span> <span class="o">--</span><span class="n">additional</span><span class="o">-</span><span class="n">hooks</span><span class="o">-</span><span class="nb">dir</span> <span class="o">./</span>  <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pyreadstat._readstat_writer</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pyreadstat.worker</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">damage</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+
 
 <p>Alternately, you can simplify the PyInstaller command by using the <code>py_install/hook-fcheck.py</code> file:</p>
-<pre class="codehilite"><code>pyinstaller -F --additional-hooks-dir=/path/to/py_install  /path/to/damage.py
-</code></pre>
+<div class="codehilite"><pre><span></span><code>pyinstaller -F --additional-hooks-dir=/path/to/py_install  /path/to/damage.py
+</code></pre></div>
+
 
 <p>This process will create a damage.spec file along with a <em>build</em> and a <em>dist</em> dir. Inside the <em>dist</em> dir will be your self-contained file, which you can do with as you like.</p>
               
