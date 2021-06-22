@@ -35,7 +35,7 @@ CONFIG = {
     'url': 'https://ubc-library-rc.github.io/fcheck/',
     'download_url': 'https://github.com/ubc-library-rc/fcheck',
     'author_email': 'paul.lesack@ubc.ca',
-    'modules': ['fcheck'],
+    'py_modules': ['fcheck'],
     'install_requires' : ['pyreadstat>=1.1.0'],
     'scripts':['scripts/damage.py'],
     'name': 'fcheck',

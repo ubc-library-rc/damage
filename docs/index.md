@@ -8,6 +8,8 @@ nav_order: 1
 
 ## Overview
 
+![Damage logo](images/damage.svg)
+
 **Damage** (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. A created manifest includes, for all file types:
 
 * The file name
@@ -42,7 +44,9 @@ Output formats are:
 
 ### But that's not all!
 
-While *damage* is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module which you can use in your own software.
+#### The fcheck module
+
+While *damage* is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module called **fcheck** which you can use in your own software.
 
 ## Why would I need this?
 
@@ -83,12 +87,12 @@ The easiest way to make this available system wide is simply to copy the Mac exe
 The software is written in Python (>= 3.6), and the source is available as a single file in `fcheck.py`. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:
 
 ```
-git clone https://github.com/ubc-library-rc/fcheck.git
-cd fcheck 
-pip install .
+pip install git+https://github.com/ubc-library-rc/fcheck.git
 ```
 
 This second method installs the *damage* command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional `import fcheck` sort of way. If you don't care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.
+
+Documentation on the module is available via the [API reference documentation](api_reference.md).
 
 ### Source code
 

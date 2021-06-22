@@ -14,6 +14,7 @@ Checker() will report number of cases and variables as
 rows and columns respectively.
 
 '''
+
 import hashlib
 import json
 import os.path
@@ -25,7 +26,7 @@ import pyreadstat
 #how-to-check-type-of-files-without-extensions-in-pythonimport magic
 #https://thepythonguru.com/writing-packages-in-python/
 
-VERSION = (0, 1, 0)
+VERSION = (0, 1, 1)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #Commercial stats files extensions
