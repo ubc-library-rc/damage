@@ -53,6 +53,10 @@
     <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#but-thats-not-all">But that's not all!</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#the-fcheck-module">The fcheck module</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -131,6 +135,7 @@
               
                 <h1 id="file-manifest-tools-damage-and-fcheck">File manifest tools: Damage and FCheck<a class="headerlink" href="#file-manifest-tools-damage-and-fcheck" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><img alt="Damage logo" src="images/damage.svg" /></p>
 <p><strong>Damage</strong> (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. A created manifest includes, for all file types:</p>
 <ul>
 <li>The file name</li>
@@ -163,7 +168,8 @@
 
 
 <h3 id="but-thats-not-all">But that&rsquo;s not all!<a class="headerlink" href="#but-thats-not-all" title="Permanent link">&para;</a></h3>
-<p>While <em>damage</em> is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module which you can use in your own software.</p>
+<h4 id="the-fcheck-module">The fcheck module<a class="headerlink" href="#the-fcheck-module" title="Permanent link">&para;</a></h4>
+<p>While <em>damage</em> is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module called <strong>fcheck</strong> which you can use in your own software.</p>
 <h2 id="why-would-i-need-this">Why would I need this?<a class="headerlink" href="#why-would-i-need-this" title="Permanent link">&para;</a></h2>
 <p>More than ever, the world today revolves around data sharing. Knowing the data that you&rsquo;ve downloaded is <em>correct</em> is key.</p>
 <p><strong>For data distributors</strong></p>
@@ -189,13 +195,12 @@
 <p>The easiest way to make this available system wide is simply to copy the Mac executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it.</p>
 <h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
 <p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
-<div class="codehilite"><pre><span></span><code>git clone https://github.com/ubc-library-rc/fcheck.git
-cd fcheck 
-pip install .
+<div class="codehilite"><pre><span></span><code>pip install git+https://github.com/ubc-library-rc/fcheck.git
 </code></pre></div>
 
 
 <p>This second method installs the <em>damage</em> command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional <code>import fcheck</code> sort of way. If you don&rsquo;t care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.</p>
+<p>Documentation on the module is available via the <a href="api_reference/">API reference documentation</a>.</p>
 <h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
 <p>As you may have surmised frotm the example above, source code is available at <a href="https://github.com/ubc-library-rc/fcheck">https://github.com/ubc-library-rc/fcheck</a>, along with all of the documentation and binary files.</p>
               
@@ -251,5 +256,5 @@ pip install .
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-05-28 22:25:48.771695+00:00
+Build Date UTC : 2021-06-22 23:25:49.646038+00:00
 -->
