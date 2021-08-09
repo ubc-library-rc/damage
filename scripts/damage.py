@@ -1,7 +1,8 @@
+#! python
 '''
 Manifest generator for data files.
 
-Produces a text file with user specificied checksums for all files
+Produces a text file with user specified checksums for all files
 from the top of a specified tree and checks line length
 and ASCII character status for text files.
 
