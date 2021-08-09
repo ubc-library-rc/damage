@@ -26,7 +26,7 @@ import pyreadstat
 #how-to-check-type-of-files-without-extensions-in-pythonimport magic
 #https://thepythonguru.com/writing-packages-in-python/
 
-VERSION = (0, 1, 1)
+VERSION = (0, 1, 2)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #Commercial stats files extensions

@@ -1,4 +1,4 @@
-#! python
+#!python
 '''
 Manifest generator for data files.
 
