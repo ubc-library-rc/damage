@@ -73,6 +73,10 @@
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#installing-with-pip">Installing with pip</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#updating-with-with-pip">Updating with with pip</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#source-code">Source code</a>
     </li>
@@ -195,12 +199,18 @@
 <p>The easiest way to make this available system wide is simply to copy the Mac executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it.</p>
 <h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
 <p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
-<div class="codehilite"><pre><span></span><code>pip install git+https://github.com/ubc-library-rc/fcheck.git
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">git</span><span class="o">+</span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">ubc</span><span class="o">-</span><span class="n">library</span><span class="o">-</span><span class="n">rc</span><span class="o">/</span><span class="n">fcheck</span><span class="p">.</span><span class="n">git</span><span class="nv">@master</span><span class="w"></span>
 </code></pre></div>
 
 
 <p>This second method installs the <em>damage</em> command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional <code>import fcheck</code> sort of way. If you don&rsquo;t care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.</p>
 <p>Documentation on the module is available via the <a href="api_reference/">API reference documentation</a>.</p>
+<h4 id="updating-with-with-pip">Updating with with pip<a class="headerlink" href="#updating-with-with-pip" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="c1">--upgrade git+https://github.com/ubc-library-rc/fcheck.git@master</span>
+</code></pre></div>
+
+
+<p>Because the software is not hosted at PyPi, there is a slightly longer update string.</p>
 <h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
 <p>As you may have surmised frotm the example above, source code is available at <a href="https://github.com/ubc-library-rc/fcheck">https://github.com/ubc-library-rc/fcheck</a>, along with all of the documentation and binary files.</p>
               
@@ -256,5 +266,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-06-22 23:25:49.646038+00:00
+Build Date UTC : 2021-10-26 21:20:09.398426+00:00
 -->
