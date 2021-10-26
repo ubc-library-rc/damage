@@ -87,12 +87,20 @@ The easiest way to make this available system wide is simply to copy the Mac exe
 The software is written in Python (>= 3.6), and the source is available as a single file in `fcheck.py`. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:
 
 ```
-pip install git+https://github.com/ubc-library-rc/fcheck.git
+pip install git+https://github.com/ubc-library-rc/fcheck.git@master
 ```
 
 This second method installs the *damage* command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional `import fcheck` sort of way. If you don't care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.
 
 Documentation on the module is available via the [API reference documentation](api_reference.md).
+
+#### Updating with with pip
+
+```
+pip install --upgrade git+https://github.com/ubc-library-rc/fcheck.git@master
+```
+
+Because the software is not hosted at PyPi, there is a slightly longer update string.
 
 ### Source code
 
