@@ -26,7 +26,7 @@ import pyreadstat
 #how-to-check-type-of-files-without-extensions-in-pythonimport magic
 #https://thepythonguru.com/writing-packages-in-python/
 
-VERSION = (0, 1, 2)
+VERSION = (0, 1, 3)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #Commercial stats files extensions
@@ -208,11 +208,33 @@ class Checker():
         outlist = []
         self._fobj.seek(0)
         for rown, row in enumerate(self._fobj):
+            count=0
             for coln, char in enumerate(row):
-                if char not in string.printable:
+                if char not in string.printable and char != '\x00':
                     non_asc = {'row':rown+1, 'col': coln+1, 'char':char}
                     outlist.append(non_asc)
         return outlist
+
+    def null_count(self, **kwargs) -> dict:
+        '''
+        Returns an integer count of null characters in the file
+        ('\x00') or None if skipped
+
+        Keyword arguments:
+
+                flatfile : bool
+                   — Test is useless if not a text file. If False, returns 'N/A' 
+        '''
+        #TODO what the hell is happening with null values?
+        if not (kwargs.get('flatfile') 
+                or not self._istext 
+                or not kwargs.get('null_chars')):
+            return None
+        self._fobj.seek(0)
+        count = self._fobj.read().count('\x00')
+        if not count:
+            return None
+        return count
 
     def dos(self, **kwargs) -> bool:
         '''
@@ -268,6 +290,8 @@ class Checker():
             flatfile : bool
                 — Perform rectangularity check. If False, returns dictionary
                   with all values as 'N/A'
+            null_chars : bool
+                - check for null characters
         '''
         out = {'filename': self.fname}
         digest = kwargs.get('digest', 'md5')
@@ -279,6 +303,7 @@ class Checker():
         out.update({'flat': self.flat_tester(**kwargs)})
         out.update({'nonascii': self.non_ascii_tester(**kwargs)})
         out.update({'encoding': self._encoding})
+        out.update({'null_chars': self.null_count(**kwargs)})
         if dos:
             out.update({'dos' : self.dos(**kwargs)})
         return out
@@ -314,6 +339,9 @@ class Checker():
         if output.get('dos'):
             dosout = 'Windows file (CRLF found in document)\n'
             textout += dosout
+        if output.get('null_chars'):
+            textout += f"Null characters: {output.get('null_chars')}"
+
         return textout
 
     def _manifest_json(self, **kwargs) -> str:
@@ -407,7 +435,6 @@ class Checker():
         if out == 'csv':
             return self._manifest_csv(**kwargs)
         return None
-
 
 if __name__ == '__main__':
     pass
