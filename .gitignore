@@ -12,3 +12,5 @@ notes
 notes/**
 **/.DS_Store
 .DS_Store
+./binary_releases
+./binary_releases/**
