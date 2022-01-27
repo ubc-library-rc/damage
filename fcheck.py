@@ -26,7 +26,7 @@ import pyreadstat
 #how-to-check-type-of-files-without-extensions-in-pythonimport magic
 #https://thepythonguru.com/writing-packages-in-python/
 
-VERSION = (0, 1, 3)
+VERSION = (0, 1, 4)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #Commercial stats files extensions
@@ -226,7 +226,7 @@ class Checker():
                    — Test is useless if not a text file. If False, returns 'N/A' 
         '''
         #TODO what the hell is happening with null values?
-        if not (kwargs.get('flatfile') 
+        if (not kwargs.get('flatfile') 
                 or not self._istext 
                 or not kwargs.get('null_chars')):
             return None
