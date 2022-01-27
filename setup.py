@@ -28,18 +28,44 @@ VERSION_LINE = list(
 
 PKG_VERSION = get_version(ast.literal_eval(VERSION_LINE.split('=')[-1].strip()))
 
+def readme():
+    '''
+    Read in the markdown long description
+    '''
+    try:
+        with open( os.path.join(
+                   os.path.dirname(__file__),
+                   'README.md')) as fil:
+            return fil.read()
+    except IOError:
+        return ''
 CONFIG = {
     'description': 'File manifest generator',
+    'long_description': readme(),
+    'long_description_content_type' : 'text/markdown',
     'author': 'Paul Lesack',
     'license': 'MIT',
     'url': 'https://ubc-library-rc.github.io/fcheck/',
     'download_url': 'https://github.com/ubc-library-rc/fcheck',
     'author_email': 'paul.lesack@ubc.ca',
     'py_modules': ['fcheck'],
+    'python_requires': '>=3.6',
     'install_requires' : ['pyreadstat>=1.1.0'],
     'scripts':['scripts/damage.py'],
     'name': 'fcheck',
-    'version': PKG_VERSION
-}
-
+    'version': PKG_VERSION,
+    'classifiers' : ['Development Status :: 4 - Beta',
+                     'Intended Audience :: Education',
+                     'License :: OSI Approved :: MIT License'
+                     'Programming Language :: Python :: 3.6',
+                     'Programming Language :: Python :: 3.7',
+                     'Programming Language :: Python :: 3.8',
+                     'Programming Language :: Python :: 3.9',
+                     'Programming Language :: Python :: 3.10',
+                     'Topic :: Education'],
+    'project_urls' : {'Documentation': 'https://ubc-library-rc.github.io/fcheck',
+                      'Source': 'https://github.com/ubc-library-rc/fcheck',
+                      'Tracker': 'https://github.com/ubc-library-rc/fcheck/issues'},
+    'keywords' : ['metadata','SAS', 'SPSS', 'Stata', 'rectangular files', 'manifest generator'],
+    }
 setup(**CONFIG)
