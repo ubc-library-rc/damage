@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -109,12 +110,21 @@
               
                 <h1 id="creating-a-binary-damage">Creating a binary damage<a class="headerlink" href="#creating-a-binary-damage" title="Permanent link">&para;</a></h1>
 <p>Not everyone has a python installation on their computer, and even if they do, they don&rsquo;t necessarily know how to use it. As damage is supposed to be simple to use, the easiest way to use it is as a traditional application. This means it needs to be compiled or packaged into, ideally, a single file.</p>
-<p>To perform these steps, you will need  PyInstaller. Although these examples use absolute paths, that&rsquo;s not technically required</p>
+<blockquote>
+<p>Note that you only need to this if there is not a binary version of <strong>damage</strong> available for your platform. Normally you would just download the software from the <a href="https://github.com/ubc-library-rc/fcheck/releases">releases</a> page. </p>
+</blockquote>
+<p>Users most likely to require a custom binary version of damage are:</p>
+<ul>
+<li>Linux users</li>
+<li>Mac users who are using machines with M1 processors</li>
+<li>Users with ARM chips or other uncommon system architecture</li>
+</ul>
+<p>To perform these steps, you will need  [PyInstaller] along with an installed version of Python &gt;= v3.6. Although these examples use absolute paths, that&rsquo;s not technically required. You can install PyInstaller the usual way with <em>pip</em>. ie. <code>pip install PyInstaller</code></p>
 <h2 id="building-with-pyinstaller">Building with Pyinstaller<a class="headerlink" href="#building-with-pyinstaller" title="Permanent link">&para;</a></h2>
 <p>Depending on your Python installation, you may need to build with a virtual environment (which you should probably do anyway).</p>
 <p>Damage doesn&rsquo;t have a lot of dependencies; you really only need pyreadstat, which installs pandas and numpy as dependencies.</p>
 <p>or, as the output of <code>pip freeze</code>:</p>
-<div class="codehilite"><pre><span></span><code>altgraph==0.17
+<pre class="codehilite"><code>altgraph==0.17
 importlib-metadata==4.0.1
 macholib==1.14
 numpy==1.20.2
@@ -126,20 +136,18 @@ python-dateutil==2.8.1
 pytz==2021.1
 six==1.15.0
 typing-extensions==3.10.0.0
-zipp==3.4.1
-</code></pre></div>
+zipp==3.4.1</code></pre>
 
 
-<div class="codehilite"><pre><span></span><code><span class="n">pyinstaller</span> <span class="o">-</span><span class="n">F</span> <span class="o">--</span><span class="n">additional</span><span class="o">-</span><span class="n">hooks</span><span class="o">-</span><span class="nb">dir</span> <span class="o">./</span>  <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pyreadstat._readstat_writer</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">pyreadstat.worker</span> <span class="o">--</span><span class="n">hidden</span><span class="o">-</span><span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">damage</span><span class="o">.</span><span class="n">py</span>
-</code></pre></div>
+<pre class="codehilite"><code>pyinstaller -F --additional-hooks-dir ./  --hidden-import pyreadstat._readstat_writer --hidden-import pandas --hidden-import pyreadstat.worker --hidden-import multiprocessing /path/to/damage.py</code></pre>
 
 
 <p>Alternately, you can simplify the PyInstaller command by using the <code>py_install/hook-fcheck.py</code> file:</p>
-<div class="codehilite"><pre><span></span><code>pyinstaller -F --additional-hooks-dir=/path/to/py_install  /path/to/damage.py
-</code></pre></div>
+<pre class="codehilite"><code>pyinstaller -F --additional-hooks-dir=/path/to/py_install  /path/to/damage.py</code></pre>
 
 
 <p>This process will create a damage.spec file along with a <em>build</em> and a <em>dist</em> dir. Inside the <em>dist</em> dir will be your self-contained file, which you can do with as you like.</p>
+<p>Normally, on MacOS and linux system, the resultant <strong>damage</strong> file is placed in <code>/usr/local/bin</code> and for Windows computers, the <strong>damage.exe</strong> file is placed somewhere on you system <code>PATH</code>.</p>
               
             </div>
           </div>

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -62,21 +63,27 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">API reference for fcheck</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#checker-objects">Checker Objects</a>
+    <li class="toctree-l2"><a class="reference internal" href="#fcheck">fcheck</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#__init__">__init__</a>
+    <li class="toctree-l3"><a class="reference internal" href="#checker-objects">Checker Objects</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#__init__">__init__</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#__del__">__del__</a>
+    <li class="toctree-l4"><a class="reference internal" href="#__del__">__del__</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#produce_digest">produce_digest</a>
+    <li class="toctree-l4"><a class="reference internal" href="#produce_digest">produce_digest</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#flat_tester">flat_tester</a>
+    <li class="toctree-l4"><a class="reference internal" href="#flat_tester">flat_tester</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#non_ascii_tester">non_ascii_tester</a>
+    <li class="toctree-l4"><a class="reference internal" href="#non_ascii_tester">non_ascii_tester</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#dos">dos</a>
+    <li class="toctree-l4"><a class="reference internal" href="#null_count">null_count</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#manifest">manifest</a>
+    <li class="toctree-l4"><a class="reference internal" href="#dos">dos</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#manifest">manifest</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -123,8 +130,9 @@
           <div role="main">
             <div class="section">
               
-                <p><a name="fcheck"></a></p>
-<h1 id="fcheck">fcheck<a class="headerlink" href="#fcheck" title="Permanent link">&para;</a></h1>
+                <h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p><a name="fcheck"></a></p>
+<h2 id="fcheck">fcheck<a class="headerlink" href="#fcheck" title="Permanent link">&para;</a></h2>
 <p>Manifest generator for data files.</p>
 <p>Produces a text file with user specificied checksums for all files
 from the top of a specified tree and checks line length
@@ -136,98 +144,98 @@ and ASCII character status for text files.</p>
 <p>Checker() will report number of cases and variables as
 rows and columns respectively.</p>
 <p><a name="fcheck.Checker"></a></p>
-<h2 id="checker-objects">Checker Objects<a class="headerlink" href="#checker-objects" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Checker</span><span class="p">()</span>
-</code></pre></div>
+<h3 id="checker-objects">Checker Objects<a class="headerlink" href="#checker-objects" title="Permanent link">&para;</a></h3>
+<pre class="codehilite"><code class="language-python">class Checker()</code></pre>
 
 
 <p>A collection of various tools attached to a file</p>
 <p><a name="fcheck.Checker.__init__"></a></p>
-<h4 id="__init__">__init__<a class="headerlink" href="#__init__" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
-</code></pre></div>
+<h5 id="__init__">__init__<a class="headerlink" href="#__init__" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | __init__(fname: str)</code></pre>
 
 
 <p>Initializes Checker instance</p>
-<div class="codehilite"><pre><span></span><code><span class="n">fname</span> <span class="o">:</span> <span class="n">str</span>
-    <span class="n">Path</span> <span class="n">to</span> <span class="n">file</span>
-</code></pre></div>
+<pre class="codehilite"><code>fname : str
+    Path to file</code></pre>
 
 
 <p><a name="fcheck.Checker.__del__"></a></p>
-<h4 id="__del__">__del__<a class="headerlink" href="#__del__" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="fm">__del__</span><span class="p">()</span>
-</code></pre></div>
+<h5 id="__del__">__del__<a class="headerlink" href="#__del__" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | __del__()</code></pre>
 
 
 <p>Destructor closes file</p>
 <p><a name="fcheck.Checker.produce_digest"></a></p>
-<h4 id="produce_digest">produce_digest<a class="headerlink" href="#produce_digest" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">produce_digest</span><span class="p">(</span><span class="n">prot</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
-</code></pre></div>
+<h5 id="produce_digest">produce_digest<a class="headerlink" href="#produce_digest" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | produce_digest(prot: str = 'md5', blocksize: int = 2*16) -&gt; str</code></pre>
 
 
 <p>Returns hex digest for object</p>
-<div class="codehilite"><pre><span></span><code><span class="n">fname</span> <span class="o">:</span> <span class="n">str</span>
-   <span class="n">Path</span> <span class="n">to</span> <span class="n">a</span> <span class="n">file</span> <span class="n">object</span>
+<pre class="codehilite"><code>fname : str
+   Path to a file object
 
-<span class="n">prot</span> <span class="o">:</span> <span class="n">str</span>
-   <span class="n">Hash</span> <span class="n">type</span><span class="o">.</span> <span class="n">Supported</span> <span class="n">hashes</span><span class="o">:</span> <span class="s1">&#39;sha1&#39;</span><span class="o">,</span> <span class="s1">&#39;sha224&#39;</span><span class="o">,</span> <span class="s1">&#39;sha256&#39;</span><span class="o">,</span>
-      <span class="s1">&#39;sha384&#39;</span><span class="o">,</span> <span class="s1">&#39;sha512&#39;</span><span class="o">,</span> <span class="s1">&#39;blake2b&#39;</span><span class="o">,</span> <span class="s1">&#39;blake2s&#39;</span><span class="o">,</span> <span class="s1">&#39;md5&#39;</span><span class="o">.</span>
-      <span class="n">Default</span><span class="o">:</span> <span class="s1">&#39;md5&#39;</span>
+prot : str
+   Hash type. Supported hashes: 'sha1', 'sha224', 'sha256',
+      'sha384', 'sha512', 'blake2b', 'blake2s', 'md5'.
+      Default: 'md5'
 
-<span class="n">blocksize</span> <span class="o">:</span> <span class="n">int</span>
-   <span class="n">Read</span> <span class="n">block</span> <span class="n">size</span> <span class="k">in</span> <span class="n">bytes</span>
-</code></pre></div>
+blocksize : int
+   Read block size in bytes</code></pre>
 
 
 <p><a name="fcheck.Checker.flat_tester"></a></p>
-<h4 id="flat_tester">flat_tester<a class="headerlink" href="#flat_tester" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">flat_tester</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
-</code></pre></div>
+<h5 id="flat_tester">flat_tester<a class="headerlink" href="#flat_tester" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | flat_tester(**kwargs) -&gt; dict</code></pre>
 
 
 <p>Checks file for line length and number of records.</p>
 <p>Returns a dictionary:</p>
 <p><code>{'min_cols': int, 'max_cols' : int, 'numrec':int, 'constant' : bool}</code></p>
 <p><a name="fcheck.Checker.non_ascii_tester"></a></p>
-<h4 id="non_ascii_tester">non_ascii_tester<a class="headerlink" href="#non_ascii_tester" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">non_ascii_tester</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span>
-</code></pre></div>
+<h5 id="non_ascii_tester">non_ascii_tester<a class="headerlink" href="#non_ascii_tester" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | non_ascii_tester(**kwargs) -&gt; list</code></pre>
 
 
 <p>Returns a list of dicts of positions of non-ASCII characters in a text file.</p>
 <p><code>[{'row': int, 'col':int, 'char':str}...]</code></p>
-<div class="codehilite"><pre><span></span><code><span class="n">fname</span> <span class="o">:</span> <span class="n">str</span>
-   <span class="n">Path</span><span class="o">/</span><span class="n">filename</span>
+<pre class="codehilite"><code>fname : str
+   Path/filename
 
-<span class="n">Keyword</span> <span class="k">arguments</span><span class="o">:</span>
+Keyword arguments:
 
-    <span class="n">flatfile</span> <span class="o">:</span> <span class="n">bool</span>
-       <span class="err">—</span> <span class="n">Perform</span> <span class="n">rectangularity</span> <span class="n">check</span><span class="o">.</span> <span class="n">If</span> <span class="n">False</span><span class="o">,</span> <span class="n">returns</span> <span class="n">dictionary</span>
-         <span class="k">with</span> <span class="n">all</span> <span class="n">values</span> <span class="k">as</span> <span class="s1">&#39;N/A&#39;</span>
-</code></pre></div>
+    flatfile : bool
+       — Perform rectangularity check. If False, returns dictionary
+         with all values as 'N/A'</code></pre>
+
+
+<p><a name="fcheck.Checker.null_count"></a></p>
+<h5 id="null_count">null_count<a class="headerlink" href="#null_count" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | null_count(**kwargs) -&gt; dict</code></pre>
+
+
+<p>Returns an integer count of null characters in the file
+(&lsquo;\x00&rsquo;) or None if skipped</p>
+<p>Keyword arguments:</p>
+<pre class="codehilite"><code>    flatfile : bool
+       — Test is useless if not a text file. If False, returns 'N/A'</code></pre>
 
 
 <p><a name="fcheck.Checker.dos"></a></p>
-<h4 id="dos">dos<a class="headerlink" href="#dos" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">dos</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
-</code></pre></div>
+<h5 id="dos">dos<a class="headerlink" href="#dos" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | dos(**kwargs) -&gt; bool</code></pre>
 
 
 <p>Checks for presence of carriage returns in file</p>
 <p>Returns True if a carriage return ie, ord(13) is present</p>
 <p>Keyword arguments:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">flatfile</span> <span class="o">:</span> <span class="n">bool</span>
-    <span class="err">—</span> <span class="n">Perform</span> <span class="n">rectangularity</span> <span class="n">check</span><span class="o">.</span> <span class="n">If</span> <span class="n">False</span><span class="o">,</span> <span class="n">returns</span> <span class="n">dictionary</span>
-      <span class="k">with</span> <span class="n">all</span> <span class="n">values</span> <span class="k">as</span> <span class="s1">&#39;N/A&#39;</span>
-</code></pre></div>
+<pre class="codehilite"><code>flatfile : bool
+    — Perform rectangularity check. If False, returns dictionary
+      with all values as 'N/A'</code></pre>
 
 
 <p><a name="fcheck.Checker.manifest"></a></p>
-<h4 id="manifest">manifest<a class="headerlink" href="#manifest" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="o">|</span> <span class="n">manifest</span><span class="p">(</span><span class="n">out</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;txt&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
+<h5 id="manifest">manifest<a class="headerlink" href="#manifest" title="Permanent link">&para;</a></h5>
+<pre class="codehilite"><code class="language-python"> | manifest(out: str = 'txt', **kwargs)</code></pre>
 
 
 <p>Returns your desired output type as string</p>
@@ -236,22 +244,21 @@ rows and columns respectively.</p>
 <p>Accepted keywords and defaults:
     digest : str
         — Hash algorithm. Default &lsquo;md5&rsquo;</p>
-<div class="codehilite"><pre><span></span><code><span class="n">flat</span> <span class="o">:</span> <span class="n">bool</span>
-    <span class="err">—</span> <span class="n">Flat</span> <span class="n">file</span> <span class="n">checking</span><span class="o">.</span> <span class="n">Default</span> <span class="n">True</span>
+<pre class="codehilite"><code>flat : bool
+    — Flat file checking. Default True
 
-<span class="n">nonascii</span> <span class="o">:</span> <span class="n">bool</span>
-    <span class="err">—</span> <span class="n">Check</span> <span class="k">for</span> <span class="n">non</span><span class="o">-</span><span class="n">ASCII</span> <span class="n">characters</span><span class="o">.</span> <span class="n">Default</span> <span class="n">True</span>
+nonascii : bool
+    — Check for non-ASCII characters. Default True
 
-<span class="n">dos</span> <span class="o">:</span> <span class="n">bool</span>
-    <span class="err">—</span> <span class="n">check</span> <span class="k">for</span> <span class="n">Windows</span> <span class="n">CR</span><span class="o">/</span><span class="n">LF</span> <span class="n">combo</span><span class="o">.</span> <span class="n">Default</span> <span class="n">True</span>
-<span class="n">flatfile</span> <span class="o">:</span> <span class="n">bool</span>
-    <span class="err">—</span> <span class="n">Perform</span> <span class="n">rectangularity</span> <span class="n">check</span><span class="o">.</span> <span class="n">If</span> <span class="n">False</span><span class="o">,</span> <span class="n">returns</span> <span class="n">dictionary</span>
-      <span class="k">with</span> <span class="n">all</span> <span class="n">values</span> <span class="k">as</span> <span class="s1">&#39;N/A&#39;</span>
+dos : bool
+    — check for Windows CR/LF combo. Default True
+flatfile : bool
+    — Perform rectangularity check. If False, returns dictionary
+      with all values as 'N/A'
 
-<span class="n">headers</span> <span class="o">:</span> <span class="n">bool</span>
-   <span class="err">—</span>  <span class="n">Include</span> <span class="n">csv</span> <span class="n">header</span> <span class="o">(</span><span class="n">only</span> <span class="n">has</span> <span class="n">any</span> <span class="n">effect</span> <span class="k">with</span> <span class="n">out</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="o">)</span>
-      <span class="n">Default</span> <span class="k">is</span> <span class="n">False</span>
-</code></pre></div>
+headers : bool
+   —  Include csv header (only has any effect with out='csv')
+      Default is False</code></pre>
               
             </div>
           </div>

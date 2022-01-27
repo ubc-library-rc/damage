@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -111,9 +112,11 @@
               
                 <h1 id="how-to-use-the-damage-utility">How to use the damage utility<a class="headerlink" href="#how-to-use-the-damage-utility" title="Permanent link">&para;</a></h1>
 <p>Currently, this utility works as a <em>console</em> utility, ie. a Windows command prompt or terminal is required for use.</p>
+<p><strong>If you have installed the fcheck module with <em>pip</em></strong></p>
+<p><code>damage.py [options]</code></p>
 <p><strong>If using the binary, and the binary is in your $PATH</strong></p>
 <p><code>damage [options]</code></p>
-<p><strong>If using Python, invoke the utility with:</strong></p>
+<p><strong>If using Python directly from the source code, invoke the utility with:</strong></p>
 <p><code>python3 /path/to/damage.py [options]</code></p>
 <p>Note that on Windows this means something like:</p>
 <p><code>python3 C:\path\to\damage.py [options]</code></p>
@@ -121,22 +124,21 @@
 <p>By default, the program will spit its results to the screen (stdout). To send the output to a file, run the utility and pipe the output to a file. For example:</p>
 <p><code>damage -o csv -r ./ &gt; C:\temp\output.csv</code></p>
 <h4 id="program-options">Program options<a class="headerlink" href="#program-options" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="n">usage</span><span class="o">:</span> <span class="n">damage</span> <span class="o">[-</span><span class="n">h</span><span class="o">]</span> <span class="o">[-</span><span class="n">v</span><span class="o">]</span> <span class="o">[-</span><span class="n">o</span> <span class="n">OUT</span><span class="o">]</span> <span class="o">[-</span><span class="n">n</span><span class="o">]</span> <span class="o">[-</span><span class="n">r</span><span class="o">]</span> <span class="o">[-</span><span class="n">t</span> <span class="n">DIGEST</span><span class="o">]</span> <span class="n">files</span> <span class="o">[</span><span class="n">files</span> <span class="o">...]</span>
+<pre class="codehilite"><code class="language-nohighlight">usage: damage.py [-h] [-v] [-o OUT] [-n] [-r] [-t DIGEST] files [files ...]
 
-<span class="n">Produces</span> <span class="n">a</span> <span class="n">text</span><span class="o">,</span> <span class="n">csv</span> <span class="n">or</span> <span class="n">JSON</span> <span class="n">output</span> <span class="k">with</span> <span class="n">checksums</span> <span class="k">for</span> <span class="n">files</span><span class="o">,</span> <span class="n">testing</span> <span class="k">for</span> <span class="n">Windows</span> <span class="n">CRLF</span> <span class="n">combinations</span><span class="o">,</span> <span class="k">as</span> <span class="n">well</span> <span class="k">as</span> <span class="n">checking</span> <span class="n">text</span> <span class="n">files</span> <span class="k">for</span> <span class="n">regularity</span> <span class="n">and</span> <span class="n">non</span><span class="o">/</span><span class="n">ASCII</span> <span class="n">characters</span>
+Produces a text, csv or JSON output with checksums for files, testing for Windows CRLF combinations, as well as checking text files for regularity and non/ASCII characters
 
-<span class="n">positional</span> <span class="k">arguments</span><span class="o">:</span>
-  <span class="n">files</span>                 <span class="n">Files</span> <span class="n">to</span> <span class="n">check</span><span class="o">.</span> <span class="n">Wildcards</span> <span class="n">acceptable</span> <span class="o">(</span><span class="n">eg</span><span class="o">,</span> <span class="o">*)</span>
+positional arguments:
+  files                 Files to check. Wildcards acceptable (eg, *)
 
-<span class="n">optional</span> <span class="k">arguments</span><span class="o">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="o">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="k">this</span> <span class="n">help</span> <span class="n">message</span> <span class="n">and</span> <span class="n">exit</span>
-  <span class="o">-</span><span class="n">v</span><span class="o">,</span> <span class="o">--</span><span class="n">version</span>         <span class="n">Show</span> <span class="n">version</span> <span class="n">number</span> <span class="n">and</span> <span class="n">exit</span>
-  <span class="o">-</span><span class="n">o</span> <span class="n">OUT</span><span class="o">,</span> <span class="o">--</span><span class="n">output</span> <span class="n">OUT</span>  <span class="n">Output</span> <span class="n">format</span><span class="o">.</span> <span class="n">One</span> <span class="n">of</span> <span class="n">txt</span><span class="o">,</span> <span class="n">csv</span><span class="o">,</span> <span class="n">json</span>
-  <span class="o">-</span><span class="n">n</span><span class="o">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">flat</span>         <span class="n">Don</span><span class="s1">&#39;t check text files for rectangularity</span>
-<span class="s1">  -r, --recursive       Recursive *directory* processing of file tree. Assumes that the arguments point to a directory (eg, tmp/), and a slash will be appended if one does not exist</span>
-<span class="s1">  -t DIGEST, --hash-type DIGEST</span>
-<span class="s1">                        Checksum hash type. Supported hashes: &#39;</span><span class="n">sha1</span><span class="s1">&#39;, &#39;</span><span class="n">sha224</span><span class="s1">&#39;, &#39;</span><span class="n">sha256</span><span class="s1">&#39;, &#39;</span><span class="n">sha384</span><span class="s1">&#39;, &#39;</span><span class="n">sha512</span><span class="s1">&#39;, &#39;</span><span class="n">blake2b</span><span class="s1">&#39;, &#39;</span><span class="n">blake2s</span><span class="s1">&#39;, &#39;</span><span class="n">md5</span><span class="s1">&#39;. Default: &#39;</span><span class="n">md5</span><span class="err">&#39;</span>
-</code></pre></div>
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         Show version number and exit
+  -o OUT, --output OUT  Output format. One of txt, csv, json
+  -n, --no-flat         Don't check text files for rectangularity
+  -r, --recursive       Recursive *directory* processing of file tree. Assumes that the arguments point to a directory (eg, tmp/), and a slash will be appended if one does not exist
+  -t DIGEST, --hash-type DIGEST
+                        Checksum hash type. Supported hashes: 'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'blake2b', 'blake2s', 'md5'. Default: 'md5'</code></pre>
 
 
 <h2 id="compilingpackaging-the-software-on-your-platform">Compiling/packaging the software on your platform<a class="headerlink" href="#compilingpackaging-the-software-on-your-platform" title="Permanent link">&para;</a></h2>
