@@ -22,6 +22,10 @@ import os
 import sys
 import fcheck
 
+if sys.platform == 'win32':
+    import glob
+    import ntpath
+
 def parse() -> argparse.ArgumentParser():
     '''
     Separates argparser into function. Returns arparse.ArgumentParser()
@@ -56,13 +60,13 @@ def recurse_files(parsed_args):
     '''
     outlist = []
     for tree in parsed_args:
-        if not tree.endswith(os.sep):
-            tree += os.sep
-        fpath = os.path.split(os.path.expanduser(tree))[0]
-        ftree = [x for x in os.walk(fpath)]
-        ftree = [f'{p[0]}{os.sep}{f}' for p in ftree for f in p[2]]
-        ftree = list(set(ftree))
-        outlist += ftree
+        if os.path.isdir(tree):
+            ftree = list(os.walk(tree))
+            ftree = [f'{p[0]}{os.sep}{f}' for p in ftree for f in p[2]]
+            ftree = list(set(ftree))
+            outlist += ftree
+        else:
+            outlist.append(tree)
     return outlist
 
 def main():
@@ -74,8 +78,6 @@ def main():
     if not args.recur:
         #Windows does not do wildcard expansion at the shell level
         if sys.platform == 'win32':
-            import glob
-            import ntpath
             files = [y for x in args.files for y in glob.glob(x) if ntpath.isfile(y)]
         else:
             files = [x for x in args.files if os.path.isfile(x)]

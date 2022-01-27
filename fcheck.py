@@ -26,13 +26,12 @@ import pyreadstat
 #how-to-check-type-of-files-without-extensions-in-pythonimport magic
 #https://thepythonguru.com/writing-packages-in-python/
 
-VERSION = (0, 1, 4)
+VERSION = (0, 1, 5)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #Commercial stats files extensions
 #I am aware that extension checking is not perfect
 STATFILES = ['dta', 'sav', 'sas7bdat']
-
 
 class Checker():
     '''
@@ -106,7 +105,7 @@ class Checker():
             _hash = ok_hash[prot]
         except (UnboundLocalError, KeyError):
             message = ('Unsupported hash type. Valid values are '
-                       f'{[x for x in ok_hash]}.')
+                       f'{list(ok_hash)}.')
             print(message)
             raise
 
@@ -208,7 +207,6 @@ class Checker():
         outlist = []
         self._fobj.seek(0)
         for rown, row in enumerate(self._fobj):
-            count=0
             for coln, char in enumerate(row):
                 if char not in string.printable and char != '\x00':
                     non_asc = {'row':rown+1, 'col': coln+1, 'char':char}
@@ -223,11 +221,10 @@ class Checker():
         Keyword arguments:
 
                 flatfile : bool
-                   — Test is useless if not a text file. If False, returns 'N/A' 
+                   — Test is useless if not a text file. If False, returns 'N/A'
         '''
-        #TODO what the hell is happening with null values?
-        if (not kwargs.get('flatfile') 
-                or not self._istext 
+        if (not kwargs.get('flatfile')
+                or not self._istext
                 or not kwargs.get('null_chars')):
             return None
         self._fobj.seek(0)
@@ -320,7 +317,7 @@ class Checker():
             textout += f"Number of records: {output['flat']['numrec']}\n"
             if output['flat'].get('constant'):
                 if output['flat'].get('constant') == 'N/A':
-                    flatout = f"Columns: N/A\n"
+                    flatout = "Columns: N/A\n"
                 else: flatout = f"Columns: {output['flat']['max_cols']} constant records\n"
             else:
                 flatout = (f"Minimum line length {output['flat']['min_cols']}, "
