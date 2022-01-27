@@ -1,5 +1,7 @@
+#API Reference
 <a name="fcheck"></a>
-# fcheck
+
+## fcheck
 
 Manifest generator for data files.
 
@@ -16,7 +18,8 @@ Checker() will report number of cases and variables as
 rows and columns respectively.
 
 <a name="fcheck.Checker"></a>
-## Checker Objects
+
+### Checker Objects
 
 ```python
 class Checker()
@@ -25,7 +28,8 @@ class Checker()
 A collection of various tools attached to a file
 
 <a name="fcheck.Checker.__init__"></a>
-#### \_\_init\_\_
+
+##### \_\_init\_\_
 
 ```python
  | __init__(fname: str)
@@ -37,7 +41,8 @@ Initializes Checker instance
         Path to file
 
 <a name="fcheck.Checker.__del__"></a>
-#### \_\_del\_\_
+
+##### \_\_del\_\_
 
 ```python
  | __del__()
@@ -46,7 +51,8 @@ Initializes Checker instance
 Destructor closes file
 
 <a name="fcheck.Checker.produce_digest"></a>
-#### produce\_digest
+
+##### produce\_digest
 
 ```python
  | produce_digest(prot: str = 'md5', blocksize: int = 2*16) -> str
@@ -66,7 +72,8 @@ Returns hex digest for object
        Read block size in bytes
 
 <a name="fcheck.Checker.flat_tester"></a>
-#### flat\_tester
+
+##### flat\_tester
 
 ```python
  | flat_tester(**kwargs) -> dict
@@ -79,7 +86,8 @@ Returns a dictionary:
 `{'min_cols': int, 'max_cols' : int, 'numrec':int, 'constant' : bool}`
 
 <a name="fcheck.Checker.non_ascii_tester"></a>
-#### non\_ascii\_tester
+
+##### non\_ascii\_tester
 
 ```python
  | non_ascii_tester(**kwargs) -> list
@@ -98,8 +106,25 @@ Returns a list of dicts of positions of non-ASCII characters in a text file.
            — Perform rectangularity check. If False, returns dictionary
              with all values as 'N/A'
 
+<a name="fcheck.Checker.null_count"></a>
+
+##### null\_count
+
+```python
+ | null_count(**kwargs) -> dict
+```
+
+Returns an integer count of null characters in the file
+('\x00') or None if skipped
+
+Keyword arguments:
+
+        flatfile : bool
+           — Test is useless if not a text file. If False, returns 'N/A'
+
 <a name="fcheck.Checker.dos"></a>
-#### dos
+
+##### dos
 
 ```python
  | dos(**kwargs) -> bool
@@ -116,7 +141,8 @@ Keyword arguments:
           with all values as 'N/A'
 
 <a name="fcheck.Checker.manifest"></a>
-#### manifest
+
+##### manifest
 
 ```python
  | manifest(out: str = 'txt', **kwargs)

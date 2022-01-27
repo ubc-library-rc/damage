@@ -2,12 +2,15 @@
 
 Currently, this utility works as a *console* utility, ie. a Windows command prompt or terminal is required for use.
 
+**If you have installed the fcheck module with _pip_**
+
+`damage.py [options]`
+
 **If using the binary, and the binary is in your $PATH**
 
 `damage [options]`
 
-
-**If using Python, invoke the utility with:**
+**If using Python directly from the source code, invoke the utility with:**
 
 `python3 /path/to/damage.py [options]`
 
@@ -23,8 +26,8 @@ By default, the program will spit its results to the screen (stdout). To send th
 
 #### Program options
 
-```
-usage: damage [-h] [-v] [-o OUT] [-n] [-r] [-t DIGEST] files [files ...]
+```nohighlight
+usage: damage.py [-h] [-v] [-o OUT] [-n] [-r] [-t DIGEST] files [files ...]
 
 Produces a text, csv or JSON output with checksums for files, testing for Windows CRLF combinations, as well as checking text files for regularity and non/ASCII characters
 

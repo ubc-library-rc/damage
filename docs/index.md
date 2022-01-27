@@ -10,7 +10,14 @@ nav_order: 1
 
 ![Damage logo](images/damage.svg)
 
-**Damage** (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. A created manifest includes, for all file types:
+**Damage** (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. 
+
+Download the newest binary version of Damage here:
+
+[<button>Windows</button>](https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage.exe)
+[<button>MacOS</button>](https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage)
+
+A created manifest includes, for all file types:
 
 * The file name
 * Checksum in your choice of hash for the file. Current flavours of hashes are: sha1, sha224, sha256, sha384, sha512, blake2b, blake2s, md5 
@@ -23,6 +30,7 @@ For **plain text files**, often used for microdata, the utility also produces in
 * Number of records
 * Constant records flag (ie, all lines are of the same length)
 * Row and column of non-ASCII characters
+* A count of null characters
 * Flag for DOS/Windows formatting (ie, carriage return + line feed as opposed to just a line feed).
 
 For files in **SAS, SPSS and Stata formats** (ie, .sas7bdat, .sav and .dta) the utility will provide information on:
@@ -68,7 +76,7 @@ More than ever, the world today revolves around data sharing. Knowing the data t
 
 ### Binary files 
 
-Console binaries are available for Windows and Mac (Intel) at <https://github.com/ubc-library-rc/fcheck/tree/master/binaries>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
+Console binaries of the damage utility are available for Windows and Mac (Intel) at fcheck's release page <https://github.com/ubc-library-rc/fcheck/releases>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
 
 These files don't need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.
 
@@ -86,7 +94,7 @@ The easiest way to make this available system wide is simply to copy the Mac exe
 
 The software is written in Python (>= 3.6), and the source is available as a single file in `fcheck.py`. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:
 
-```
+```nohighlight
 pip install git+https://github.com/ubc-library-rc/fcheck.git@master
 ```
 
@@ -96,7 +104,7 @@ Documentation on the module is available via the [API reference documentation](a
 
 #### Updating with with pip
 
-```
+```nohighlight
 pip install --upgrade git+https://github.com/ubc-library-rc/fcheck.git@master
 ```
 
@@ -104,4 +112,4 @@ Because the software is not hosted at PyPi, there is a slightly longer update st
 
 ### Source code
 
-As you may have surmised frotm the example above, source code is available at <https://github.com/ubc-library-rc/fcheck>, along with all of the documentation and binary files.
+As you may have surmised from the example above, source code is available at <https://github.com/ubc-library-rc/fcheck>, along with all of the documentation and binary files.

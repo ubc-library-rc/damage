@@ -8,11 +8,16 @@ nav:
   - Frequently asked questions: faq.md
   - Credits: credits.md
 
+extra_css: [extra.css]
+
 markdown_extensions:
   - smarty
   - toc:
       permalink: True
-  - codehilite
+  - codehilite:
+      guess_lang: False
+      linenums: False
+      use_pygments: False
   - attr_list
 
 theme: readthedocs

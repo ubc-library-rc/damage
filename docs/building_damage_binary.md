@@ -2,7 +2,15 @@
 
 Not everyone has a python installation on their computer, and even if they do, they don't necessarily know how to use it. As damage is supposed to be simple to use, the easiest way to use it is as a traditional application. This means it needs to be compiled or packaged into, ideally, a single file.
 
-To perform these steps, you will need  PyInstaller. Although these examples use absolute paths, that's not technically required
+> Note that you only need to this if there is not a binary version of **damage** available for your platform. Normally you would just download the software from the [releases](https://github.com/ubc-library-rc/fcheck/releases) page. 
+
+Users most likely to require a custom binary version of damage are:
+
+* Linux users
+* Mac users who are using machines with M1 processors
+* Users with ARM chips or other uncommon system architecture
+
+To perform these steps, you will need  [PyInstaller] along with an installed version of Python >= v3.6. Although these examples use absolute paths, that's not technically required. You can install PyInstaller the usual way with _pip_. ie. `pip install PyInstaller`
 
 ## Building with Pyinstaller
 
@@ -38,3 +46,7 @@ pyinstaller -F --additional-hooks-dir=/path/to/py_install  /path/to/damage.py
 ```
 
 This process will create a damage.spec file along with a *build* and a *dist* dir. Inside the *dist* dir will be your self-contained file, which you can do with as you like.
+
+Normally, on MacOS and linux system, the resultant **damage** file is placed in `/usr/local/bin` and for Windows computers, the **damage.exe** file is placed somewhere on you system `PATH`.
+
+
