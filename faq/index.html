@@ -124,6 +124,14 @@
 </ol>
 </li>
 </ul>
+<p><strong>I try to run <em>damage</em> from Windows explorer or Finder and it doesn&rsquo;t work. What&rsquo;s going on?</strong></p>
+<ul>
+<li><em>damage</em> is a <em>console</em> program. That means it runs from with a Windows command prompt session or PowerShell session, and in the case of other computer sessions, within a terminal session. At this point, it doesn&rsquo;t have a GUI, although there&rsquo;s a chance that one may be added in the future.</li>
+</ul>
+<p><strong>What&rsquo;s all this PATH and /usr/local/bin stuff?</strong></p>
+<ul>
+<li>PATH is an environment variable on your computer which allows programs to invoked without laboriously typing out the full location of the program. On linux-like systems, <em>/usr/local/bin</em> is already part of the PATH environment variable, so just moving/copying the damage executable file there will do all the work in one step. If you are using <em>damage.py</em>, ie, you installed <em>fcheck</em> with <em>pip</em>, you don&rsquo;t need to do any of this unless you really want to.</li>
+</ul>
               
             </div>
           </div>
