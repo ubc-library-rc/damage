@@ -12,6 +12,10 @@ nav_order: 1
 
 **Damage** (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. 
 
+### Important
+
+**Damage** is a console utility, which means it runs in a Windows command prompt/PowerShell/bash session or, in the case of other operating systems, a terminal session. It does not have a GUI. If this seems like gibberish to you, **damage** may not be suited for your needs.
+
 Download the newest binary version of Damage here:
 
 [<button>Windows</button>](https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage.exe)
