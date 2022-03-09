@@ -14,3 +14,5 @@ notes/**
 .DS_Store
 binary_releases
 binary_releases/**
+tmp
+tmp/**
