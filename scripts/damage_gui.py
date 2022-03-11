@@ -1,7 +1,11 @@
 import io
 import os
-import subprocess
+import shlex
 import shutil
+import subprocess
+import tempfile
+import textwrap
+import webbrowser
 
 import fcheck
 import PySimpleGUI as sg
@@ -9,14 +13,32 @@ import PySimpleGUI as sg
 if sg.running_mac():
     import plistlib
     ttk_theme = 'aqua'
-    sg.set_options(font='System 14')
+    FONTSIZE = 14
+    BASEFONT = 'System'
 else:
-    import shlex
-    import tempfile
     ttk_theme =  'vista'
-    sg.set_options(font='Arial 9')
+    FONTSIZE = 9
+    BASEFONT = 'Arial' #GRR
+    
+sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
+VERSION = (0,2,0)
+__version__ = '.'.join([str(x) for x in VERSION])
+
+LICENCE = textwrap.fill(replace_whitespace=False, text=
+'''
+MIT License
+
+Copyright 2022 University of British Columbia Library
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+''' )
+
 global prefdict
 
 sg.theme('systemDefaultForReal')
@@ -49,9 +71,10 @@ def get_prefs()->None:
         if sg.running_linux() or sg.running_windows():
             with open(preffile) as fn:
                 prefdict = sg.json.load(fn)
-
+       
+    
     except FileNotFoundError:
-        prefdict = dict(flat=False,
+        prefdict = dict(flatfile=False,
                         recurse=False,
                         digest='md5',
                         out='txt',
@@ -59,6 +82,11 @@ def get_prefs()->None:
                         headers=True,
                         nonascii=True
                         )
+    #TODO automatically fix prefdict['flat'] to be 'flatfile' or put in version check 
+    fixflat = prefdict.get('flat')
+    if fixflat:
+        prefdict['flatfile'] = fixflat
+        del prefdict['flat']
 
 def set_prefs()->None:
     '''
@@ -87,68 +115,6 @@ def damage(flist, **kwargs)->str:
 
     return '\n'.join(output)
 
-def damage_table(flist, **kwargs)->(list, str):
-    '''
-    Create data for a tabular display
-    '''
-    output = []
-    kwargs['header'] = True
-    testme = fcheck.Checker(flist[0], **kwargs)
-    #headers = testme.manifest(**kwargs)).split('\n')[0].split(',')
-    #headers = [x.strip('"') for x in headers]
-    output.append(testme.manifest(**kwargs))
-
-    for fil in flist[1:]:
-        kwargs['header'] = False
-        testme=Checker(fil, **kwargs)
-        output.append(testme.manifest(**kwargs))
-    data = output.split('\n')
-    data =[x.split(',') for x in data]
-    data = [[y.strip('"')] for y in x for x in data]
-    return data, output
-
-def prefs_window()->sg.Window:
-    '''Opens a preferences popup'''
-    #All the options
-    hashes =['md5','sha1', 'sha224', 'sha256', 'sha384', 'sha512',
-             'blake2b', 'blake2s']
-    outputs = ['txt','csv', 'json']
-    layout = [[sg.Text('Damage Preferences', font='_ 18 bold')],
-             [sg.Checkbox('Shorten file paths in output',
-                           key= '-SHORT-',
-                           default=prefdict['short'], )],
-             [sg.Checkbox('Text file rectangularity check',
-                           key= '-FLAT-',
-                           default=prefdict['flat'], )],
-             [sg.Checkbox('Recursively add files from directories',
-                           key='-RECURSE-', default=prefdict['recurse'])],
-             [sg.Text('Hash type'),
-              sg.Combo(values=hashes, default_value=prefdict['digest'],
-                       key='-DIGEST-', readonly=True)],
-             [sg.Text('Output format'),
-              sg.Combo(values=outputs, default_value=prefdict['out'],
-                       key='-OUT-', readonly=True)],
-             [sg.Ok(bind_return_key=True)]]
-    pwindow = sg.Window(title='Preferences',
-                     resizable=True,
-                     layout=layout,
-                     ttk_theme=ttk_theme,
-                     use_ttk_buttons=True,
-                     keep_on_top=True,
-                     modal=True, finalize=True)
-    pevent, pvalues = pwindow.read()
-    if pevent:
-        for key in ['short', 'flat', 'recurse', 'digest', 'out']:
-            prefdict[key] = pvalues[f'-{key.upper()}-']
-
-    set_prefs()
-    pwindow.close()
-
-def platform_menu():
-    if running_mac():
-        pass
-        #Goddamn it
-
 def popup_files_chooser_mac(initialdir=None)->list:
     '''
     popup files chooser broken on Mac. This is the editted replacement.
@@ -174,9 +140,29 @@ def popup_files_chooser_mac(initialdir=None)->list:
     root.destroy()
     return filenames
 
+def damage_table(flist, **kwargs)->(list, str): # Not used yet
+    '''
+    Create data for a tabular display
+    '''
+    output = []
+    kwargs['header'] = True
+    testme = fcheck.Checker(flist[0], **kwargs)
+    #headers = testme.manifest(**kwargs)).split('\n')[0].split(',')
+    #headers = [x.strip('"') for x in headers]
+    output.append(testme.manifest(**kwargs))
+
+    for fil in flist[1:]:
+        kwargs['header'] = False
+        testme=Checker(fil, **kwargs)
+        output.append(testme.manifest(**kwargs))
+    data = output.split('\n')
+    data =[x.split(',') for x in data]
+    data = [[y.strip('"')] for y in x for x in data]
+    return data, output
+
 def get_folder_files(direc:str, recursive:bool=False, hidden:bool=False)->list:
     '''
-    Gets files in a folder, recursive or no
+    Returns files in a folder, recursive or no
     direc : str
         path to directory
     recursive : bool
@@ -198,7 +184,9 @@ def get_folder_files(direc:str, recursive:bool=False, hidden:bool=False)->list:
 
 def send_to_file(outstring)->None:
     '''
-    Sends output to file
+    Sends string output to file
+
+    Creates a tk.asksaveasfile dialogue and saves
     '''
     #Because TK is just easier
     outfile = sg.tk.filedialog.asksaveasfile(title='Save Output', 
@@ -214,16 +202,17 @@ def send_to_printer(outstring:str)->None:
     Data is unformatted. If you want formatting save to a file and use
     a text editor. Assumes UTF-8 for Mac/linux.
     '''
-    outstring = io.StringIO(outstring)
+    outfile = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
+                                          suffix='.txt', delete=False)
+    outfile.write(outstring)
+    outfile.close()
+    
     if sg.running_mac() or sg.running_linux():
-        lpr =  subprocess.Popen(shutil.which('lpr'), stdin=subprocess.PIPE)
-        lpr.stdin.write(bytes(outstring, 'utf-8'))
+        #lpr =  subprocess.Popen(shutil.which('lpr'), stdin=subprocess.PIPE)
+        #lpr.stdin.write(bytes(outstring, 'utf-8'))
+        subprocess.run([shutil.which('lpr'), outfile.name])
 
     if sg.running_windows():
-        outfile = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
-                                              suffix='.txt', delete=False)
-        outfile.write(outstring)
-        outfile.close()
 
         #List of all printers names and shows default one
         #wmic printer get name,default
@@ -237,7 +226,92 @@ def send_to_printer(outstring:str)->None:
         default_printer = [x for x in printerinfo if x[0] == 'TRUE'][0][1]
         subprocess.run(['print', f'/D:{default_printer}', outfile.name])
         #tempfile must be removed manually because of delete=False above
-        os.remove(outfile.name)
+    os.remove(outfile.name)
+
+def platform_menu(): # Not used yet
+    '''
+    Platform specific menus
+    '''
+    if running_mac():
+        pass
+        #Goddamn it
+
+def about_window()->sg.Window:
+    '''
+    Creates the "About" window
+    '''
+    about = dict(developers = ['Paul Lesack'],
+                 user_testers = ['Jeremy Buhler'],
+                 source_url = 'https://github.com/ubc-library-rc/fcheck',
+                 documentation = 'https://ubc-library-rc.github.io/fcheck'
+                 )
+    name = [[sg.Text(f'{PROGNAME} v{__version__}', font=f'{BASEFONT} {FONTSIZE+4} bold')]]
+    source =[[sg.Text('Source code', font=f'{BASEFONT} {FONTSIZE+2} bold')],
+              [sg.Text(about['source_url'], enable_events=True, text_color='blue', k='-SC-')]]
+    documentation =[[sg.Text('Documentation', font=f'{BASEFONT} {FONTSIZE+2} bold')],
+                     [sg.Text(about['source_url'], enable_events=True, text_color='blue', k='-DOC-')]]
+    devs =[[sg.Text('Developers', font=f'{BASEFONT} {FONTSIZE+2} bold',)],
+            [sg.Text(x) for x in about['developers']]]
+    testers = [[sg.Text('Testers', font=f'{BASEFONT} {FONTSIZE+2} bold')],
+               [sg.Text(x) for x in about['user_testers']]]
+    licence =[[sg.Text('Licence information', font=f'{BASEFONT} {FONTSIZE+2} bold')],
+              [sg.Text(LICENCE, font=f'{BASEFONT} {FONTSIZE-2}')]]
+    layout = name + documentation + devs + testers + source + licence
+    window = sg.Window('About', modal=True,
+                       keep_on_top=True,
+                       layout=layout,
+                       finalize=True)
+    while True:
+        event, values = window.read()
+        if event == '-SC-':
+            webbrowser.open(about['source_url'])
+        if event == '-DOC-':
+            webbrowser.open(about['documentation'])
+        if event == sg.WIN_CLOSED:
+            break
+    window.close()
+
+
+
+def prefs_window()->sg.Window:
+    '''
+    Creates a preferences popup window. 
+    Values from window  saved to the preferences dictionary prefdict
+    '''
+    #All the options
+    hashes =['md5','sha1', 'sha224', 'sha256', 'sha384', 'sha512',
+             'blake2b', 'blake2s']
+    outputs = ['txt','csv', 'json']
+    layout = [[sg.Text('Damage Preferences', font=f'{BASEFONT} {FONTSIZE+4} bold')],
+             [sg.Checkbox('Shorten file paths in output',
+                           key= '-SHORT-',
+                           default=prefdict['short'], )],
+             [sg.Checkbox('Text file rectangularity check',
+                           key= '-FLAT-',
+                           default=prefdict['flatfile'], )],
+             [sg.Checkbox('Recursively add files from directories',
+                           key='-RECURSE-', default=prefdict['recurse'])],
+             [sg.Text('Hash type'),
+              sg.Combo(values=hashes, default_value=prefdict['digest'],
+                       key='-DIGEST-', readonly=True)],
+             [sg.Text('Output format'),
+              sg.Combo(values=outputs, default_value=prefdict['out'],
+                       key='-OUT-', readonly=True)],
+             [sg.Ok(bind_return_key=True)]]
+    pwindow = sg.Window(title='Preferences',
+                     resizable=True,
+                     layout=layout,
+                     ttk_theme=ttk_theme,
+                     use_ttk_buttons=True,
+                     keep_on_top=True,
+                     modal=True, finalize=True)
+    pevent, pvalues = pwindow.read()
+    if pevent:
+        for key in ['short', 'flat', 'recurse', 'digest', 'out']:
+            prefdict[key] = pvalues[f'-{key.upper()}-']
+
+    set_prefs()
+    pwindow.close()
 
 def main_window()->sg.Window:
     '''
@@ -247,16 +321,18 @@ def main_window()->sg.Window:
     #    '''
     #    Get all items from a folder listing
     #    '''
-
-    menu = sg.Menu([[PROGNAME, ['Preferences::tk::mac::ShowPreferences']],
-                    ['File',['Add &Files',
+    #I gave up attaching preferences to the mac menu
+    #because there's too much hidden using sg.
+    #You may as well use straight tk if you want that.
+    menu = sg.Menu([['File',['Add &Files',
                              'Add Fol&der',
                              '---',
                              '!&Save Output to File',
                              '!&Print Output::-PRINT-']],
                     ['Edit', ['&Copy',
-                              '&Paste']],
-                    ['Help', ['About']]],
+                              '&Paste',
+                              'Preferences']],
+                    ['Help', ['Damage Help', 'Credits and Details']]],
                     key='-MENUBAR-')
 
     lbox = sg.Listbox(values=[], key='-SELECT-',
@@ -302,6 +378,7 @@ def main_window()->sg.Window:
                       location= prefdict.get('main_location', (None, None)),
                       finalize=True, enable_close_attempted_event=True)
     lbox.Widget.config(borderwidth=0)
+    #sg.Print(vars(layout[1][0]))
     window.set_min_size((875,400))
     return window
 
@@ -309,27 +386,39 @@ def main()->None:
     '''
     Main loop
     '''
-    #TODO Force exclude mac .app bundles or have is_file check 
     #TODO Icon
-    #TODO About
     #TODO Help
     #TODO CSV tabular output
     #TODO platform specific menu shortcuts
 
     get_prefs()
     window  = main_window()
+    #FFFFUUUUU
     menulayout = window['-MENUBAR-'].MenuDefinition
-    #I shouldn't have had to find that out by examining the class definition, FFS
-    #vars(window['-MENUBAR-')
+    #Why don't I just do it all in TK? Jesus
+    #talk about undocumented.
+    #also: https://tkdocs.com/tutorial/menus.html
+    #window.TKroot.tk.createcommand('tk::mac::ShowPreferences', prefs_window ) # How to get root? What is the function where None is?
+    root = window.hidden_master_root #(see PySimpleGUI.py.StartupTK, line 16008)
+    #sg.Print(type(poot))
+    #root.createcommand('tk::mac::ShowPreferences', prefs_window ) 
+    #root.createcommand('tk::mac::ShowPreferences', lambda:  None)      
+    #Also, why does the window stop responding after calling the prefs? But only half? It's
+    #a fucking mystery. And it doesn't happen with straight TK so it's something to with psg.
+    #root.createcommand('tk::mac::standardAboutPanel', about_window)
     while True:
         event, values = window.read()
         #sg.Print(relative_location=(500,0))
+        #sg.Print(event, values)
+        #print(event)
         #sg.Print(prefdict)
-
         if event in (sg.WINDOW_CLOSE_ATTEMPTED_EVENT,):
             prefdict['main_size'] = window.size
             prefdict['main_location'] = window.current_location()
             set_prefs()
+            break
+
+        if event in (sg.WINDOW_CLOSED,):
             break
 
         if event == '-IN-':
@@ -339,6 +428,9 @@ def main()->None:
                            [x for x in values['-IN-'].split(';') if
                             x not in window['-SELECT-'].get_list_values()])
                 upd_list = [x for x in upd_list if os.path.isfile(x)]
+                #Fuck you tkinter for replacing os.sep with a slash
+                if sg.running_windows():
+                    upd_list = [x.replace('/', os.sep) for x in upd_list]
                 window['-SELECT-'].update(upd_list)
                 window['-IN-'].update(value='')
 
@@ -351,6 +443,8 @@ def main()->None:
             upd_list = (window['-SELECT-'].get_list_values() +
                    [x[0]+os.sep+x[1] for x in newfiles if
                     x[0]+os.sep+x[1] not in window['-SELECT-'].get_list_values()])
+            if sg.running_windows():
+                upd_list = [x.replace('/', os.sep) for x in upd_list]
             upd_list = [x for x in upd_list if os.path.isfile(x)]
             window['-SELECT-'].update(upd_list)
 
@@ -380,18 +474,18 @@ def main()->None:
             except (ValueError, NameError, AttributeError):
                 window['-OUTPUT-'].update('')
 
-        if event == 'Preferences::tk::mac::ShowPreferences':
+        if event == 'Preferences':
             prefs_window()
             window['-OUTPUT-'].update('')
 
         if window['-OUTPUT-'].get():
-            #update menu
-            menulayout[1][1][3] = '&Save Output to File'
-            menulayout[1][1][4] = '&Print Output::-PRINT-'
+            #update menu. This is a PIA.
+            menulayout[0][1][3] = '&Save Output to File'
+            menulayout[0][1][4] = '&Print Output::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
         else:
-            menulayout[1][1][3] = '!&Save Output to File'
-            menulayout[1][1][4] = '!&Print Output::-PRINT-'
+            menulayout[0][1][3] = '!&Save Output to File'
+            menulayout[0][1][4] = '!&Print Output::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
 
         #Menubar events
@@ -399,7 +493,9 @@ def main()->None:
             if sg.running_mac():#Mac will crash using sg.popup_get_file
                 newfiles = popup_files_chooser_mac()
             else:
-                newfiles = sg.popup_get_file('', no_window=True, file_types = sg.FILE_TYPES_ALL_TYPES)
+                newfiles = sg.popup_get_file(message='', no_window=True, 
+                                             multiple_files=True,
+                                             file_types = sg.FILE_TYPES_ALL_FILES)
             upd_list = (window['-SELECT-'].get_list_values() +
                    [x for x in newfiles if
                     x not in window['-SELECT-'].get_list_values()])
@@ -407,6 +503,14 @@ def main()->None:
         
         if event == 'Save Output to File':
             send_to_file(values['-OUTPUT-'])
+        
+        if event.endswith('-PRINT-'):
+            send_to_printer(values['-OUTPUT-'])
+
+        if event == 'Credits and Details':
+            about_window()
+        if event == 'Damage Help':
+            webbrowser.open('https://ubc-library-rc.github.io/fcheck')
             
     window.close()
 
