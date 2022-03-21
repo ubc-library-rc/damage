@@ -15,17 +15,21 @@ if sg.running_mac():
     ttk_theme = 'aqua'
     FONTSIZE = 14
     BASEFONT = 'System'
+    MOD = '\u2318' #CMD key unicode 2318 Place of Interest
+    CMDCTRL = 'Command' #tkinter bind string sans <>
 else:
     ttk_theme =  'vista'
     FONTSIZE = 9
     BASEFONT = 'Arial' #GRR
-    
+    MOD = 'Ctrl'
+    CMDCTRL = 'Control'
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
 VERSION = (0,2,0)
 __version__ = '.'.join([str(x) for x in VERSION])
 
+#TODO parse licence from main repo licence when ui moved to final directory.
 LICENCE = textwrap.fill(replace_whitespace=False, text=
 '''
 MIT License
@@ -71,8 +75,8 @@ def get_prefs()->None:
         if sg.running_linux() or sg.running_windows():
             with open(preffile) as fn:
                 prefdict = sg.json.load(fn)
-       
-    
+
+
     except FileNotFoundError:
         prefdict = dict(flatfile=False,
                         recurse=False,
@@ -82,7 +86,7 @@ def get_prefs()->None:
                         headers=True,
                         nonascii=True
                         )
-    #TODO automatically fix prefdict['flat'] to be 'flatfile' or put in version check 
+    #TODONE automatically fix prefdict['flat'] to be 'flatfile' or put in version check
     fixflat = prefdict.get('flat')
     if fixflat:
         prefdict['flatfile'] = fixflat
@@ -180,6 +184,10 @@ def get_folder_files(direc:str, recursive:bool=False, hidden:bool=False)->list:
         flist = [[a, d] for a, b, c in os.walk(os.path.expanduser(direc)) for d in c]
     if not hidden:
         flist=[x for x in flist if not x[1].startswith('.')]
+    #will this work?
+    if sg.running_windows():
+        flist = [[x[0].replace('/', os.sep), x[1]] for x in flist]
+        #sg.Print(flist)
     return flist
 
 def send_to_file(outstring)->None:
@@ -189,7 +197,7 @@ def send_to_file(outstring)->None:
     Creates a tk.asksaveasfile dialogue and saves
     '''
     #Because TK is just easier
-    outfile = sg.tk.filedialog.asksaveasfile(title='Save Output', 
+    outfile = sg.tk.filedialog.asksaveasfile(title='Save Output',
                                        initialfile=f'output.{prefdict["out"]}',
                                        confirmoverwrite=True)
     if outfile:
@@ -202,11 +210,12 @@ def send_to_printer(outstring:str)->None:
     Data is unformatted. If you want formatting save to a file and use
     a text editor. Assumes UTF-8 for Mac/linux.
     '''
+    #https://stackoverflow.com/questions/12723818/print-to-standard-printer-from-python
     outfile = tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
                                           suffix='.txt', delete=False)
     outfile.write(outstring)
     outfile.close()
-    
+
     if sg.running_mac() or sg.running_linux():
         #lpr =  subprocess.Popen(shutil.which('lpr'), stdin=subprocess.PIPE)
         #lpr.stdin.write(bytes(outstring, 'utf-8'))
@@ -219,14 +228,15 @@ def send_to_printer(outstring:str)->None:
         #https://stackoverflow.com/questions/13311201/get-default-printer-name-from-command-line
         subout = subprocess.run(shlex.split('wmic printer get name,default'),
                                 capture_output=True)
-        #the following only makes sense of you look at the output of the 
+        #the following only makes sense of you look at the output of the
         #windows shell command above. stout is binary, hence decode.
-        printerinfo = [[x[:6].strip(), x[6:].strip()] for x in 
+        printerinfo = [[x[:6].strip(), x[6:].strip()] for x in
                         subout.stdout.decode().split('\n')[1:]]
         default_printer = [x for x in printerinfo if x[0] == 'TRUE'][0][1]
         subprocess.run(['print', f'/D:{default_printer}', outfile.name])
         #tempfile must be removed manually because of delete=False above
     os.remove(outfile.name)
+    sg.popup('Output sent to default printer', title='Job Completed', any_key_closes=True)
 
 def platform_menu(): # Not used yet
     '''
@@ -271,11 +281,9 @@ def about_window()->sg.Window:
             break
     window.close()
 
-
-
 def prefs_window()->sg.Window:
     '''
-    Creates a preferences popup window. 
+    Creates a preferences popup window.
     Values from window  saved to the preferences dictionary prefdict
     '''
     #All the options
@@ -305,13 +313,27 @@ def prefs_window()->sg.Window:
                      use_ttk_buttons=True,
                      keep_on_top=True,
                      modal=True, finalize=True)
+    pwindow.bind('<Escape>', 'Exit')
     pevent, pvalues = pwindow.read()
     if pevent:
         for key in ['short', 'flat', 'recurse', 'digest', 'out']:
             prefdict[key] = pvalues[f'-{key.upper()}-']
-
     set_prefs()
+    if pevent == 'Exit':
+        pwindow.close()
     pwindow.close()
+
+def window_binds(window:sg.Window)->None:
+    '''
+    Bind keys to main window
+    '''
+    #window.bind(f'<{CMDCTRL}>', eventname)
+    #sg.Print(f'<{CMDCTRL}-c>', '-COPY-')
+    #window.bind(f'<{CMDCTRL}-c>', '-COPY-')
+    #sg.Print(f'<{CMDCTRL}-v>', '-PASTE-')
+    window.bind(f'<{CMDCTRL}-v>', '-PASTE-')
+    window.bind(f'<{CMDCTRL}-s>', '-SAVE-')
+    window.bind(f'<{CMDCTRL}-p>', '-PRINT-')
 
 def main_window()->sg.Window:
     '''
@@ -327,10 +349,10 @@ def main_window()->sg.Window:
     menu = sg.Menu([['File',['Add &Files',
                              'Add Fol&der',
                              '---',
-                             '!&Save Output to File',
-                             '!&Print Output::-PRINT-']],
-                    ['Edit', ['&Copy',
-                              '&Paste',
+                             f'!&Save Output to File          {MOD}S::-SAVE-',
+                             f'!&Print Output                      {MOD}P::-PRINT-']],
+                             ['Edit', [f'&Copy     {MOD}C::-COPY-',
+                                 f'&Paste    {MOD}V::-PASTE-',
                               'Preferences']],
                     ['Help', ['Damage Help', 'Credits and Details']]],
                     key='-MENUBAR-')
@@ -380,16 +402,20 @@ def main_window()->sg.Window:
     lbox.Widget.config(borderwidth=0)
     #sg.Print(vars(layout[1][0]))
     window.set_min_size((875,400))
+    window_binds(window)
     return window
 
 def main()->None:
     '''
     Main loop
     '''
+    #TODO Windows not stripping out dups when adding from two different methods. 
     #TODO Icon
-    #TODO Help
     #TODO CSV tabular output
-    #TODO platform specific menu shortcuts
+    #TODONE Help
+    #TODONE platform specific menu shortcuts
+    #TODONE DONE File menus behave differently from buttons
+    #TODONE bind keys to shortcuts
 
     get_prefs()
     window  = main_window()
@@ -401,14 +427,14 @@ def main()->None:
     #window.TKroot.tk.createcommand('tk::mac::ShowPreferences', prefs_window ) # How to get root? What is the function where None is?
     root = window.hidden_master_root #(see PySimpleGUI.py.StartupTK, line 16008)
     #sg.Print(type(poot))
-    #root.createcommand('tk::mac::ShowPreferences', prefs_window ) 
-    #root.createcommand('tk::mac::ShowPreferences', lambda:  None)      
+    #root.createcommand('tk::mac::ShowPreferences', prefs_window )
+    #root.createcommand('tk::mac::ShowPreferences', lambda:  None)
     #Also, why does the window stop responding after calling the prefs? But only half? It's
     #a fucking mystery. And it doesn't happen with straight TK so it's something to with psg.
     #root.createcommand('tk::mac::standardAboutPanel', about_window)
     while True:
         event, values = window.read()
-        #sg.Print(relative_location=(500,0))
+        #sg.Print(relative_location=(700,0))
         #sg.Print(event, values)
         #print(event)
         #sg.Print(prefdict)
@@ -424,13 +450,21 @@ def main()->None:
         if event == '-IN-':
             #sg.Print(f"Values=| {values['-IN-']} |", c='white on red')
             if len(values['-IN-']): # No way to set None, so empty is '', or len() == 0.
-                upd_list = (window['-SELECT-'].get_list_values() +
-                           [x for x in values['-IN-'].split(';') if
-                            x not in window['-SELECT-'].get_list_values()])
+                if sg.running_windows():#FFFUUUU TK
+                    #tk automatically replaces backlashes with slashes.
+                    #too bad fcheck doesn't.
+                    upd_list = (window['-SELECT-'].get_list_values() +
+                                [x.replace('/', os.sep) for x in values['-IN-'].split(';') if
+                                 x.replace('/', os.sep) not in window['-SELECT-'].get_list_values()])
+                else:
+                    upd_list = (window['-SELECT-'].get_list_values() +
+                                [x for x in values['-IN-'].split(';') if
+                                 x not in window['-SELECT-'].get_list_values()])
                 upd_list = [x for x in upd_list if os.path.isfile(x)]
                 #Fuck you tkinter for replacing os.sep with a slash
-                if sg.running_windows():
-                    upd_list = [x.replace('/', os.sep) for x in upd_list]
+                #Maybe make this a function
+                #if sg.running_windows():
+                #    upd_list = [x.replace('/', os.sep) for x in upd_list]
                 window['-SELECT-'].update(upd_list)
                 window['-IN-'].update(value='')
 
@@ -443,10 +477,10 @@ def main()->None:
             upd_list = (window['-SELECT-'].get_list_values() +
                    [x[0]+os.sep+x[1] for x in newfiles if
                     x[0]+os.sep+x[1] not in window['-SELECT-'].get_list_values()])
-            if sg.running_windows():
-                upd_list = [x.replace('/', os.sep) for x in upd_list]
             upd_list = [x for x in upd_list if os.path.isfile(x)]
             window['-SELECT-'].update(upd_list)
+        
+        
 
         if event == '-DELETE-':
             nlist = [x for x in window['-SELECT-'].get_list_values() if
@@ -480,12 +514,18 @@ def main()->None:
 
         if window['-OUTPUT-'].get():
             #update menu. This is a PIA.
-            menulayout[0][1][3] = '&Save Output to File'
-            menulayout[0][1][4] = '&Print Output::-PRINT-'
+            menulayout[0][1][3] = f'&Save Output to File          {MOD}S::-SAVE-'
+            menulayout[0][1][4] = f'&Print Output                      {MOD}P::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
+
+            if event.endswith('-SAVE-'):
+                send_to_file(values['-OUTPUT-'])
+
+            if event.endswith('-PRINT-'):
+                send_to_printer(values['-OUTPUT-'])
         else:
-            menulayout[0][1][3] = '!&Save Output to File'
-            menulayout[0][1][4] = '!&Print Output::-PRINT-'
+            menulayout[0][1][3] = f'!&Save Output to File          {MOD}S::-SAVE-'
+            menulayout[0][1][4] = f'!&Print Output                      {MOD}P::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
 
         #Menubar events
@@ -493,25 +533,32 @@ def main()->None:
             if sg.running_mac():#Mac will crash using sg.popup_get_file
                 newfiles = popup_files_chooser_mac()
             else:
-                newfiles = sg.popup_get_file(message='', no_window=True, 
+                newfiles = sg.popup_get_file(message='', no_window=True,
                                              multiple_files=True,
                                              file_types = sg.FILE_TYPES_ALL_FILES)
+                if sg.running_windows():#Again, TK replaces \ with /.
+                    newfiles= [x.replace('/', os.sep) for x in newfiles]
             upd_list = (window['-SELECT-'].get_list_values() +
                    [x for x in newfiles if
                     x not in window['-SELECT-'].get_list_values()])
             window['-SELECT-'].update(upd_list)
-        
-        if event == 'Save Output to File':
-            send_to_file(values['-OUTPUT-'])
-        
-        if event.endswith('-PRINT-'):
-            send_to_printer(values['-OUTPUT-'])
 
         if event == 'Credits and Details':
             about_window()
         if event == 'Damage Help':
             webbrowser.open('https://ubc-library-rc.github.io/fcheck')
-            
+
+        #Copypasta
+        if event.endswith(':-COPY-'):
+            #sg.clipboard_get()
+            sg.clipboard_set(window['-OUTPUT-'].Widget.selection_get())
+            #sg.Print('COPY!!!', c='white on blue')
+            #sg.Print(sg.clipboard_get())
+        if event.endswith(':-PASTE-'):#Menu only because pastes by default
+            sg.Print('PASTE!!!', c='white on orange')
+            window['-OUTPUT-'].Widget.insert(sg.tk.INSERT,
+                                                sg.clipboard_get())
+
     window.close()
 
 if __name__ == '__main__':
