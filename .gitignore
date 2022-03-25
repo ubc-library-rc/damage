@@ -7,7 +7,7 @@ build
 build/**
 dist
 dist/**
-*.spec
+./*.spec
 notes
 notes/**
 **/.DS_Store
@@ -16,3 +16,6 @@ binary_releases
 binary_releases/**
 tmp
 tmp/**
+**/Thumbs.db
+**/Thumbs.db*encryptable
+gui/damage_gui.spec

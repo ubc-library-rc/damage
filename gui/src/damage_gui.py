@@ -252,7 +252,8 @@ def about_window()->sg.Window:
                  source_url = 'https://github.com/ubc-library-rc/fcheck',
                  documentation = 'https://ubc-library-rc.github.io/fcheck'
                  )
-    name = [[sg.Text(f'{PROGNAME} v{__version__}', font=f'{BASEFONT} {FONTSIZE+4} bold')]]
+    displayname = f'{PROGNAME[:PROGNAME.find("_")].capitalize()} v{__version__}'
+    name = [[sg.Text(displayname, font=f'{BASEFONT} {FONTSIZE+4} bold')]]
     source =[[sg.Text('Source code', font=f'{BASEFONT} {FONTSIZE+2} bold')],
               [sg.Text(about['source_url'], enable_events=True, text_color='blue', k='-SC-')]]
     documentation =[[sg.Text('Documentation', font=f'{BASEFONT} {FONTSIZE+2} bold')],
