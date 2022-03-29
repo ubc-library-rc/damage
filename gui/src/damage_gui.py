@@ -30,7 +30,7 @@ else:
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,3,2)
+VERSION = (0,3,3)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -289,11 +289,13 @@ def prefs_window()->sg.Window:
     hashes =['md5','sha1', 'sha224', 'sha256', 'sha384', 'sha512',
              'blake2b', 'blake2s']
     outputs = ['txt','csv', 'json']
+    rectang = ('Text file rectangularity '
+                '& statistics file column check' )
     layout = [[sg.Text('Damage Preferences', font=f'{BASEFONT} {FONTSIZE+4} bold')],
              [sg.Checkbox('Shorten file paths in output',
                            key= '-SHORT-',
                            default=prefdict['short'], )],
-             [sg.Checkbox('Text file rectangularity check',
+             [sg.Checkbox(text=rectang,
                            key= '-FLATFILE-',
                            default=prefdict['flatfile'], )],
              [sg.Checkbox('Recursively add files from directories',
@@ -304,7 +306,7 @@ def prefs_window()->sg.Window:
              [sg.Text('Output format'),
               sg.Combo(values=outputs, default_value=prefdict['out'],
                        key='-OUT-', readonly=True)],
-             [sg.Ok(bind_return_key=True)]]
+             [sg.Ok(bind_return_key=True, button_text='OK')]]
     pwindow = sg.Window(title='Preferences',
                     icon=ICON,
                      resizable=True,
@@ -450,7 +452,7 @@ def main_window()->sg.Window:
                      expand_y=True,
                      expand_x=True)]]
 
-    print(prefdict.get('main_size'))
+    #print(prefdict.get('main_size'))
     window = sg.Window(title='Damage', layout=layout, resizable=True,
                       size = prefdict.get('main_size', (None, None)),
                       icon=ICON,
