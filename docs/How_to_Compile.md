@@ -31,7 +31,7 @@ app = BUNDLE(exe,
             'NSAppleScriptEnabled': False,
             'CFBundleDocumentTypes': [
                 {
-                    'CFBundleTypeName': 'My File Format',
+                    #'CFBundleTypeName': 'My File Format',
                     'CFBundleTypeIconFile': 'MyFileIcon.icns',
                     'LSItemContentTypes': ['com.example.myformat'],
                     'LSHandlerRank': 'Owner'
@@ -44,17 +44,17 @@ find pyi-makespec with more `which pyi-makespec`
 
 *NOTE: --onefile on Mac isn't even required.* Doing so just makes one file, which must then be unpacked to make an app package which isn't even even a single file in the first place. It then doesn't have to unpack itself into a temp file and runs like a normal app. Jesus.
 
-python310 -E -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --windowed --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ~/Documents/Work/Projects/fcheck/py_install/ --icon=assets/DamageAppIcon.icns src/damage_gui.py --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole
+python310 -E -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns src/damage_gui.py --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole
 
 so, in the above, for mac, --onefile is not there. Add --noconsole so you don't get the annoying console window.
 
 ## Building a specfile for Mac
-python310 -m PyInstaller.utils.cliutils.makespec --noconsole --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --windowed --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 src/damage_gui.py
+python310 -m PyInstaller.utils.cliutils.makespec --noconsole --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 src/damage_gui.py
 
 
 Then manually add plist info to the specfile before using the spec file. For better versioning, read the VERSION string from the source code and insert it as a version number so that it does not have to be done manually.
 
-Note that the mac does *not* have  --onefile. I reiterate because it's important.
+Note that the mac does *not* have  --onefile OR --windowed. I reiterate because it's important.
 
 ## Building a specfile for Windows
 It's very similar, except use --onefile, ignore the --add-binary, --osx-bundle-identifer (although I think you can include it), and use
@@ -76,3 +76,24 @@ Using the spec file is easy:
 `python310 -m PyInstaller --clean damage_gui_combined.spec` 
 
 The --clean is optional, as is --noconfirm
+
+#Building a mac application that doesn't run from a temporary directory
+
+1. Build the application, not a specfile, using the command above.
+2. Manually add the information to the generated plist, which is at:
+`dist/damage_gui.app/Contents/Info.plist`
+3. Use the python plist tools (plistlib) to add the correct keys:
+```
+ info_plist={
+	       	    'NSPrincipalClass': 'NSApplication',
+	       	    'NSAppleScriptEnabled': False,
+	       	    'CFBundleDocumentTypes': [
+	       		{
+	       		    #'CFBundleTypeName': 'My File Format',
+	       		    'CFBundleTypeIconFile': 'assets/DamageAppIcon.icns',
+	       		    '#LSItemContentTypes': ['com.example.myformat'],
+	       		    'LSHandlerRank': 'Alternate',
+			    'CFBundleTypeRole': 'Editor'
+	       		    }
+```
+ 

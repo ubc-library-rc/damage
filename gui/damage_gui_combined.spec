@@ -6,9 +6,10 @@ block_cipher = None
 
 if sys.platform == 'darwin':
              binaries=[('/System/Library/Frameworks/Tk.framework/Tk', 'tk'), ('/System/Library/Frameworks/Tcl.framework/Tcl', 'tcl')]
+             winicon = 'assets/DamageAppIcon.icns'
 else:
              binaries=[]
-
+             winicon = 'assets/DamageAppIcon.ico'
 a = Analysis(['src/damage_gui.py'],
              pathex=[],
              binaries=binaries,
@@ -30,6 +31,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,  
           [],
+          #exclude_binaries=True,
           name='Damage',
           debug=False,
           bootloader_ignore_signals=False,
@@ -41,7 +43,9 @@ exe = EXE(pyz,
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,
-          entitlements_file=None , icon='assets/DamageAppIcon.ico')
+          entitlements_file=None,
+          icon=winicon,
+	  )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -52,7 +56,7 @@ coll = COLLECT(exe,
                name='damage_gui')
 app = BUNDLE(coll,
              name='Damage.app',
-             icon='assets/DamageAppIcon.icns',
+             icon=winicon,
              bundle_identifier='ca.ubc.library',
 	     version='.'.join(map(str,VERSION)),
 	     info_plist={
