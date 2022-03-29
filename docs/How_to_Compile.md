@@ -44,7 +44,7 @@ find pyi-makespec with more `which pyi-makespec`
 
 *NOTE: --onefile on Mac isn't even required.* Doing so just makes one file, which must then be unpacked to make an app package which isn't even even a single file in the first place. It then doesn't have to unpack itself into a temp file and runs like a normal app. Jesus.
 
-python310 -E -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns src/damage_gui.py --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole
+python310 -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns src/damage_gui.py --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole
 
 so, in the above, for mac, --onefile is not there. Add --noconsole so you don't get the annoying console window.
 
@@ -79,7 +79,10 @@ The --clean is optional, as is --noconfirm
 
 #Building a mac application that doesn't run from a temporary directory
 
-1. Build the application, not a specfile, using the command above.
+1. Build the application, not a specfile, using the command, from the `gui` dir:
+
+python310 -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns src/damage_gui.py --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole
+
 2. Manually add the information to the generated plist, which is at:
 `dist/damage_gui.app/Contents/Info.plist`
 3. Use the python plist tools (plistlib) to add the correct keys:
@@ -96,4 +99,10 @@ The --clean is optional, as is --noconfirm
 			    'CFBundleTypeRole': 'Editor'
 	       		    }
 ```
+
+Or, use the script developed for this purpose:
+
+`gui/customize_pyinstaller_plist.py`
+
+Then, rename the output Damage.app (or alternately, start with a simlinked Damage.py instead of renaming.
  

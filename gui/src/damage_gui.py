@@ -30,7 +30,7 @@ else:
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,3,3)
+VERSION = (0,4,0)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -336,6 +336,7 @@ def window_binds(window:sg.Window)->None:
     window.bind(f'<{CMDCTRL}-v>', '-PASTE-')
     window.bind(f'<{CMDCTRL}-s>', '-SAVE-')
     window.bind(f'<{CMDCTRL}-p>', '-PRINT-')
+    window.bind(f'<{CMDCTRL}-m>', '-MANIFEST-')
 
 def main_window()->sg.Window:
     '''
@@ -352,13 +353,15 @@ def main_window()->sg.Window:
     #Menu section
     menu = sg.Menu([['File',['Add &Files',
                              'Add Fol&der',
-                             '---',
-                             f'!&Save Output to File          {MOD}S::-SAVE-',
-                             f'!&Print Output                      {MOD}P::-PRINT-']],
-                             ['Edit', [f'&Copy     {MOD}C::-COPY-',
+                             'Remove Files::-DELETE-']],
+                     ['Edit', [f'&Copy     {MOD}C::-COPY-',
                                  f'&Paste    {MOD}V::-PASTE-',
                               'Preferences']],
-                    ['Help', ['Damage Help', 'Credits and Details']]],
+                     ['Actions', [f'Create &Manifest               {MOD}M::-MANIFEST-',
+                                  '---',
+                                  f'!&Save Output to File          {MOD}S::-SAVE-',
+                                  f'!&Print Output                      {MOD}P::-PRINT-']],
+                     ['Help', ['Damage Help', 'Credits and Details']]],
                     key='-MENUBAR-')
     #Chosen file (left) section
     lbox = sg.Listbox(values=[], key='-SELECT-',
@@ -501,6 +504,7 @@ def main()->None:
     window  = main_window()
     #FFFFUUUUU
     menulayout = window['-MENUBAR-'].MenuDefinition
+    #sg.Print(menulayout)
     #Why don't I just do it all in TK? Jesus
     #talk about undocumented.
     #also: https://tkdocs.com/tutorial/menus.html
@@ -563,13 +567,13 @@ def main()->None:
         
         
 
-        if event == '-DELETE-':
+        if event.endswith('-DELETE-'):
             nlist = [x for x in window['-SELECT-'].get_list_values() if
                     x not in values['-SELECT-']]
             window['-SELECT-'].update(nlist)
             #print(nlist)
 
-        if event == '-MANIFEST-':
+        if event.endswith('-MANIFEST-'):
             try:
                 delme = ''
                 upd_list = window['-SELECT-'].get_list_values()
@@ -620,8 +624,8 @@ def main()->None:
 
         if window['-OUTPUT-'].get():
             #update menu. This is a PIA.
-            menulayout[0][1][3] = f'&Save Output to File          {MOD}S::-SAVE-'
-            menulayout[0][1][4] = f'&Print Output                      {MOD}P::-PRINT-'
+            menulayout[2][1][2] = f'&Save Output to File          {MOD}S::-SAVE-'
+            menulayout[2][1][3] = f'&Print Output                      {MOD}P::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
 
             if event.endswith('-SAVE-'):
@@ -630,8 +634,8 @@ def main()->None:
             if event.endswith('-PRINT-'):
                 send_to_printer(values['-OUTPUT-'])
         else:
-            menulayout[0][1][3] = f'!&Save Output to File          {MOD}S::-SAVE-'
-            menulayout[0][1][4] = f'!&Print Output                      {MOD}P::-PRINT-'
+            menulayout[2][1][2] = f'!&Save Output to File          {MOD}S::-SAVE-'
+            menulayout[2][1][3] = f'!&Print Output                      {MOD}P::-PRINT-'
             window['-MENUBAR-'].update(menulayout)
 
         #Menubar events

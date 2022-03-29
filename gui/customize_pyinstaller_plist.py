@@ -34,7 +34,10 @@ with open(dm_plist_p, 'rb') as f:
 
 dm_plist['CFBundleDisplayName'] = 'Damage' #This controls what the app is called. ie, value.app
 #Weirdly, a terminal ls still shows damage_gui.app, but Finder shows Damage.app
+#Couldn't hurt to rename it, though, I don't think.
+#Also appears in the name in the Finder?
 dm_plist['CFBundleName'] = 'Damage'  # This controls the menu name and the version string
+dm_plist['CFBundleExecutable'] = 'damage_gui' #This is the executable file inside the bundle
 dm_plist['CFBundleShortVersionString'] = '.'.join(map(str, VERSION))
 dm_plist['NSPrincipalClass'] = 'NSApplication'
 dm_plist['NSAppleScriptEnabled'] = False
