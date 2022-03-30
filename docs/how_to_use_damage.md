@@ -1,6 +1,6 @@
-# How to use the damage utility
+# How to use the damage console utility
 
-Currently, this utility works as a *console* utility, ie. a Windows command prompt or terminal is required for use.
+Documentation is for the  *console* utility. That means a Windows command prompt or terminal is required for use. The console utility is normally referred to with a lowercase initial 'd' (ie, **damage**) and the full GUI application as **Damage**
 
 **If you have installed the fcheck module with _pip_**
 

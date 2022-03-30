@@ -12,14 +12,16 @@ nav_order: 1
 
 **Damage** (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. 
 
-### Important
+### Multiple flavours!
 
-**Damage** is a console utility, which means it runs in a Windows command prompt/PowerShell/bash session or, in the case of other operating systems, a terminal session. It does not have a GUI. If this seems like gibberish to you, **damage** may not be suited for your needs.
+![Damage GUI](images/damage_example_screen.png)
+
+
+**Damage** comes as both a traditional application (with a handy user interface) or as console utility running in your  Windows command prompt/PowerShell/bash session.
 
 Download the newest binary version of Damage here:
 
-[<button>Windows</button>](https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage.exe)
-[<button>MacOS</button>](https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage)
+[<button>Download Damage</button>](https://github.com/ubc-library-rc/fcheck/releases)
 
 A created manifest includes, for all file types:
 
@@ -76,13 +78,20 @@ More than ever, the world today revolves around data sharing. Knowing the data t
 * _damage_ and _fcheck_ can help with creating descriptive documentation which is required for your research data deposit
 * _damage_ output ensures the integrity of your data set when used by others
  
-## Obtaining the software/installation
+## Detailed software/installation instructions
 
-### Binary files 
+### GUI application
 
-Console binaries of the damage utility are available for Windows and Mac (Intel) at fcheck's release page <https://github.com/ubc-library-rc/fcheck/releases>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
+Use the download button above to download the GUI application. On Windows and Linux, you need only  unzip it and run it from wherever you like. On a Mac, double-click the .dmg file and drag the icon to the Applications folder.
 
-These files don't need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.
+### Console binary files 
+
+Console binaries of the damage utility are available for Windows and Mac and Linux for Intel processors at fcheck's release page <https://github.com/ubc-library-rc/fcheck/releases>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
+
+These files don't need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH. Note that the console binary and the GUI application are called **damage** and **Damage**, respectively. This makes a difference on a case-sensitive file system. 
+
+**Important note**
+If you are using _both_ the console binary and the windowed GUI application, you should be careful if both are in your system's `PATH`, as this could potentially cause you unforeseen difficulties.
 
 #### Windows users
 
@@ -90,11 +99,11 @@ The download should be in a directory that is listed in the `%PATH%` environment
 
 The easiest way to do this is to use the Start menu and type "Environment", then select "Edit Environment variables for your account". Either place the binary file into a directory listed in `Path`, or add a new directory to your path using the GUI.
 
-#### Mac users
+#### Mac and Linux users
 
-The easiest way to make this available system wide is simply to copy the Mac executable to the `/usr/local/bin` directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type */usr/local/bin* in the box to easily find it.
+The easiest way to make this available system wide is simply to copy the executable to the `/usr/local/bin` directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type */usr/local/bin* in the box to easily find it. If you don't like those options, other common locations include, but are not limited to `/opt/bin` and `~/.local/bin`.
  
-### Installing with pip 
+### Installing fcheck *and* the damage console utility with pip 
 
 The software is written in Python (>= 3.6), and the source is available as a single file in `fcheck.py`. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:
 
@@ -113,6 +122,8 @@ pip install --upgrade git+https://github.com/ubc-library-rc/fcheck.git@master
 ```
 
 Because the software is not hosted at PyPi, there is a slightly longer update string.
+
+Note that while the console binary is updated with pip, the GUI application is not.
 
 ### Source code
 
