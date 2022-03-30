@@ -25,13 +25,13 @@ if sg.running_windows():
     ttk_theme =  'vista'
     FONTSIZE = 9
     BASEFONT = 'Arial' #GRR
-    MOD = 'Ctrl'
+    MOD = 'Ctrl-'
     CMDCTRL = 'Control'
 if sg.running_linux():
     ttk_theme =  'alt'
     FONTSIZE = 9
     BASEFONT = 'TkDefaultFont' #GRR
-    MOD = 'Ctrl'
+    MOD = 'Ctrl-'
     CMDCTRL = 'Control'
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
