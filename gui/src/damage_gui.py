@@ -1,6 +1,6 @@
-import base64
+#import base64
 import csv
-import io
+#import io
 import os
 import shlex
 import shutil
@@ -21,16 +21,22 @@ if sg.running_mac():
     BASEFONT = 'System'
     MOD = '\u2318' #CMD key unicode 2318 Place of Interest
     CMDCTRL = 'Command' #tkinter bind string sans <>
-else:
+if sg.running_windows():
     ttk_theme =  'vista'
     FONTSIZE = 9
     BASEFONT = 'Arial' #GRR
     MOD = 'Ctrl'
     CMDCTRL = 'Control'
+if sg.running_linux():
+    ttk_theme =  'alt'
+    FONTSIZE = 9
+    BASEFONT = 'TkDefaultFont' #GRR
+    MOD = 'Ctrl'
+    CMDCTRL = 'Control'
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,4,0)
+VERSION = (0,4,1)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -349,7 +355,7 @@ def main_window()->sg.Window:
     #I gave up attaching preferences to the mac menu
     #because there's too much hidden using sg.
     #You may as well use straight tk if you want that.
-    
+
     #Menu section
     menu = sg.Menu([['File',['Add &Files',
                              'Add Fol&der',
@@ -378,9 +384,9 @@ def main_window()->sg.Window:
              sg.FolderBrowse(button_text='Add Folder', key='-FOLDER-', target='-IFOLD-'),
              sg.Button(button_text='Remove Files',
                        enable_events=True, key='-DELETE-')]]
-    
+
     #Right side (output) section
-    #This is more complicated than it should be because psg doesn't 
+    #This is more complicated than it should be because psg doesn't
     #flip correctly between Multiline and Table elements and doesn't hide
     #the Table scrollbars, and resizing is also affected. The (a) solution
     #is to put each of them in a Frame.
@@ -403,21 +409,21 @@ def main_window()->sg.Window:
                      border_width=0,
                      key='F1',
                      visible=txtout)
-    
+
     #CSV/tabular output box
     #hardcoding the headers seems dumb but this is alpha
-    headers = ['filename', 'digestType', 'digest', 
-                'min_cols', 'max_cols', 'numrec', 
+    headers = ['filename', 'digestType', 'digest',
+                'min_cols', 'max_cols', 'numrec',
                 'constant', 'encoding', 'nonascii',
                 'encoding', 'null_chars', 'dos']
 
     #right side layout
-    csvout = sg.Table([['' for x in range(len(headers))]], #Need data to create the table 
-                headings=headers, 
+    csvout = sg.Table([['' for x in range(len(headers))]], #Need data to create the table
+                headings=headers,
                 key='-CSV-',
                 #num_rows=40, #not needed with expansion
                 alternating_row_color='#FFA805',
-                #size=(800,40), 
+                #size=(800,40),
                 expand_x=True,
                 expand_y=True,
                 hide_vertical_scroll=False,
@@ -492,7 +498,7 @@ def main()->None:
     '''
     Main loop
     '''
-    #TODONE Windows not stripping out dups when adding from two different methods. 
+    #TODONE Windows not stripping out dups when adding from two different methods.
     #TODONE Icon
     #TODONE CSV tabular output
     #TODONE Help
@@ -509,7 +515,7 @@ def main()->None:
     #talk about undocumented.
     #also: https://tkdocs.com/tutorial/menus.html
     #window.TKroot.tk.createcommand('tk::mac::ShowPreferences', prefs_window ) # How to get root? What is the function where None is?
-    root = window.hidden_master_root #(see PySimpleGUI.py.StartupTK, line 16008)
+    #root = window.hidden_master_root #(see PySimpleGUI.py.StartupTK, line 16008)
     #sg.Print(type(poot))
     #root.createcommand('tk::mac::ShowPreferences', prefs_window )
     #root.createcommand('tk::mac::ShowPreferences', lambda:  None)
@@ -564,8 +570,8 @@ def main()->None:
                     x[0]+os.sep+x[1] not in window['-SELECT-'].get_list_values()])
             upd_list = [x for x in upd_list if os.path.isfile(x)]
             window['-SELECT-'].update(upd_list)
-        
-        
+
+
 
         if event.endswith('-DELETE-'):
             nlist = [x for x in window['-SELECT-'].get_list_values() if
@@ -589,7 +595,7 @@ def main()->None:
                         delme = os.path.split(upd_list[0])[0] + os.sep
                     txt = txt.replace(delme,'')
                     window['-OUTPUT-'].update(txt)
-            
+
                 if prefdict.get('out') == 'csv':
                     txt = txt.split('\n')
                     reader=csv.reader(txt[1::2], delimiter=',')#Strip out the headers
