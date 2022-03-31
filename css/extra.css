@@ -4,6 +4,11 @@ h1 {
 h2 {
   color: orange;
 }
+
+.wy-side-nav-search{
+	background-color: orange
+        }
+
 button  {
 	/*background-color: #2980B9;*/
 	background-color: orange;

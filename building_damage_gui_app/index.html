@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Building the Damage GUI application - damage/fcheck</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../css/extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Building the Damage GUI application";
+    var mkdocs_page_input_path = "building_damage_gui_app.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> damage/fcheck</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools — Damage and fcheck</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_gui_damage/">How to use the Damage application</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Building the Damage GUI application</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#procedure">Procedure</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#windows-and-linux-computers">Windows and Linux computers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#macos">MacOS</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage console utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../building_damage_binary/">Building the damage console utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference for fcheck</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../faq/">Frequently asked questions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../credits/">Credits</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">damage/fcheck</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Building the Damage GUI application</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="creating-your-own-damage-app">Creating your own Damage app<a class="headerlink" href="#creating-your-own-damage-app" title="Permanent link">&para;</a></h1>
+<hr />
+<p>This page will be only of interest to those deciding to build their own application from the source code, most likely because their processor (like ARM or M1) is not supported. For most users, this is unnecessary and <strong>Damage</strong> can be downloaded from the <a href="https://github.com/ubc-library-rc/fcheck/releases">Github releases page</a>.</p>
+<hr />
+<p>The <strong>Damage</strong> GUI application, unlike the console program, isn&rsquo;t included when installing <strong>fcheck</strong>, either using <code>pip</code> or from the source code itself.</p>
+<p>Because the <strong>Damage</strong> app uses <strong>tkinter</strong>, there are a number of problems that can arise, notably on Mac computers. Should you want to build the app, here are some guidelines on how to go about it.</p>
+<ul>
+<li>
+<p>The build process doesn&rsquo;t use the same Python version as the <strong>fcheck</strong> module and the console utility. You will note in <code>setup.py</code> that it says <code>python_requires:'&gt;=3.6'</code>. <strong>THIS IS NOT (NECESSARILY) TRUE FOR BUILDING THE GUI APP</strong>, notably on Mac computers, due to issues with <strong>tkinter</strong>. The app was built using Python 3.10.2 on Mac.</p>
+</li>
+<li>
+<p>Building the app requires the installation of <strong>PyInstaller</strong> and <strong>PySimpleGUI</strong>, as well as the installation of <strong>fcheck</strong></p>
+</li>
+</ul>
+<h2 id="procedure">Procedure<a class="headerlink" href="#procedure" title="Permanent link">&para;</a></h2>
+<h3 id="windows-and-linux-computers">Windows and Linux computers<a class="headerlink" href="#windows-and-linux-computers" title="Permanent link">&para;</a></h3>
+<p>For Windows and Linux, the easiest way is to build using the included PyInstaller .spec file. Change to the <code>gui</code> directory and run</p>
+<p><code>python3 -m PyInstaller --clean --noconfirm damage_gui_combined.spec</code></p>
+<p>If you don&rsquo;t want to use the premade .spec file:</p>
+<p><code>python3 -m PyInstaller --onefile --additional-hooks-dir ../py_install/  --name  Damage --clean --noconfirm [any additional options go here] src/damage_gui.py</code></p>
+<p>Note that for Windows and Linux, any version of Python &gt;=3.6 should suffice, unlike for Mac computers.</p>
+<p>The resultant application will be in the <code>dist</code> directory; place it wherever you like,</p>
+<h3 id="macos">MacOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<p>For Mac computers, you can technically use the same procedure as above. However, it&rsquo;s a bit redunant for Mac, as there&rsquo;s no real reason to create the <code>--onefile --windowed</code> version as Mac apps are, by default, directories anyway.</p>
+<p>The solution is to run PyInstaller without those options, editing the resulting plist file.</p>
+<p>That is, in the source directory, run PyiInstaller, where <code>python310</code> is the path to your Python 3.10 or higher Python</p>
+<p><code>python310 -m PyInstaller   --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --additional-hooks-dir ../py_install/ --icon=assets/DamageAppIcon.icns --osx-bundle-identifier=ca.ubc.library --target-arch=x86_64 --noconsole --clean --noconfirm --name Damage src/damage_gui.py</code></p>
+<p>And then,</p>
+<p>from the same directory:</p>
+<p><code>python310 customize_pyinstaller_plist.py</code></p>
+<p>Once that is completed, there will be Mac app bundle in <code>dist</code> which doesn&rsquo;t require unpacking at runtime. The completed app bundle can then be placed into DMG container for distribution, if required.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../how_to_use_damage/" class="btn btn-neutral float-right" title="How to use the damage console utility">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../how_to_use_gui_damage/" class="btn btn-neutral" title="How to use the Damage application"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../how_to_use_gui_damage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../how_to_use_damage/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

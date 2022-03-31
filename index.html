@@ -15,11 +15,11 @@
   <link rel="stylesheet" href="css/theme.css" />
   <link rel="stylesheet" href="css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  <link href="extra.css" rel="stylesheet" />
+  <link href="css/extra.css" rel="stylesheet" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "File manifest tools damage and fcheck";
+    var mkdocs_page_name = "File manifest tools \u2014 Damage and fcheck";
     var mkdocs_page_input_path = "index.md";
     var mkdocs_page_url = null;
   </script>
@@ -49,11 +49,11 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href=".">File manifest tools damage and fcheck</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">File manifest tools — Damage and fcheck</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#important">Important</a>
+    <li class="toctree-l3"><a class="reference internal" href="#multiple-flavours">Multiple flavours!</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#but-thats-not-all">But that's not all!</a>
         <ul>
@@ -65,17 +65,19 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#why-would-i-need-this">Why would I need this?</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#obtaining-the-softwareinstallation">Obtaining the software/installation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#detailed-softwareinstallation-instructions">Detailed software/installation instructions</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#binary-files">Binary files</a>
+    <li class="toctree-l3"><a class="reference internal" href="#gui-application">GUI application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#console-binary-files">Console binary files</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#windows-users">Windows users</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#mac-users">Mac users</a>
+    <li class="toctree-l4"><a class="reference internal" href="#mac-and-linux-users">Mac and Linux users</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#installing-with-pip">Installing with pip</a>
+    <li class="toctree-l3"><a class="reference internal" href="#installing-fcheck-and-the-damage-console-utility-with-pip">Installing fcheck and the damage console utility with pip</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#updating-with-with-pip">Updating with with pip</a>
     </li>
@@ -89,11 +91,19 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="how_to_use_damage/">How to use the damage utility</a>
+                    <li class="toctree-l1"><a class="reference internal" href="how_to_use_gui_damage/">How to use the Damage application</a>
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="building_damage_binary/">Building damage as standalone application</a>
+                    <li class="toctree-l1"><a class="reference internal" href="building_damage_gui_app/">Building the Damage GUI application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="how_to_use_damage/">How to use the damage console utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="building_damage_binary/">Building the damage console utility</a>
                     </li>
                 </ul>
                 <ul>
@@ -129,7 +139,7 @@
     
       
     
-    <li>File manifest tools damage and fcheck</li>
+    <li>File manifest tools — Damage and fcheck</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -144,11 +154,11 @@
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p><img alt="Damage logo" src="images/damage.svg" /></p>
 <p><strong>Damage</strong> (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. </p>
-<h3 id="important">Important<a class="headerlink" href="#important" title="Permanent link">&para;</a></h3>
-<p><strong>Damage</strong> is a console utility, which means it runs in a Windows command prompt/PowerShell/bash session or, in the case of other operating systems, a terminal session. It does not have a GUI. If this seems like gibberish to you, <strong>damage</strong> may not be suited for your needs.</p>
+<h3 id="multiple-flavours">Multiple flavours!<a class="headerlink" href="#multiple-flavours" title="Permanent link">&para;</a></h3>
+<p><img alt="Damage GUI" src="images/damage_example_screen.png" /></p>
+<p><strong>Damage</strong> comes as both a traditional application (with a handy user interface) or as console utility running in your  Windows command prompt/PowerShell/bash session.</p>
 <p>Download the newest binary version of Damage here:</p>
-<p><a href="https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage.exe"><button>Windows</button></a>
-<a href="https://github.com/ubc-library-rc/fcheck/releases/download/v0.1.5/damage"><button>MacOS</button></a></p>
+<p><a href="https://github.com/ubc-library-rc/fcheck/releases"><button>Download Damage</button></a></p>
 <p>A created manifest includes, for all file types:</p>
 <ul>
 <li>The file name</li>
@@ -197,16 +207,20 @@
 <li><em>damage</em> and <em>fcheck</em> can help with creating descriptive documentation which is required for your research data deposit</li>
 <li><em>damage</em> output ensures the integrity of your data set when used by others</li>
 </ul>
-<h2 id="obtaining-the-softwareinstallation">Obtaining the software/installation<a class="headerlink" href="#obtaining-the-softwareinstallation" title="Permanent link">&para;</a></h2>
-<h3 id="binary-files">Binary files<a class="headerlink" href="#binary-files" title="Permanent link">&para;</a></h3>
-<p>Console binaries of the damage utility are available for Windows and Mac (Intel) at fcheck&rsquo;s release page <a href="https://github.com/ubc-library-rc/fcheck/releases">https://github.com/ubc-library-rc/fcheck/releases</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
-<p>These files don&rsquo;t need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH.</p>
+<h2 id="detailed-softwareinstallation-instructions">Detailed software/installation instructions<a class="headerlink" href="#detailed-softwareinstallation-instructions" title="Permanent link">&para;</a></h2>
+<h3 id="gui-application">GUI application<a class="headerlink" href="#gui-application" title="Permanent link">&para;</a></h3>
+<p>Use the download button above to download the GUI application. On Windows and Linux, you need only  unzip it and run it from wherever you like. On a Mac, double-click the .dmg file and drag the icon to the Applications folder.</p>
+<h3 id="console-binary-files">Console binary files<a class="headerlink" href="#console-binary-files" title="Permanent link">&para;</a></h3>
+<p>Console binaries of the damage utility are available for Windows and Mac and Linux for Intel processors at fcheck&rsquo;s release page <a href="https://github.com/ubc-library-rc/fcheck/releases">https://github.com/ubc-library-rc/fcheck/releases</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
+<p>These files don&rsquo;t need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH. Note that the console binary and the GUI application are called <strong>damage</strong> and <strong>Damage</strong>, respectively. This makes a difference on a case-sensitive file system. </p>
+<p><strong>Important note</strong>
+If you are using <em>both</em> the console binary and the windowed GUI application, you should be careful if both are in your system&rsquo;s <code>PATH</code>, as this could potentially cause you unforeseen difficulties.</p>
 <h4 id="windows-users">Windows users<a class="headerlink" href="#windows-users" title="Permanent link">&para;</a></h4>
 <p>The download should be in a directory that is listed in the <code>%PATH%</code> environment variable. </p>
 <p>The easiest way to do this is to use the Start menu and type &ldquo;Environment&rdquo;, then select &ldquo;Edit Environment variables for your account&rdquo;. Either place the binary file into a directory listed in <code>Path</code>, or add a new directory to your path using the GUI.</p>
-<h4 id="mac-users">Mac users<a class="headerlink" href="#mac-users" title="Permanent link">&para;</a></h4>
-<p>The easiest way to make this available system wide is simply to copy the Mac executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it.</p>
-<h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
+<h4 id="mac-and-linux-users">Mac and Linux users<a class="headerlink" href="#mac-and-linux-users" title="Permanent link">&para;</a></h4>
+<p>The easiest way to make this available system wide is simply to copy the executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it. If you don&rsquo;t like those options, other common locations include, but are not limited to <code>/opt/bin</code> and <code>~/.local/bin</code>.</p>
+<h3 id="installing-fcheck-and-the-damage-console-utility-with-pip">Installing fcheck <em>and</em> the damage console utility with pip<a class="headerlink" href="#installing-fcheck-and-the-damage-console-utility-with-pip" title="Permanent link">&para;</a></h3>
 <p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
 <pre class="codehilite"><code class="language-nohighlight">pip install git+https://github.com/ubc-library-rc/fcheck.git@master</code></pre>
 
@@ -218,6 +232,7 @@
 
 
 <p>Because the software is not hosted at PyPi, there is a slightly longer update string.</p>
+<p>Note that while the console binary is updated with pip, the GUI application is not.</p>
 <h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
 <p>As you may have surmised from the example above, source code is available at <a href="https://github.com/ubc-library-rc/fcheck">https://github.com/ubc-library-rc/fcheck</a>, along with all of the documentation and binary files.</p>
               
@@ -227,7 +242,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="how_to_use_damage/" class="btn btn-neutral float-right" title="How to use the damage utility">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="how_to_use_gui_damage/" class="btn btn-neutral float-right" title="How to use the Damage application">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -255,7 +270,7 @@
       
       
       
-        <span style="margin-left: 15px"><a href="how_to_use_damage/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="how_to_use_gui_damage/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -273,5 +288,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-01-28 16:51:01.723131+00:00
+Build Date UTC : 2022-03-31 18:08:19.423805+00:00
 -->

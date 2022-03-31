@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>How to use the Damage application - damage/fcheck</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../css/extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "How to use the Damage application";
+    var mkdocs_page_input_path = "how_to_use_gui_damage.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> damage/fcheck</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools — Damage and fcheck</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to use the Damage application</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#for-microsoft-windows">For Microsoft Windows</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#for-macos">For MacOS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#for-linux">For Linux</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#the-preferences-window">The Preferences window</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#selecting-files">Selecting files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#removing-files">Removing files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#generating-the-manifest">Generating the manifest</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#output">Output</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-help-menu">The Help menu</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-the-point-of-this">What is the point of this?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#if-youre-a-data-provider">If you're a data provider</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#if-youre-a-data-user">If you're a data user</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bonus-points">Bonus points</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../building_damage_gui_app/">Building the Damage GUI application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage console utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../building_damage_binary/">Building the damage console utility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference for fcheck</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../faq/">Frequently asked questions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../credits/">Credits</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">damage/fcheck</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>How to use the Damage application</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="how-to-use-the-damage-application">How to use the Damage application<a class="headerlink" href="#how-to-use-the-damage-application" title="Permanent link">&para;</a></h1>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>For all versions of <strong>Damage</strong>, download the latest release for your platform from the <a href="https://github.com/ubc-library-rc/fcheck/releases">Github releases page</a>. Note that releases for all architectures are not available. Notably, there are no versions for Apple M1 processors nor ARM architecture at the present time.</p>
+<p>Ironically, <strong>Damage</strong> could check the integrity of your download by verifying its checksum. If you wish to do so (and it&rsquo;s good practice to do so), you could use the <strong>damage</strong> command line tool or another utility such as <strong>openssl</strong>.</p>
+<h3 id="for-microsoft-windows">For Microsoft Windows<a class="headerlink" href="#for-microsoft-windows" title="Permanent link">&para;</a></h3>
+<p>The Windows application is a portable file; it does not require installation. Simply unzip it and run <strong>Damage.exe</strong>. Note that the console utility, if it&rsquo;s installed is called <strong>damage.exe</strong> and the application is called <strong>Damage.exe</strong>, with an uppercase D. On most Windows computers, this is a distinction with out a difference. You should ensure that only one of the applications, usually <strong>damage.exe</strong>, is on your <code>%PATH%</code>.</p>
+<h3 id="for-macos">For MacOS<a class="headerlink" href="#for-macos" title="Permanent link">&para;</a></h3>
+<p>Double-click the DMG file, and it should automatically appear in a Finder window. Drag the icon to the Applications folder. If, for some reason, you don&rsquo;t want to put it in the Applications folder, you can drag it somewhere else.</p>
+<p>Note that the developer(s) of <strong>Damage</strong> do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <a href="https://support.apple.com/en-ca/guide/mac-help/mh40616/mac">https://support.apple.com/en-ca/guide/mac-help/mh40616/mac</a>. To start the application (for the first time only), you may have to right click on the application, select <strong>Open</strong> then agree to the conditions.</p>
+<p>You can, of course, disagree, but that would defeat the purpose of downloading it.</p>
+<h3 id="for-linux">For Linux<a class="headerlink" href="#for-linux" title="Permanent link">&para;</a></h3>
+<p>Unzip the download. Like the Windows utility, it is a single file. Traditionally, you can place that file in <code>/usr/local/bin</code> or <code>opt/bin</code>, or if that is not a solution, another user-centred location is <code>~/.local/bin</code>.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>On running the application, you will be presented with an essentially blank interface.</p>
+<p><img alt="Damage empty window" src="../images/damage_main_window_blank.png" /></p>
+<p>The workflow consists of the following easy steps:</p>
+<ol>
+<li>Set your preferences</li>
+<li>Select files</li>
+<li>Create the manifest</li>
+<li>Save (or print) the output</li>
+</ol>
+<h3 id="the-preferences-window">The Preferences window<a class="headerlink" href="#the-preferences-window" title="Permanent link">&para;</a></h3>
+<p>The output of <strong>Damage</strong>, like all other software, will be dependent on the preferences you set. While the defaults are fine, you may need to match your output to someone else&rsquo;s manifest, or you don&rsquo;t like what the defaults are. To do this, use the Preferences window, available via the <em>Edit/Preferences</em> menu item.</p>
+<p><img alt="Damage preferences window" src="../images/damage_pref_window.png" /></p>
+<p><strong>The options</strong></p>
+<ul>
+<li>
+<p><strong>Shorten file paths in output</strong>: Given a list of files, the common portion of the file path will be removed in the output. For example, given two files <code>path/to/dir_a/x.txt</code> and <code>path/to/dir_b/y.txt</code>, the output will show <code>dir_a/x.txt</code> and <code>dir_b/y.txt</code>.</p>
+</li>
+<li>
+<p><strong>Rectangularity check</strong>: For plain text files and statistical software files, check for line length and number of records. If a text file is meant to be a rectangular file, ie, each record or line contains the same number of observations, thus having the same line length, then the output will show <code>constant records</code>, and all the lines will have the same length. In the case of statistical files, the line length refers to the number of <strong>fields</strong>, ie, variables. If, for instance, the value is not constant, that means that the data set is truncated.</p>
+</li>
+<li>
+<p><strong>Recursively add files from directories</strong>: When adding a folder, add all the files found in sub-folders as well. So, if folder A contains folders B and C, any files found in A, B and C will be added, all the way to to the point where no further folders are found.</p>
+</li>
+<li>
+<p><strong>Hash type</strong>: Cryptographic hash algorithm used to check for file integrity. The most commonly used are likely <code>md5</code> and <code>sha256</code>. If checking downloaded files for integrity, use the algorithm stated on the download site. For example, on the release page for this software product, you will see that the download checksums are listed as <code>sha256</code>. If checksums don&rsquo;t match, then file integrity is compromised.</p>
+</li>
+<li>
+<p><strong>Output format</strong>: Output format of the resulting manifest.</p>
+<ul>
+<li>txt: Human readable plain text format</li>
+<li>csv: Comma separated value spreadsheet</li>
+<li>json: Javascript Object Notation dictionary for times when machine readable output is required.</li>
+</ul>
+</li>
+</ul>
+<h3 id="selecting-files">Selecting files<a class="headerlink" href="#selecting-files" title="Permanent link">&para;</a></h3>
+<p>You have several options to select files to analyze. Add individual files with either the <em>Add Files</em> button or the the menu under <em>Files/Add Files</em></p>
+<p>If you would like to add an entire folder of files, select the <em>Add Folder</em> button or the <em>Files/Add Folder</em> menu.</p>
+<p>Files (with their full paths) will be added to the left sidebar, or <em>File Section</em>. </p>
+<p>In some cases, what seems like a file doesn&rsquo;t appear in the list. For instance, should you attempt to add a Mac application (which, in the Finder, looks like a single item), it will be ignored. Mac Applications are really folders, despite looking like single files. Should you really need to add an item such as this, use the <em>Add Folder</em> function.</p>
+<p><img alt="Adding files" src="../images/damage_added_files.png" /></p>
+<h3 id="removing-files">Removing files<a class="headerlink" href="#removing-files" title="Permanent link">&para;</a></h3>
+<p>If you wish to edit the list of files, select the files you wish to remove from the <em>File Section</em> and use the <em>Remove Files</em> button, or use the convenient menu item <em>Files/Remove Files</em></p>
+<h3 id="generating-the-manifest">Generating the manifest<a class="headerlink" href="#generating-the-manifest" title="Permanent link">&para;</a></h3>
+<p>To generate the manifest for your selected files, hit the <em>Generate Manifest</em> button, use the <em>Actions/Create Manifest</em> menu item, or use the plaform specific short combination. Note that this operation may take a while depending on the size and complexity of the file(s) you are analyzing. Notably, statistical files with hundreds of thousands of records (or millions) may take a while. Don&rsquo;t assume the application has crashed if results are not instant.</p>
+<p>Once completed, the output is shown in the cleverly labelled <em>Output Section</em>. At this point, you can edit the results (although it&rsquo;s not clear why you would). More importantly, though, the saving and printing options will now be available.</p>
+<p><img alt="Manifest created" src="../images/damage_manifest_created.png" /></p>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">&para;</a></h3>
+<p>To save, select <em>Actions/Save Output</em> or use the shortcut key combination. The output will be saved with the correct extension automatically.</p>
+<p>To print, select <em>Actions/Print Output</em> or use the shortcut key combination. The output will be sent immediately to your default printer. </p>
+<p><img alt="Damage output window" src="../images/damage_output_window.png" /></p>
+<p><strong>Note</strong>: There is no printer selection and formatting dialogue; the manifest is sent to the printer as plain text. Note that in the case of csv files, this means that you will get raw csv, not a nice table.</p>
+<p>If you require nicely tabulated and formatted data, use a spreadsheet to open the created csv file.</p>
+<h3 id="the-help-menu">The Help menu<a class="headerlink" href="#the-help-menu" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Damage help</strong>: takes you to this page. Obviously, this requires an internet connection, but what doesn&rsquo;t these days</p>
+</li>
+<li>
+<p><strong>Credits and Details</strong>: Developer information as well as links to the source code.</p>
+</li>
+</ul>
+<h2 id="what-is-the-point-of-this">What is the point of this?<a class="headerlink" href="#what-is-the-point-of-this" title="Permanent link">&para;</a></h2>
+<p><strong>Damage</strong> is designed to ease the distribution of data by providing a standardized listing of checksums and record lengths, which ideally will be distributed with the data set itself. This allows end-users to duplicate the procedure and compare results.</p>
+<h3 id="if-youre-a-data-provider">If you&rsquo;re a data provider<a class="headerlink" href="#if-youre-a-data-provider" title="Permanent link">&para;</a></h3>
+<p>Use <strong>Damage</strong> to create a data manifest which you distribute with your data and documentation. This will allow users to verify that they have <em>exactly</em> what you intend them to have.</p>
+<h3 id="if-youre-a-data-user">If you&rsquo;re a data user<a class="headerlink" href="#if-youre-a-data-user" title="Permanent link">&para;</a></h3>
+<p>Use <strong>Damage</strong> to verify that what you&rsquo;ve received from a data provider is what they&rsquo;re supposed to have given you.</p>
+<h3 id="bonus-points">Bonus points<a class="headerlink" href="#bonus-points" title="Permanent link">&para;</a></h3>
+<p>If both parties shorten file paths and use the same directory structure, then the <em>manifests</em> can be compared. If the checksums of the manifests are not identical, then the data structures are not identical.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../building_damage_gui_app/" class="btn btn-neutral float-right" title="Building the Damage GUI application">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="File manifest tools — Damage and fcheck"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../building_damage_gui_app/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

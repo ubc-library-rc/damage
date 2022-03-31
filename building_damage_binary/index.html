@@ -9,17 +9,17 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Building damage as standalone application - damage/fcheck</title>
+  <title>Building the damage console utility - damage/fcheck</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  <link href="../extra.css" rel="stylesheet" />
+  <link href="../css/extra.css" rel="stylesheet" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Building damage as standalone application";
+    var mkdocs_page_name = "Building the damage console utility";
     var mkdocs_page_input_path = "building_damage_binary.md";
     var mkdocs_page_url = null;
   </script>
@@ -49,15 +49,23 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools damage and fcheck</a>
+                    <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools — Damage and fcheck</a>
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage utility</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_gui_damage/">How to use the Damage application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../building_damage_gui_app/">Building the Damage GUI application</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage console utility</a>
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Building damage as standalone application</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Building the damage console utility</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#building-with-pyinstaller">Building with Pyinstaller</a>
     </li>
@@ -97,7 +105,7 @@
     
       
     
-    <li>Building damage as standalone application</li>
+    <li>Building the damage console utility</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -109,13 +117,14 @@
             <div class="section">
               
                 <h1 id="creating-a-binary-damage">Creating a binary damage<a class="headerlink" href="#creating-a-binary-damage" title="Permanent link">&para;</a></h1>
-<p>Not everyone has a python installation on their computer, and even if they do, they don&rsquo;t necessarily know how to use it. As damage is supposed to be simple to use, the easiest way to use it is as a traditional application. This means it needs to be compiled or packaged into, ideally, a single file.</p>
-<blockquote>
-<p>Note that you only need to this if there is not a binary version of <strong>damage</strong> available for your platform. Normally you would just download the software from the <a href="https://github.com/ubc-library-rc/fcheck/releases">releases</a> page. </p>
-</blockquote>
+<hr />
+<p>This page will be only of interest to those deciding to build their own application from the source code. For most users, this is unnecessary and the <strong>damage</strong> console utility can be downloaded from the <a href="https://github.com/ubc-library-rc/fcheck/releases">Github releases page</a>.</p>
+<p>Note that you need Python and <em>fcheck</em> to do this, and once you do that, you can <em>already</em> invoke <strong>damage.py</strong>. So this is only necessary if you want to make a binary distribution that you want to give to someone else. </p>
+<hr />
+<p>Not everyone has a Python installation on their computer, and even if they do, they don&rsquo;t necessarily know how to use it. As <strong>damage</strong> is supposed to be simple to use, the easiest way to use it is as a traditional application. This means it needs to be compiled or packaged into, ideally, a single file.</p>
 <p>Users most likely to require a custom binary version of damage are:</p>
 <ul>
-<li>Linux users</li>
+<li>Linux users, because the distribution version may not function on their systems</li>
 <li>Mac users who are using machines with M1 processors</li>
 <li>Users with ARM chips or other uncommon system architecture</li>
 </ul>
@@ -158,7 +167,7 @@ zipp==3.4.1</code></pre>
         <a href="../api_reference/" class="btn btn-neutral float-right" title="API reference for fcheck">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../how_to_use_damage/" class="btn btn-neutral" title="How to use the damage utility"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../how_to_use_damage/" class="btn btn-neutral" title="How to use the damage console utility"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
