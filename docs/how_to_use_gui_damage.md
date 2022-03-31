@@ -4,7 +4,7 @@
 
 For all versions of **Damage**, download the latest release for your platform from the [Github releases page](https://github.com/ubc-library-rc/fcheck/releases). Note that releases for all architectures are not available. Notably, there are no versions for Apple M1 processors nor ARM architecture at the present time.
 
-Ironically, **Damage** could check the integrity of your download by verifying its checksum. If you wish to do so (and it's good practice to do so), you could use the **damage** command line tool or another utility such as **openssl**
+Ironically, **Damage** could check the integrity of your download by verifying its checksum. If you wish to do so (and it's good practice to do so), you could use the **damage** command line tool or another utility such as **openssl**.
 
 ### For Microsoft Windows
 
@@ -14,7 +14,8 @@ The Windows application is a portable file; it does not require installation. Si
 
 Double-click the DMG file, and it should automatically appear in a Finder window. Drag the icon to the Applications folder. If, for some reason, you don't want to put it in the Applications folder, you can drag it somewhere else.
 
-Note that the developers of **Damage** do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions.
+Note that the developer(s) of **Damage** do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions.
+
 
 You can, of course, disagree, but that would defeat the purpose of downloading it.
 

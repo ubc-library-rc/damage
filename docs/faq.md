@@ -1,5 +1,13 @@
 # Frequently asked questions
 
+**Why is there no printer dialogue when I print from _Damage_?**
+
+* The application prints text directly to default printer; there's no formatting. For more nicely formatted text, consider opening the output document in a text editor or spreadsheet
+
+**I can't edit values in _Damage's_ csv mode?**
+
+* This is the expected behaviour. If you need to edit the CSV, please use a spreadsheet application.
+
 **Why would you call the software "damage"?**
 
 * Command line utility names are not easy to remember. Typing 'damage [filename'] for the first time will burn the name into your memory.

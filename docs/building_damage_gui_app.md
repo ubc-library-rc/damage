@@ -1,5 +1,11 @@
 # Creating your own Damage app
 
+---
+
+This page will be only of interest to those deciding to build their own application from the source code, most likely because their processor (like ARM or M1) is not supported. For most users, this is unnecessary and **Damage** can be downloaded from the [Github releases page](https://github.com/ubc-library-rc/fcheck/releases).
+
+---
+
 The **Damage** GUI application, unlike the console program, isn't included when installing **fcheck**, either using `pip` or from the source code itself.
 
 Because the **Damage** app uses **tkinter**, there are a number of problems that can arise, notably on Mac computers. Should you want to build the app, here are some guidelines on how to go about it.

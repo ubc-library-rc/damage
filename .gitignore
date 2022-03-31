@@ -19,3 +19,4 @@ tmp/**
 **/Thumbs.db
 **/Thumbs.db*encryptable
 gui/damage_gui.spec
+gui/Damage.spec
