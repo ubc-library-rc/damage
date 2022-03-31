@@ -27,7 +27,7 @@ try:
     dm_plist_p = sys.argv[1]
 except:
     dm_plist_p = (os.path.dirname('__file__') +
-                  os.path.join('dist','damage_gui.app','Contents','Info.plist'))
+                  os.path.join('dist','Damage.app','Contents','Info.plist'))
 
 with open(dm_plist_p, 'rb') as f:
     dm_plist = plistlib.load(f)
@@ -37,7 +37,7 @@ dm_plist['CFBundleDisplayName'] = 'Damage' #This controls what the app is called
 #Couldn't hurt to rename it, though, I don't think.
 #Also appears in the name in the Finder?
 dm_plist['CFBundleName'] = 'Damage'  # This controls the menu name and the version string
-dm_plist['CFBundleExecutable'] = 'damage_gui' #This is the executable file inside the bundle
+dm_plist['CFBundleExecutable'] = 'Damage' #This is the executable file inside the bundle
 dm_plist['CFBundleShortVersionString'] = '.'.join(map(str, VERSION))
 dm_plist['NSPrincipalClass'] = 'NSApplication'
 dm_plist['NSAppleScriptEnabled'] = False
