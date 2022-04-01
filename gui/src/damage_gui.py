@@ -36,7 +36,7 @@ if sg.running_linux():
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,4,1)
+VERSION = (0,4,2)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -381,7 +381,9 @@ def main_window()->sg.Window:
             [sg.Input(visible=False, enable_events=True, key='-IN-'),
              sg.FilesBrowse(button_text='Add Files', target='-IN-'),
              sg.Input(visible=False, enable_events=True, key='-IFOLD-'),
-             sg.FolderBrowse(button_text='Add Folder', key='-FOLDER-', target='-IFOLD-'),
+             sg.FolderBrowse(button_text='Add Folder', key='-FOLDER-', 
+                             target='-IFOLD-',
+                             initial_folder=os.path.expanduser('~')),
              sg.Button(button_text='Remove Files',
                        enable_events=True, key='-DELETE-')]]
 
@@ -560,8 +562,20 @@ def main()->None:
                 window['-IN-'].update(value='')
 
         if event in ('-IFOLD-', 'Add Folder'):
-            if event == 'Add Folder':
-                newfiles = get_folder_files(sg.popup_get_folder('', no_window=True))
+            if event in ('Add Folder',):
+                #Not implementing same behaviour in button
+                #requires rewriting menu
+                #TODO find a way to have the menu item
+                #and button have the behaviour below
+                #probably by having the button replaced by a function call.
+                #initiald = window['-IFOLD-'].get()
+                #if not initiald:
+                #    initiald = os.path.expanduser('~')
+                initiald = os.path.expanduser('~')
+                newfiles = get_folder_files(sg.popup_get_folder('',
+                                                                no_window=True,
+                                                                initial_folder=initiald),
+                                             prefdict['recurse'])
             else:
                 newfiles = get_folder_files(values['-IFOLD-'], prefdict['recurse'])
                 #sg.Print(newfiles, c='red on yellow')
