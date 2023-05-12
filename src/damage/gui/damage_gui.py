@@ -1,3 +1,6 @@
+'''
+Damage GUI application
+'''
 #import base64
 import csv
 #import io
@@ -9,9 +12,9 @@ import tempfile
 import textwrap
 import webbrowser
 
-import fcheck
-import PySimpleGUI as sg
-
+import damage
+#import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 
 #Put ICON here
 if sg.running_mac():
@@ -36,7 +39,7 @@ if sg.running_linux():
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,4,2)
+VERSION = (0,4,4)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -50,7 +53,7 @@ LICENCE = textwrap.fill(replace_whitespace=False, text=
 '''
 MIT License
 
-Copyright 2022 University of British Columbia Library
+Copyright 2023 University of British Columbia Library
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -136,7 +139,7 @@ def damage(flist, **kwargs)->str:
     #kwargs['headers'] = False
     output = []
     for fil in flist:
-        testme = fcheck.Checker(fil)
+        testme = damage.Checker(fil)
         output.append(testme.manifest(**kwargs))
 
     return '\n'.join(output)
@@ -255,8 +258,8 @@ def about_window()->sg.Window:
     '''
     about = dict(developers = ['Paul Lesack'],
                  user_testers = ['Jeremy Buhler'],
-                 source_url = 'https://github.com/ubc-library-rc/fcheck',
-                 documentation = 'https://ubc-library-rc.github.io/fcheck'
+                 source_url = 'https://github.com/ubc-library-rc/damage',
+                 documentation = 'https://ubc-library-rc.github.io/damage'
                  )
     displayname = f'{PROGNAME[:PROGNAME.find("_")].capitalize()} v{__version__}'
     name = [[sg.Text(displayname, font=f'{BASEFONT} {FONTSIZE+4} bold')]]
@@ -545,7 +548,7 @@ def main()->None:
             if len(values['-IN-']): # No way to set None, so empty is '', or len() == 0.
                 if sg.running_windows():#FFFUUUU TK
                     #tk automatically replaces backlashes with slashes.
-                    #too bad fcheck doesn't.
+                    #too bad damage doesn't.
                     upd_list = (window['-SELECT-'].get_list_values() +
                                 [x.replace('/', os.sep) for x in values['-IN-'].split(';') if
                                  x.replace('/', os.sep) not in window['-SELECT-'].get_list_values()])
@@ -676,7 +679,7 @@ def main()->None:
         if event == 'Credits and Details':
             about_window()
         if event == 'Damage Help':
-            webbrowser.open('https://ubc-library-rc.github.io/fcheck')
+            webbrowser.open('https://ubc-library-rc.github.io/damage')
 
         #Copypasta
         if event.endswith(':-COPY-'):

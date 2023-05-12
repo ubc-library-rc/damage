@@ -1,7 +1,7 @@
-site_name: damage/fcheck 
+site_name: damage
 docs_dir: 'docs'
 nav:
-  - File manifest tools — Damage and fcheck: index.md
+  - File manifest tools: index.md
   - How to use the Damage application: how_to_use_gui_damage.md
   - Building the Damage GUI application: building_damage_gui_app.md
   - How to use the damage console utility: how_to_use_damage.md

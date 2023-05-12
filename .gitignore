@@ -20,3 +20,13 @@ tmp/**
 **/Thumbs.db*encryptable
 gui/damage_gui.spec
 gui/Damage.spec
+bin/
+bin/**
+lib/
+lib/**
+include/
+include/**
+pyvenv.cfg
+optional-requirements.txt
+src/damage/__init__.old.py
+**/*old.py
