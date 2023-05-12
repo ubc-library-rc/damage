@@ -20,7 +20,7 @@ import argparse
 import json
 import os
 import sys
-import fcheck
+import damage as fcheck
 
 if sys.platform == 'win32':
     import glob

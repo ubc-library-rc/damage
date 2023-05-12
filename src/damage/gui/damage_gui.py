@@ -9,7 +9,7 @@ import tempfile
 import textwrap
 import webbrowser
 
-import fcheck
+import damage as fcheck
 import PySimpleGUI as sg
 
 
@@ -36,7 +36,7 @@ if sg.running_linux():
 sg.set_options(font=f'{BASEFONT} {FONTSIZE}')
 
 PROGNAME = (os.path.splitext(os.path.basename(__file__))[0])
-VERSION = (0,4,2)
+VERSION = (0,4,3)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #ICON is base64 text just above __main__ section
@@ -50,7 +50,7 @@ LICENCE = textwrap.fill(replace_whitespace=False, text=
 '''
 MIT License
 
-Copyright 2022 University of British Columbia Library
+Copyright 2023 University of British Columbia Library
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
