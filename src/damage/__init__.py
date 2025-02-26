@@ -30,7 +30,7 @@ import pyreadstat
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 3, 2)
+VERSION = (0, 3, 8)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -71,9 +71,14 @@ class Checker():
         Check to see if file is a text file based on mimetype.
         Works with extensions only which is not ideal
         '''
-        if ('text' in mimetypes.guess_type(self.fname)
-            or self.fname.suffix.lower() in self.textfiles):
-            return True
+        try:
+            if ('text' in mimetypes.guess_file_type(self.fname)
+                or self.fname.suffix.lower() in self.textfiles):
+                return True
+        except AttributeError: #soft deprecation fix
+            if ('text' in mimetypes.guess_type(self.fname)
+                or self.fname.suffix.lower() in self.textfiles):
+                return True
 
         return False
 
@@ -282,7 +287,11 @@ class Checker():
         '''
         Returns mimetype or 'application/octet-stream'
         '''
-        out = mimetypes.guess_file_type(fname)[0]
+        try:
+            out = mimetypes.guess_file_type(fname)[0]
+        except AttributeError:
+            #soft deprecation
+            out = mimetypes.guess_type(fname)[0]
         if not out:
             out = 'application/octet-stream'
         return out
@@ -328,8 +337,9 @@ class Checker():
 
         out.update({'digestType' : digest})
         out.update({'digest' : self.produce_digest(digest)})
-        out.update({'flat': self.flat_tester(**kwargs)})
+        #out.update({'flat': self.flat_tester(**kwargs)})
         out.update(self.flat_tester(**kwargs))
+        #out.update({'flat':'FFFFFFFFFFFF'})
         out.update({'nonascii': self.non_ascii_tester(**kwargs)})
         out.update({'encoding': self.encoding['encoding']})
         out.update({'null_chars': self.null_count(**kwargs)})

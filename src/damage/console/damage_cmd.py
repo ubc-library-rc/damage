@@ -74,6 +74,8 @@ def main():
     Main function to output manifests to stdout.
     '''
     separator_types = {'csv': ',', 'tsv': '\t'}
+    #Purely for formatting output
+    line_spacer = {'txt':'\n\n', 'csv':'\n', 'tsv': '\n'}
     parser = parse()
     args = parser.parse_args()
     if not args.recur:
@@ -100,7 +102,7 @@ def main():
                 output.append(testme.manifest(sep=separator_types.get(args.out),
                                               **vars(args)))
         if not args.out == 'json':
-            print('\n'.join(output))
+            print(line_spacer[args.out].join(output).strip())
         else:
             outjson = ('{"files" :' +
                        '[' + ','.join(output) + ']'
@@ -110,7 +112,6 @@ def main():
     except Exception as err: #pylint: disable=broad-exception-caught
         print(f'Abnormal program terminiation {err}')
         sys.exit()
-
 
 if __name__ == '__main__':
     main()

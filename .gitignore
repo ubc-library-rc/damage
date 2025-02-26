@@ -30,3 +30,10 @@ pyvenv.cfg
 optional-requirements.txt
 src/damage/__init__.old.py
 **/*old.py
+**/*new.py
+*app
+*app/**
+**swp
+**bak
+tests/data/*sas7bdat
+
