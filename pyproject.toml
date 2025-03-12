@@ -1,6 +1,6 @@
 [project]
 name = "damage"
-version = "0.3.8"
+version = "0.3.14"
 description = "File manifest generator and python package for statistical data files and documentation'"
 authors = [
     {name = "Paul Lesack",email = "paul.lesack@ubc.ca"}
@@ -9,7 +9,7 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.12, <4"
 dependencies = [
-    "freesimplegui (>=5.1.1,<6.0.0)",
+    "freesimplegui (>=5.2.0,<6.0.0)",
     "chardet (>=5.2.0,<6.0.0)",
     "numpy (>=2.2.3,<3.0.0)",
     "pandas (>=2.2.3,<3.0.0)",
@@ -42,8 +42,8 @@ pydoc-markdown = ">=4.0.0"
 [project.scripts]
 damage = "damage.console.damage_cmd:main"
 damage-gui = "damage.gui.damage_gui:main"
-#windows only?
 
+#windows only?
 [project.gui-scripts]
 damage-gui = "damage.gui.damage_gui:main"
 

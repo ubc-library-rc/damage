@@ -57,6 +57,8 @@ def parse() -> argparse.ArgumentParser(): #DONE
                         type=str.lower)
     parser.add_argument('-a', '--no-ascii', action='store_true', dest='asctest',
                         help="Don't check text files for non-ASCII characters")
+    parser.add_argument('-f', '--to-file',
+                        help='Output to -f [file] instead of stdout')
     return parser
 
 def recurse_files(inlist) -> map:
@@ -69,13 +71,13 @@ def recurse_files(inlist) -> map:
         outlist += [pathlib.Path(x[0], y) for x in rec for y in x[2]]
     return outlist #includes hidden files
 
-def main():
+def main(): #pylint: disable=too-many-branches
     '''
     Main function to output manifests to stdout.
     '''
     separator_types = {'csv': ',', 'tsv': '\t'}
     #Purely for formatting output
-    line_spacer = {'txt':'\n\n', 'csv':'\n', 'tsv': '\n'}
+    line_spacer = {'txt':'\n\n', 'csv':'', 'tsv': ''}
     parser = parse()
     args = parser.parse_args()
     if not args.recur:
@@ -102,16 +104,23 @@ def main():
                 output.append(testme.manifest(sep=separator_types.get(args.out),
                                               **vars(args)))
         if not args.out == 'json':
-            print(line_spacer[args.out].join(output).strip())
+            #print(line_spacer[args.out].join(output).strip())
+            out_info =line_spacer[args.out].join(output).strip()
         else:
             outjson = ('{"files" :' +
                        '[' + ','.join(output) + ']'
                        + '}')
-            outjson = json.dumps(json.loads(outjson)) #validate
-            print(outjson)
+            out_info = json.dumps(json.loads(outjson)) #validate
     except Exception as err: #pylint: disable=broad-exception-caught
-        print(f'Abnormal program terminiation {err}')
+        print(f'Abnormal program termination {err}')
         sys.exit()
+
+    if args.to_file:
+        with open(pathlib.Path(args.to_file), mode='w',
+                  encoding='utf-8') as outf:
+            outf.write(out_info)
+    else:
+        print(out_info)
 
 if __name__ == '__main__':
     main()

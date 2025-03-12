@@ -2,7 +2,6 @@
 Damage GUI application
 '''
 #import base64
-import csv
 import base64
 import json
 import os
@@ -22,8 +21,6 @@ import damage
 #TODO put the application into a class or function
 #Prettify the name
 PROGNAME = pathlib.Path(__file__).stem.capitalize().replace('_gui','')
-# Using main damage version now so it's only in one place
-#VERSION = (0,5,1) # Is this better? I don't know
 __version__ = '.'.join([str(x) for x in damage.VERSION])
 
 BASEDIR = pathlib.Path(__file__).parent
@@ -42,7 +39,13 @@ sg.DEFAULT_WINDOW_ICON = ICON
 if sg.running_mac():
     import plistlib
     TTK_THEME = 'aqua'
+    # make FONTSIZE dependent on homebrew in path because only brew python
+    # compiles successfully on MacOS on a case-insensitive file system
+    # and for some inconceivable reason the font size changes
     FONTSIZE = 14
+    for hack in ['homebrew', 'MacOS']:
+        if hack in {y for x in sys.path for y in pathlib.Path(x).parts}:
+            FONTSIZE = 10
     BASEFONT = 'System'
     MOD = '\u2318' #CMD key unicode 2318 Place of Interest
     CMDCTRL = 'Command' #tkinter bind string sans <>
@@ -165,7 +168,7 @@ def damager(flist, **kwargs)->str:
     if kwargs['out'] =='txt':
         return '\n\n'.join(output)
     if kwargs['out'] == 'csv':
-        return '\n'.join(output)#Horrible hack
+        return ''.join(output)#Horrible hack; excel dialiect automatically adds \r\n
     outjson = ('{"files" :' +
                '[' + ','.join(output) + ']'
                + '}')
@@ -190,10 +193,11 @@ def get_folder_files(direc:str, recursive:bool=False, hidden:bool=False)->list:
         return []
     walker = pathlib.Path(direc).walk()
     if not recursive:
-        walker = list(next(walker))
+        walker = [next(walker)]
     else:
         walker = list(walker)
     flist=[]
+    #Hidden is a property in the Checker object, but this comes before instantiation
     if hidden:
         #flist = [[x[0], pathlib.Path(x[0], y).name] for x in walker for y in x[2]
         #         if pathlib.Path(x[0],y).is_file()]
@@ -205,8 +209,6 @@ def get_folder_files(direc:str, recursive:bool=False, hidden:bool=False)->list:
         flist = [pathlib.Path(x[0],y) for x in walker for y in x[2]
                 if not any(z.startswith('.') for z in
                             pathlib.Path(x[0], y).parts)]
-        #sg.easy_print([x[0].name for x in walker])
-        #sg.easy_print(flist)
     return flist
 
 def send_to_file(outstring)->None:
@@ -266,7 +268,7 @@ def about_window()->sg.Window:
     Creates the "About" window
     '''
     about = { 'developers' : ['Paul Lesack'],
-             'user_testers' : ['Jeremy Buhler'],
+             'user_testers' : ['Alex Alisauskas','Jeremy Buhler', 'Cheryl Niamath'],
              'source_url' : 'https://github.com/ubc-library-rc/damage',
              'documentation' : 'https://ubc-library-rc.github.io/damage'
              }
@@ -411,10 +413,11 @@ def main_window()->sg.Window:
     #late for that, isn't it.
 
     outbox = sg.Multiline(key='-OUTPUT-',
-                           size=100,
+                           size=10000, #Auto-expansion has a bug
                            expand_x=True,
                            expand_y=True,
-                           visible=True)
+                           visible=True,
+                           auto_refresh=True)
     frame_1=sg.Frame(title ='',
                      layout=[[outbox]],
                      expand_x=True,
@@ -446,6 +449,7 @@ def main_window()->sg.Window:
                 auto_size_columns=True,
                 #def_col_width=200,#If this is at default window expansion doesn't work
                 #max_col_width=2000,#This ought to be enough
+                #visible=is_csv(PREFDICT),
                 visible=True,
                 enable_events=True
                 )
@@ -526,7 +530,12 @@ def main()->None:
             upd_list = (window['-SELECT-'].get_list_values() +
                         [x for x in values['-IN-'].split(';') if
                          x not in window['-SELECT-'].get_list_values()])
-            upd_list = [x for x in upd_list if pathlib.Path(x).is_file()]
+            if PREFDICT.get('hidden', False):
+                upd_list = [x for x in upd_list if pathlib.Path(x).is_file()]
+            else:
+                upd_list = [x for x in upd_list if pathlib.Path(x).is_file()
+                            and not any(z.startswith('.')
+                            for z in pathlib.Path(x).parts)]
             window['-SELECT-'].update(upd_list)
             window['-IN-'].update(value='')
 
@@ -578,17 +587,30 @@ def main()->None:
 
                 if PREFDICT.get('out') == 'csv':
                     txt = txt.split('\n')
-                    reader=csv.reader(txt[1::2], delimiter=',')#Strip out the headers
-                    window['-CSV-'].update(values=list(reader))
-                    nout = [txt[0]] + txt[1::2]#combine header with data
-                    #and send to output window for printing/saving
-                    window['-OUTPUT-'].update('\n'.join(nout))
+                    #reader=csv.reader(txt[1::2], delimiter=',')#Strip out the headers
+                    #window['-CSV-'].update(values=list(reader))
+                    #nout = [txt[0]] + txt[1::2]#combine header with data
+                    ##and send to output window for printing/saving
+                    #window['-OUTPUT-'].update('\n'.join(nout))
+
+                    #new
+                    #This is like it is because window['-CSV-'] takes lists
+                    #as values and window['-OUTPUT-] is text output
+                    #and csv.Reader adds windows \r\n.
+                    nout = [x.strip().split(',') for x in txt[1:]]
+                    nout = [x for x in nout if x !=['']]
+                    window['-CSV-'].update(nout)
+                    nout = [txt[0].strip()]+[','.join(z) for z in nout]
+                    nout = '\n'.join(nout)
+                    window['-OUTPUT-'].update(nout)
+
 
 
             except (ValueError, NameError, AttributeError):
                 window['-OUTPUT-'].update(delme)
 
         if event == 'Preferences':
+            #sg.easy_print(values)
             prefs_window()
             #Show correct window pane for output.
             xpandr = is_csv(PREFDICT)

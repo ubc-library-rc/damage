@@ -30,7 +30,7 @@ import pyreadstat
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 3, 8)
+VERSION = (0, 3, 14)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -54,7 +54,8 @@ class Checker():
         self.textfiles= ['.dat', '.txt', '.md', '.csv',
                         '.tsv', '.asc', '.html', '.xml',
                         '.xsd', '.htm', '.log', '.nfo',
-                        '.text', '.xsl', '.py', '.r']
+                        '.text', '.xsl', '.py', '.r',
+                         '.toml', '.yaml', '.yml']
         self.fname = pathlib.Path(fname)
         #self._ext = fname.suffix
         self.__istext = self.__istextfile()
@@ -65,6 +66,18 @@ class Checker():
         if self.__istext:
             with open(self.fname, encoding=self.encoding.get('encoding')) as f:
                 self.__text_obj = io.StringIO(f.read())
+
+
+    @property
+    def hidden(self)->bool:
+        '''
+        Returns True if file is hidden (ie, startswith '.')
+        or is in in a hidden directory (ie, any directory on the path
+        starts with '.')
+        '''
+        if any([x.startswith('.') for x in self.fname.parts]):
+            return True
+        return False
 
     def __istextfile(self):
         '''
@@ -281,14 +294,14 @@ class Checker():
         for text in self.__fobj_bin:
             if b'\r\n' in text:
                 return True
-        return None
+        return False
 
     def _mime_type(self, fname:pathlib.Path)->tuple:
         '''
         Returns mimetype or 'application/octet-stream'
         '''
         try:
-            out = mimetypes.guess_file_type(fname)[0]
+            out = mimetypes.guess_file_type(fname, strict=False)[0]
         except AttributeError:
             #soft deprecation
             out = mimetypes.guess_type(fname)[0]
@@ -321,9 +334,6 @@ class Checker():
             nonascii : bool
                 — Check for non-ASCII characters.
 
-            dos : bool
-                — check for Windows CR/LF combo.
-
             flatfile : bool
                 — Perform rectangularity check. If False, returns dictionary
                   with all values as 'N/A'
@@ -333,7 +343,7 @@ class Checker():
         '''
         out = {'filename': self.fname}
         digest = kwargs.get('digest', 'md5')
-        dos = kwargs.get('dos')
+        #dos = kwargs.get('dos')
 
         out.update({'digestType' : digest})
         out.update({'digest' : self.produce_digest(digest)})
@@ -344,17 +354,19 @@ class Checker():
         out.update({'encoding': self.encoding['encoding']})
         out.update({'null_chars': self.null_count(**kwargs)})
         out.update({'mimetype': self._mime_type(self.fname)})
-        if dos:
-            out.update({'dos' : self.dos(**kwargs)})
-        else:
-            out.update({'dos': None})
+        #if dos:
+        #    out.update({'dos' : self.dos(**kwargs)})
+        #else:
+        #    out.update({'dos': None})
+        out.update({'dos': self.dos(**kwargs)})
         return out
 
     def _manifest_txt(self, **kwargs)->str:
         '''
         Returns manifest as plain text
         '''
-        return '\n'.join([f'{k}: {v}' for k,v in kwargs['report'].items() if v])
+        return '\n'.join([f'{k}: {v}' for k,v in kwargs['report'].items()
+                          if v not in ['', None]])
 
     def _manifest_json(self, **kwargs)->str:
         '''

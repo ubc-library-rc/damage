@@ -7,7 +7,7 @@ nav_order: 50
 
 ## Contact
 
-**fcheck** and **damage** were written by [Paul Lesack](https://directory.library.ubc.ca/people/email/182) of the [University of British Columbia Library Research Commons](https://researchcommons.library.ubc.ca/).
+*Damage** was written by [Paul Lesack](https://directory.library.ubc.ca/people/email/182) of the [University of British Columbia Library Research Commons](https://researchcommons.library.ubc.ca/).
 	
 ## Acknowledgements
 

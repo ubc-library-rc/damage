@@ -2,26 +2,29 @@
 
 ## Installation
 
-For all versions of **Damage**, download the latest release for your platform from the [Github releases page](https://github.com/ubc-library-rc/fcheck/releases). Note that releases for all architectures are not available. Notably, there are no versions for Apple M1 processors nor ARM architecture at the present time.
+For all versions of **Damage**, download the latest release for your platform from the [Github releases page](https://github.com/ubc-library-rc/damage/releases). Note that releases for all architectures are not available.
 
 Ironically, **Damage** could check the integrity of your download by verifying its checksum. If you wish to do so (and it's good practice to do so), you could use the **damage** command line tool or another utility such as **openssl**.
 
+## Using the precompiled binary files
+
+The precompiled versions are just "normal" programs. The command line utility is not included. See the [the note](#) if you've installed with `pipx` or `pip`.
+
 ### For Microsoft Windows
 
-The Windows application is a portable file; it does not require installation. Simply unzip it and run **Damage.exe**. Note that the console utility, if it's installed is called **damage.exe** and the application is called **Damage.exe**, with an uppercase D. On most Windows computers, this is a distinction with out a difference. You should ensure that only one of the applications, usually **damage.exe**, is on your `%PATH%`.
-
+The Windows application is a portable file; it does not require installation. Simply unzip it and run **damage.exe**. Move it to wherever you like; the `Program Files` directory is a common choice.
 ### For MacOS
 
 Double-click the DMG file, and it should automatically appear in a Finder window. Drag the icon to the Applications folder. If, for some reason, you don't want to put it in the Applications folder, you can drag it somewhere else.
 
-Note that the developer(s) of **Damage** do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions.
+Note that the developer(s) of **Damage** do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions. Or whatever it is Apple decide to do, because it changes from release to release.
 
-
-You can, of course, disagree, but that would defeat the purpose of downloading it.
 
 ### For Linux
 
-Unzip the download. Like the Windows utility, it is a single file. Traditionally, you can place that file in `/usr/local/bin` or `opt/bin`, or if that is not a solution, another user-centred location is `~/.local/bin`.
+I no longer have an x86_64 or AMD64 processor Linux OS, so there is no guarantee that Linux will be represented as a download. Such is life.
+
+Unzip the download. Like the Windows utility, it is a single file. Traditionally, you can place that file in `/usr/local/bin` or `opt/bin`, or if that is not a solution, another user-centred location is `~/.local/bin`. 
 
 ## Usage
 
@@ -49,6 +52,8 @@ The output of **Damage**, like all other software, will be dependent on the pref
 * **Rectangularity check**: For plain text files and statistical software files, check for line length and number of records. If a text file is meant to be a rectangular file, ie, each record or line contains the same number of observations, thus having the same line length, then the output will show `constant records`, and all the lines will have the same length. In the case of statistical files, the line length refers to the number of **fields**, ie, variables. If, for instance, the value is not constant, that means that the data set is truncated.
 
 * **Recursively add files from directories**: When adding a folder, add all the files found in sub-folders as well. So, if folder A contains folders B and C, any files found in A, B and C will be added, all the way to to the point where no further folders are found.
+
+* **Include hidden files**: While there are many ways to hide files, this checkbox will include files that begin with `.`, such as `.DS_Store`. Or, if you are using directories, it will include files in directories such as `.git`. Normally this would be unchecked unless you have a special use case.
 
 * **Hash type**: Cryptographic hash algorithm used to check for file integrity. The most commonly used are likely `md5` and `sha256`. If checking downloaded files for integrity, use the algorithm stated on the download site. For example, on the release page for this software product, you will see that the download checksums are listed as `sha256`. If checksums don't match, then file integrity is compromised.
 
@@ -99,18 +104,3 @@ If you require nicely tabulated and formatted data, use a spreadsheet to open th
 
 * **Credits and Details**: Developer information as well as links to the source code.
 
-## What is the point of this?
-
-**Damage** is designed to ease the distribution of data by providing a standardized listing of checksums and record lengths, which ideally will be distributed with the data set itself. This allows end-users to duplicate the procedure and compare results.
-
-### If you're a data provider
-
-Use **Damage** to create a data manifest which you distribute with your data and documentation. This will allow users to verify that they have *exactly* what you intend them to have.
-
-### If you're a data user
-
-Use **Damage** to verify that what you've received from a data provider is what they're supposed to have given you.
-
-### Bonus points
-
-If both parties shorten file paths and use the same directory structure, then the *manifests* can be compared. If the checksums of the manifests are not identical, then the data structures are not identical.

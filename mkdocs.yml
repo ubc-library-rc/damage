@@ -1,12 +1,12 @@
 site_name: damage
 docs_dir: 'docs'
 nav:
-  - File manifest tools: index.md
+  - "Damage: file manifest tools": index.md
   - How to use the Damage application: how_to_use_gui_damage.md
-  - Building the Damage GUI application: building_damage_gui_app.md
-  - How to use the damage console utility: how_to_use_damage.md
-  - Building the damage console utility: building_damage_binary.md
-  - API reference for fcheck: api_reference.md
+#  - Building the Damage GUI application: building_damage_gui_app.md
+  - How to use the Damage console utility: how_to_use_damage.md
+#  - Building the Damage console utility: building_damage_binary.md
+  - API reference: api_reference.md
   - Frequently asked questions: faq.md
   - Credits: credits.md
 

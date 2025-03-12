@@ -4,7 +4,7 @@ title: Overview
 nav_order: 1
 ---
 
-# File manifest tools: Damage and FCheck
+# File manifest tools: Damage
 
 ## Overview
 
@@ -21,7 +21,7 @@ nav_order: 1
 
 Download the newest binary version of Damage here:
 
-[<button>Download Damage</button>](https://github.com/ubc-library-rc/fcheck/releases)
+[<button>Download Damage</button>](https://github.com/ubc-library-rc/damage/releases)
 
 A created manifest includes, for all file types:
 
@@ -49,7 +49,7 @@ Note that statistical package files will always be reported as rectangular due t
 Output formats are:
 
 * Plain text
-* Comma Separated Value (ie, a spreadsheet)
+* Comma Separated Value (ie, a spreadsheet), and depending on which application, tab-separated or pipe-separated values
 * JSON. This JSON doesn't conform to any particular standard, but is valid JSON object — one object for all the files. The command line program will produce output in the format of:
 
 ```
@@ -58,9 +58,9 @@ Output formats are:
 
 ### But that's not all!
 
-#### The fcheck module
+#### The damage module
 
-While *damage* is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module called **fcheck** which you can use in your own software.
+While standalone pieces of software are what most people will use, the underlying checking mechanism is available as a Python module also called **damage** which you can use in your own software.
 
 ## Why would I need this?
 
@@ -75,56 +75,48 @@ More than ever, the world today revolves around data sharing. Knowing the data t
 
 **For researchers**
 
-* _damage_ and _fcheck_ can help with creating descriptive documentation which is required for your research data deposit
+* _damage_ an help with creating descriptive documentation which is required for your research data deposit
 * _damage_ output ensures the integrity of your data set when used by others
  
 ## Detailed software/installation instructions
 
-### GUI application
+There are many ways to install **damage**. Which one is best for you depends on your 
 
-Use the download button above to download the GUI application. On Windows and Linux, you need only  unzip it and run it from wherever you like. On a Mac, double-click the .dmg file and drag the icon to the Applications folder.
+### Using **pipx**
 
-### Console binary files 
+Using [pipx](https://pipx.pypa.io/latest/) is the easiest way to make sure things are up-to-date. Use this if you:
 
-Console binaries of the damage utility are available for Windows and Mac and Linux for Intel processors at fcheck's release page <https://github.com/ubc-library-rc/fcheck/releases>. If you don't already have Python 3 installed (and potentially other python libraries) or you just don't want to use Python this is the easiest way to proceed.
+* Are happy using the terminal/command line
+* Are unlikely to use the _damage_ package in your own code
 
-These files don't need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH. Note that the console binary and the GUI application are called **damage** and **Damage**, respectively. This makes a difference on a case-sensitive file system. 
+`pipx install damage`
 
-**Important note**
-If you are using _both_ the console binary and the windowed GUI application, you should be careful if both are in your system's `PATH`, as this could potentially cause you unforeseen difficulties.
+Caveats: Although everything will be installed, you will need to invoke the Damage GUI application from the terminal/command line. Such is the price of convenience. Because _pipx_ is also a package manager, this means that you can use _pipx_ itself to update everything using its own update features
 
-#### Windows users
+### GUI application only
 
-The download should be in a directory that is listed in the `%PATH%` environment variable. 
+Use the download button above to download the GUI application. Releases may include precompiled **damage** applications for various plaforms, mostly MacOS and Windows. The availability of stand-alone application (.exe, .app bundle, whatever) will depend on how much spare time I have to compile everything.
 
-The easiest way to do this is to use the Start menu and type "Environment", then select "Edit Environment variables for your account". Either place the binary file into a directory listed in `Path`, or add a new directory to your path using the GUI.
+### Installing with pip 
 
-#### Mac and Linux users
-
-The easiest way to make this available system wide is simply to copy the executable to the `/usr/local/bin` directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type */usr/local/bin* in the box to easily find it. If you don't like those options, other common locations include, but are not limited to `/opt/bin` and `~/.local/bin`.
- 
-### Installing fcheck *and* the damage console utility with pip 
-
-The software is written in Python (>= 3.6), and the source is available as a single file in `fcheck.py`. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:
+If you are Python user, you can install in the normal, pythonic way, from PyPi:
 
 ```nohighlight
-pip install git+https://github.com/ubc-library-rc/fcheck.git@master
+pip install damage
 ```
 
-This second method installs the *damage* command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional `import fcheck` sort of way. If you don't care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.
+And if you want to use a particular branch, commit, or some other specialized branch:
+
+```nohighlight
+pip install git+https://github.com/ubc-library-rc/damage.git@master
+```
+
+Note that the parts after `.git` can be customized to whatever you need.
+
+Installing with `pip` makes the package code easily available in your own software.
 
 Documentation on the module is available via the [API reference documentation](api_reference.md).
 
-#### Updating with with pip
-
-```nohighlight
-pip install --upgrade git+https://github.com/ubc-library-rc/fcheck.git@master
-```
-
-Because the software is not hosted at PyPi, there is a slightly longer update string.
-
-Note that while the console binary is updated with pip, the GUI application is not.
-
 ### Source code
 
-As you may have surmised from the example above, source code is available at <https://github.com/ubc-library-rc/fcheck>, along with all of the documentation and binary files.
+As you may have surmised from the example above, source code is available at <https://github.com/ubc-library-rc/damage>, along with all of the documentation and binary files. That will likely not surprise you if you are reading this.
