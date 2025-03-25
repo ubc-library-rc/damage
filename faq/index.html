@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Frequently asked questions - damage/fcheck</title>
+    <title>Frequently asked questions - damage</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../css/extra.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -32,7 +31,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> damage/fcheck
+          <a href=".." class="icon icon-home"> damage
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
@@ -42,7 +41,7 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools — Damage and fcheck</a>
+                <li class="toctree-l1"><a class="reference internal" href="..">Damage: file manifest tools</a>
                 </li>
               </ul>
               <ul>
@@ -50,23 +49,15 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../building_damage_gui_app/">Building the Damage GUI application</a>
+                <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the Damage console utility</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../building_damage_binary/">Building the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference for fcheck</a>
+                <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Frequently asked questions</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Frequently asked questions</a>
     <ul class="current">
     </ul>
                 </li>
@@ -82,14 +73,14 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">damage/fcheck</a>
+          <a href="..">damage</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li>Frequently asked questions</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Frequently asked questions</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -99,9 +90,21 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="frequently-asked-questions">Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h1>
+<p><strong>What is the point of this application?</strong></p>
+<ul>
+<li>
+<p><strong>Damage</strong> is designed to ease the distribution of data by providing a standardized listing of checksums and record lengths, which ideally will be distributed with the data set itself. This allows end-users to duplicate the procedure and compare results.</p>
+<p><strong>If you&rsquo;re a data provider</strong></p>
+<p>Use <strong>Damage</strong> to create a data manifest which you distribute with your data and documentation. This will allow users to verify that they have <em>exactly</em> what you intend them to have.</p>
+<p><strong>If you&rsquo;re a data user</strong></p>
+<p>Use <strong>Damage</strong> to verify that what you&rsquo;ve received from a data provider is what they&rsquo;re supposed to have given you.</p>
+<p><strong>Bonus points</strong></p>
+<p>If both parties shorten file paths and use the same directory structure, then the <em>manifests</em> can be compared. If the checksums of the manifests are not identical, then the data structures are not identical.</p>
+</li>
+</ul>
 <p><strong>Why is there no printer dialogue when I print from <em>Damage</em>?</strong></p>
 <ul>
-<li>The application prints text directly to default printer; there&rsquo;s no formatting. For more nicely formatted text, consider opening the output document in a text editor or spreadsheet</li>
+<li>The application prints text directly to default printer; there&rsquo;s no formatting. For more nicely formatted text, consider opening the output document in a text editor or spreadsheet.</li>
 </ul>
 <p><strong>I can&rsquo;t edit values in <em>Damage&rsquo;s</em> csv mode?</strong></p>
 <ul>
@@ -111,22 +114,22 @@
 <ul>
 <li>Command line utility names are not easy to remember. Typing &lsquo;damage [filename&rsquo;] for the first time will burn the name into your memory.</li>
 </ul>
-<p><strong>Can I rename the program?</strong></p>
-<ul>
-<li>If you don&rsquo;t like the <em>frisson</em> of danger from the name, you can rename the binary files to whatever you like. <code>manifest_generator</code> is an obvious, if lengthy choice.</li>
-</ul>
 <p><strong>Why does the software hang during examination of text files?</strong></p>
 <ul>
 <li>Most of the time, the software hasn&rsquo;t actually crashed; it&rsquo;s still doing its processing, possibly more slowly than one would like. There can be two reasons for this:<ol>
 <li>Every character in a text file is examined; if your file is large, the amount of time this requires is not negligble.</li>
 <li>There have been instances of file corruption where data is replaced by <a href="https://en.wikipedia.org/wiki/Null_character">null characters</a>. Using versions previous to v0.1.3 output the row and column location of every such character, which takes a very long time if there are, as has happened, tens of millions of these characters. Versions &gt;= v0.1.3 changed this behaviour and simply output a count.</li>
-<li>TLDR; upgrade to the latest version.</li>
 </ol>
 </li>
 </ul>
 <p><strong>I try to run <em>damage</em> from Windows explorer or Finder and it doesn&rsquo;t work. What&rsquo;s going on?</strong></p>
 <ul>
-<li><em>damage</em> is a <em>console</em> program. That means it runs from with a Windows command prompt session or PowerShell session, and in the case of other computer sessions, within a terminal session. At this point, it doesn&rsquo;t have a GUI, although there&rsquo;s a chance that one may be added in the future.</li>
+<li>
+<p>If you installed with <code>pipx</code> or <code>pip</code>, make sure you are running the GUI version of <em>damage</em> and not the command line version.</p>
+</li>
+<li>
+<p>Multi-platform capablity is hard. I develop mostly for Mac and Linux, and Windows errors can slip through the cracks. If you are having problems, please <a href="https://github.com/ubc-library-rc/damage/issues">report an issue</a>.</p>
+</li>
 </ul>
 <p><strong>What&rsquo;s all this PATH and /usr/local/bin stuff?</strong></p>
 <ul>
@@ -136,7 +139,7 @@
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../api_reference/" class="btn btn-neutral float-left" title="API reference for fcheck"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../api_reference/" class="btn btn-neutral float-left" title="API reference"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../credits/" class="btn btn-neutral float-right" title="Credits">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -167,14 +170,15 @@
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

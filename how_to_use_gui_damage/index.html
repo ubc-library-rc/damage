@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>How to use the Damage application - damage/fcheck</title>
+    <title>How to use the Damage application - damage</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="../css/extra.css" rel="stylesheet" />
     
       <script>
@@ -18,12 +18,11 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -32,7 +31,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> damage/fcheck
+          <a href=".." class="icon icon-home"> damage
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
@@ -42,13 +41,15 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">File manifest tools — Damage and fcheck</a>
+                <li class="toctree-l1"><a class="reference internal" href="..">Damage: file manifest tools</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">How to use the Damage application</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">How to use the Damage application</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-the-precompiled-binary-files">Using the precompiled binary files</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#for-microsoft-windows">For Microsoft Windows</a>
     </li>
@@ -74,33 +75,15 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#what-is-the-point-of-this">What is the point of this?</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#if-youre-a-data-provider">If you're a data provider</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#if-youre-a-data-user">If you're a data user</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bonus-points">Bonus points</a>
-    </li>
-        </ul>
-    </li>
     </ul>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../building_damage_gui_app/">Building the Damage GUI application</a>
+                <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the Damage console utility</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../how_to_use_damage/">How to use the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../building_damage_binary/">Building the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference for fcheck</a>
+                <li class="toctree-l1"><a class="reference internal" href="../api_reference/">API reference</a>
                 </li>
               </ul>
               <ul>
@@ -118,14 +101,14 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">damage/fcheck</a>
+          <a href="..">damage</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li>How to use the Damage application</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">How to use the Damage application</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -136,16 +119,18 @@
               
                 <h1 id="how-to-use-the-damage-application">How to use the Damage application<a class="headerlink" href="#how-to-use-the-damage-application" title="Permanent link">&para;</a></h1>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>For all versions of <strong>Damage</strong>, download the latest release for your platform from the <a href="https://github.com/ubc-library-rc/fcheck/releases">Github releases page</a>. Note that releases for all architectures are not available. Notably, there are no versions for Apple M1 processors nor ARM architecture at the present time.</p>
+<p>For all versions of <strong>Damage</strong>, download the latest release for your platform from the <a href="https://github.com/ubc-library-rc/damage/releases">Github releases page</a>. Note that releases for all architectures are not available.</p>
 <p>Ironically, <strong>Damage</strong> could check the integrity of your download by verifying its checksum. If you wish to do so (and it&rsquo;s good practice to do so), you could use the <strong>damage</strong> command line tool or another utility such as <strong>openssl</strong>.</p>
+<h2 id="using-the-precompiled-binary-files">Using the precompiled binary files<a class="headerlink" href="#using-the-precompiled-binary-files" title="Permanent link">&para;</a></h2>
+<p>The precompiled versions are just &ldquo;normal&rdquo; programs. The command line utility is not included. See the <a href="#">the note</a> if you&rsquo;ve installed with <code>pipx</code> or <code>pip</code>.</p>
 <h3 id="for-microsoft-windows">For Microsoft Windows<a class="headerlink" href="#for-microsoft-windows" title="Permanent link">&para;</a></h3>
-<p>The Windows application is a portable file; it does not require installation. Simply unzip it and run <strong>Damage.exe</strong>. Note that the console utility, if it&rsquo;s installed is called <strong>damage.exe</strong> and the application is called <strong>Damage.exe</strong>, with an uppercase D. On most Windows computers, this is a distinction with out a difference. You should ensure that only one of the applications, usually <strong>damage.exe</strong>, is on your <code>%PATH%</code>.</p>
+<p>The Windows application is a portable file; it does not require installation. Simply unzip it and run <strong>damage.exe</strong>. Move it to wherever you like; the <code>Program Files</code> directory is a common choice.</p>
 <h3 id="for-macos">For MacOS<a class="headerlink" href="#for-macos" title="Permanent link">&para;</a></h3>
 <p>Double-click the DMG file, and it should automatically appear in a Finder window. Drag the icon to the Applications folder. If, for some reason, you don&rsquo;t want to put it in the Applications folder, you can drag it somewhere else.</p>
-<p>Note that the developer(s) of <strong>Damage</strong> do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <a href="https://support.apple.com/en-ca/guide/mac-help/mh40616/mac">https://support.apple.com/en-ca/guide/mac-help/mh40616/mac</a>. To start the application (for the first time only), you may have to right click on the application, select <strong>Open</strong> then agree to the conditions.</p>
-<p>You can, of course, disagree, but that would defeat the purpose of downloading it.</p>
+<p>Note that the developer(s) of <strong>Damage</strong> do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <a href="https://support.apple.com/en-ca/guide/mac-help/mh40616/mac">https://support.apple.com/en-ca/guide/mac-help/mh40616/mac</a>. To start the application (for the first time only), you may have to right click on the application, select <strong>Open</strong> then agree to the conditions. Or whatever it is Apple decide to do, because it changes from release to release.</p>
 <h3 id="for-linux">For Linux<a class="headerlink" href="#for-linux" title="Permanent link">&para;</a></h3>
-<p>Unzip the download. Like the Windows utility, it is a single file. Traditionally, you can place that file in <code>/usr/local/bin</code> or <code>opt/bin</code>, or if that is not a solution, another user-centred location is <code>~/.local/bin</code>.</p>
+<p>I no longer have an x86_64 or AMD64 processor Linux OS, so there is no guarantee that Linux will be represented as a download. Such is life.</p>
+<p>Unzip the download. Like the Windows utility, it is a single file. Traditionally, you can place that file in <code>/usr/local/bin</code> or <code>opt/bin</code>, or if that is not a solution, another user-centred location is <code>~/.local/bin</code>. </p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>On running the application, you will be presented with an essentially blank interface.</p>
 <p><img alt="Damage empty window" src="../images/damage_main_window_blank.png" /></p>
@@ -169,6 +154,9 @@
 </li>
 <li>
 <p><strong>Recursively add files from directories</strong>: When adding a folder, add all the files found in sub-folders as well. So, if folder A contains folders B and C, any files found in A, B and C will be added, all the way to to the point where no further folders are found.</p>
+</li>
+<li>
+<p><strong>Include hidden files</strong>: While there are many ways to hide files, this checkbox will include files that begin with <code>.</code>, such as <code>.DS_Store</code>. Or, if you are using directories, it will include files in directories such as <code>.git</code>. Normally this would be unchecked unless you have a special use case.</p>
 </li>
 <li>
 <p><strong>Hash type</strong>: Cryptographic hash algorithm used to check for file integrity. The most commonly used are likely <code>md5</code> and <code>sha256</code>. If checking downloaded files for integrity, use the algorithm stated on the download site. For example, on the release page for this software product, you will see that the download checksums are listed as <code>sha256</code>. If checksums don&rsquo;t match, then file integrity is compromised.</p>
@@ -209,20 +197,12 @@
 <p><strong>Credits and Details</strong>: Developer information as well as links to the source code.</p>
 </li>
 </ul>
-<h2 id="what-is-the-point-of-this">What is the point of this?<a class="headerlink" href="#what-is-the-point-of-this" title="Permanent link">&para;</a></h2>
-<p><strong>Damage</strong> is designed to ease the distribution of data by providing a standardized listing of checksums and record lengths, which ideally will be distributed with the data set itself. This allows end-users to duplicate the procedure and compare results.</p>
-<h3 id="if-youre-a-data-provider">If you&rsquo;re a data provider<a class="headerlink" href="#if-youre-a-data-provider" title="Permanent link">&para;</a></h3>
-<p>Use <strong>Damage</strong> to create a data manifest which you distribute with your data and documentation. This will allow users to verify that they have <em>exactly</em> what you intend them to have.</p>
-<h3 id="if-youre-a-data-user">If you&rsquo;re a data user<a class="headerlink" href="#if-youre-a-data-user" title="Permanent link">&para;</a></h3>
-<p>Use <strong>Damage</strong> to verify that what you&rsquo;ve received from a data provider is what they&rsquo;re supposed to have given you.</p>
-<h3 id="bonus-points">Bonus points<a class="headerlink" href="#bonus-points" title="Permanent link">&para;</a></h3>
-<p>If both parties shorten file paths and use the same directory structure, then the <em>manifests</em> can be compared. If the checksums of the manifests are not identical, then the data structures are not identical.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="File manifest tools — Damage and fcheck"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../building_damage_gui_app/" class="btn btn-neutral float-right" title="Building the Damage GUI application">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href=".." class="btn btn-neutral float-left" title="Damage: file manifest tools"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../how_to_use_damage/" class="btn btn-neutral float-right" title="How to use the Damage console utility">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -248,18 +228,19 @@
       <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../building_damage_gui_app/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../how_to_use_damage/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>

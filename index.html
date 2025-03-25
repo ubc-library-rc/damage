@@ -5,25 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
       <link rel="shortcut icon" href="img/favicon.ico" />
-    <title>damage/fcheck</title>
+    <title>damage</title>
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
         <link href="css/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "File manifest tools \u2014 Damage and fcheck";
+        var mkdocs_page_name = "Damage: file manifest tools";
         var mkdocs_page_input_path = "index.md";
         var mkdocs_page_url = null;
       </script>
     
-    <script src="js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -32,7 +31,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href="." class="icon icon-home"> damage/fcheck
+          <a href="." class="icon icon-home"> damage
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
@@ -42,15 +41,15 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href=".">File manifest tools — Damage and fcheck</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Damage: file manifest tools</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#multiple-flavours">Multiple flavours!</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#but-thats-not-all">But that's not all!</a>
+    <li class="toctree-l3"><a class="reference internal" href="#but-thats-not-all">But that&rsquo;s not all!</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#the-fcheck-module">The fcheck module</a>
+    <li class="toctree-l4"><a class="reference internal" href="#the-damage-module">The damage module</a>
     </li>
         </ul>
     </li>
@@ -60,21 +59,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#detailed-softwareinstallation-instructions">Detailed software/installation instructions</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#gui-application">GUI application</a>
+    <li class="toctree-l3"><a class="reference internal" href="#using-pipx">Using pipx</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#console-binary-files">Console binary files</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#windows-users">Windows users</a>
+    <li class="toctree-l3"><a class="reference internal" href="#gui-application-only">GUI application only</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#mac-and-linux-users">Mac and Linux users</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#installing-fcheck-and-the-damage-console-utility-with-pip">Installing fcheck and the damage console utility with pip</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#updating-with-with-pip">Updating with with pip</a>
-    </li>
-        </ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installing-with-pip">Installing with pip</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#source-code">Source code</a>
     </li>
@@ -88,19 +77,11 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="building_damage_gui_app/">Building the Damage GUI application</a>
+                <li class="toctree-l1"><a class="reference internal" href="how_to_use_damage/">How to use the Damage console utility</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="how_to_use_damage/">How to use the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="building_damage_binary/">Building the damage console utility</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="api_reference/">API reference for fcheck</a>
+                <li class="toctree-l1"><a class="reference internal" href="api_reference/">API reference</a>
                 </li>
               </ul>
               <ul>
@@ -118,14 +99,14 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href=".">damage/fcheck</a>
+          <a href=".">damage</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-      <li>File manifest tools — Damage and fcheck</li>
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Damage: file manifest tools</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -134,7 +115,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="file-manifest-tools-damage-and-fcheck">File manifest tools: Damage and FCheck<a class="headerlink" href="#file-manifest-tools-damage-and-fcheck" title="Permanent link">&para;</a></h1>
+                <h1 id="file-manifest-tools-damage">File manifest tools: Damage<a class="headerlink" href="#file-manifest-tools-damage" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p><img alt="Damage logo" src="images/damage.svg" /></p>
 <p><strong>Damage</strong> (either DAtaMAnifestGEnerator or a wizard, your choice) is a simple multi-platform utility which creates file manifests in a variety of formats. It was created to deal primarily with statistical data, but it also functions as a generalized file manifest tool. </p>
@@ -142,7 +123,7 @@
 <p><img alt="Damage GUI" src="images/damage_example_screen.png" /></p>
 <p><strong>Damage</strong> comes as both a traditional application (with a handy user interface) or as console utility running in your  Windows command prompt/PowerShell/bash session.</p>
 <p>Download the newest binary version of Damage here:</p>
-<p><a href="https://github.com/ubc-library-rc/fcheck/releases"><button>Download Damage</button></a></p>
+<p><a href="https://github.com/ubc-library-rc/damage/releases"><button>Download Damage</button></a></p>
 <p>A created manifest includes, for all file types:</p>
 <ul>
 <li>The file name</li>
@@ -168,14 +149,14 @@
 <p>Output formats are:</p>
 <ul>
 <li>Plain text</li>
-<li>Comma Separated Value (ie, a spreadsheet)</li>
+<li>Comma Separated Value (ie, a spreadsheet), and depending on which application, tab-separated or pipe-separated values</li>
 <li>JSON. This JSON doesn&rsquo;t conform to any particular standard, but is valid JSON object — one object for all the files. The command line program will produce output in the format of:</li>
 </ul>
 <pre><code>{&quot;files&quot;:[{file1medata}, {file2metadata}, ...{fileNmetadata}]}
 </code></pre>
 <h3 id="but-thats-not-all">But that&rsquo;s not all!<a class="headerlink" href="#but-thats-not-all" title="Permanent link">&para;</a></h3>
-<h4 id="the-fcheck-module">The fcheck module<a class="headerlink" href="#the-fcheck-module" title="Permanent link">&para;</a></h4>
-<p>While <em>damage</em> is the standalone piece of software that most people will use, the underlying checking mechanism is available as a Python module called <strong>fcheck</strong> which you can use in your own software.</p>
+<h4 id="the-damage-module">The damage module<a class="headerlink" href="#the-damage-module" title="Permanent link">&para;</a></h4>
+<p>While standalone pieces of software are what most people will use, the underlying checking mechanism is available as a Python module also called <strong>damage</strong> which you can use in your own software.</p>
 <h2 id="why-would-i-need-this">Why would I need this?<a class="headerlink" href="#why-would-i-need-this" title="Permanent link">&para;</a></h2>
 <p>More than ever, the world today revolves around data sharing. Knowing the data that you&rsquo;ve downloaded is <em>correct</em> is key.</p>
 <p><strong>For data distributors</strong></p>
@@ -187,35 +168,33 @@
 </ul>
 <p><strong>For researchers</strong></p>
 <ul>
-<li><em>damage</em> and <em>fcheck</em> can help with creating descriptive documentation which is required for your research data deposit</li>
+<li><em>damage</em> an help with creating descriptive documentation which is required for your research data deposit</li>
 <li><em>damage</em> output ensures the integrity of your data set when used by others</li>
 </ul>
 <h2 id="detailed-softwareinstallation-instructions">Detailed software/installation instructions<a class="headerlink" href="#detailed-softwareinstallation-instructions" title="Permanent link">&para;</a></h2>
-<h3 id="gui-application">GUI application<a class="headerlink" href="#gui-application" title="Permanent link">&para;</a></h3>
-<p>Use the download button above to download the GUI application. On Windows and Linux, you need only  unzip it and run it from wherever you like. On a Mac, double-click the .dmg file and drag the icon to the Applications folder.</p>
-<h3 id="console-binary-files">Console binary files<a class="headerlink" href="#console-binary-files" title="Permanent link">&para;</a></h3>
-<p>Console binaries of the damage utility are available for Windows and Mac and Linux for Intel processors at fcheck&rsquo;s release page <a href="https://github.com/ubc-library-rc/fcheck/releases">https://github.com/ubc-library-rc/fcheck/releases</a>. If you don&rsquo;t already have Python 3 installed (and potentially other python libraries) or you just don&rsquo;t want to use Python this is the easiest way to proceed.</p>
-<p>These files don&rsquo;t need installation and can be run directly from the command line. For ease of use, you might consider adding the files to your PATH. Note that the console binary and the GUI application are called <strong>damage</strong> and <strong>Damage</strong>, respectively. This makes a difference on a case-sensitive file system. </p>
-<p><strong>Important note</strong>
-If you are using <em>both</em> the console binary and the windowed GUI application, you should be careful if both are in your system&rsquo;s <code>PATH</code>, as this could potentially cause you unforeseen difficulties.</p>
-<h4 id="windows-users">Windows users<a class="headerlink" href="#windows-users" title="Permanent link">&para;</a></h4>
-<p>The download should be in a directory that is listed in the <code>%PATH%</code> environment variable. </p>
-<p>The easiest way to do this is to use the Start menu and type &ldquo;Environment&rdquo;, then select &ldquo;Edit Environment variables for your account&rdquo;. Either place the binary file into a directory listed in <code>Path</code>, or add a new directory to your path using the GUI.</p>
-<h4 id="mac-and-linux-users">Mac and Linux users<a class="headerlink" href="#mac-and-linux-users" title="Permanent link">&para;</a></h4>
-<p>The easiest way to make this available system wide is simply to copy the executable to the <code>/usr/local/bin</code> directory, which is normally found on the primary drive. In the finder, press CMD-SHIFT-G, then type <em>/usr/local/bin</em> in the box to easily find it. If you don&rsquo;t like those options, other common locations include, but are not limited to <code>/opt/bin</code> and <code>~/.local/bin</code>.</p>
-<h3 id="installing-fcheck-and-the-damage-console-utility-with-pip">Installing fcheck <em>and</em> the damage console utility with pip<a class="headerlink" href="#installing-fcheck-and-the-damage-console-utility-with-pip" title="Permanent link">&para;</a></h3>
-<p>The software is written in Python (&gt;= 3.6), and the source is available as a single file in <code>fcheck.py</code>. If you have Python 3 installed you can either just download that single file to a place of convenience, or you can install it as a Python library by running the following commands in a terminal:</p>
-<pre><code class="language-nohighlight">pip install git+https://github.com/ubc-library-rc/fcheck.git@master
+<p>There are many ways to install <strong>damage</strong>. Which one is best for you depends on your </p>
+<h3 id="using-pipx">Using <strong>pipx</strong><a class="headerlink" href="#using-pipx" title="Permanent link">&para;</a></h3>
+<p>Using <a href="https://pipx.pypa.io/latest/">pipx</a> is the easiest way to make sure things are up-to-date. Use this if you:</p>
+<ul>
+<li>Are happy using the terminal/command line</li>
+<li>Are unlikely to use the <em>damage</em> package in your own code</li>
+</ul>
+<p><code>pipx install damage</code></p>
+<p>Caveats: Although everything will be installed, you will need to invoke the Damage GUI application from the terminal/command line. Such is the price of convenience. Because <em>pipx</em> is also a package manager, this means that you can use <em>pipx</em> itself to update everything using its own update features</p>
+<h3 id="gui-application-only">GUI application only<a class="headerlink" href="#gui-application-only" title="Permanent link">&para;</a></h3>
+<p>Use the download button above to download the GUI application. Releases may include precompiled <strong>damage</strong> applications for various plaforms, mostly MacOS and Windows. The availability of stand-alone application (.exe, .app bundle, whatever) will depend on how much spare time I have to compile everything.</p>
+<h3 id="installing-with-pip">Installing with pip<a class="headerlink" href="#installing-with-pip" title="Permanent link">&para;</a></h3>
+<p>If you are Python user, you can install in the normal, pythonic way, from PyPi:</p>
+<pre><code class="language-nohighlight">pip install damage
 </code></pre>
-<p>This second method installs the <em>damage</em> command line utility and will also allow you to use the fcheck.Checker class in your own projects, in the traditional <code>import fcheck</code> sort of way. If you don&rsquo;t care about that, just download a binary or use the Python file directly. It will also automatically install the dependencies for you.</p>
+<p>And if you want to use a particular branch, commit, or some other specialized branch:</p>
+<pre><code class="language-nohighlight">pip install git+https://github.com/ubc-library-rc/damage.git@master
+</code></pre>
+<p>Note that the parts after <code>.git</code> can be customized to whatever you need.</p>
+<p>Installing with <code>pip</code> makes the package code easily available in your own software.</p>
 <p>Documentation on the module is available via the <a href="api_reference/">API reference documentation</a>.</p>
-<h4 id="updating-with-with-pip">Updating with with pip<a class="headerlink" href="#updating-with-with-pip" title="Permanent link">&para;</a></h4>
-<pre><code class="language-nohighlight">pip install --upgrade git+https://github.com/ubc-library-rc/fcheck.git@master
-</code></pre>
-<p>Because the software is not hosted at PyPi, there is a slightly longer update string.</p>
-<p>Note that while the console binary is updated with pip, the GUI application is not.</p>
 <h3 id="source-code">Source code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h3>
-<p>As you may have surmised from the example above, source code is available at <a href="https://github.com/ubc-library-rc/fcheck">https://github.com/ubc-library-rc/fcheck</a>, along with all of the documentation and binary files.</p>
+<p>As you may have surmised from the example above, source code is available at <a href="https://github.com/ubc-library-rc/damage">https://github.com/ubc-library-rc/damage</a>, along with all of the documentation and binary files. That will likely not surprise you if you are reading this.</p>
               
             </div>
           </div><footer>
@@ -248,20 +227,21 @@ If you are using <em>both</em> the console binary and the windowed GUI applicati
     
   </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme_extra.js" defer></script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 1.4.3
-Build Date UTC : 2023-05-05 15:20:11.970451+00:00
+MkDocs version : 1.6.1
+Build Date UTC : 2025-03-25 20:41:33.074748+00:00
 -->
