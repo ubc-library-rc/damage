@@ -30,7 +30,7 @@ import pyreadstat
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 3, 14)
+VERSION = (0, 3, 15)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -55,7 +55,8 @@ class Checker():
                         '.tsv', '.asc', '.html', '.xml',
                         '.xsd', '.htm', '.log', '.nfo',
                         '.text', '.xsl', '.py', '.r',
-                         '.toml', '.yaml', '.yml']
+                         '.toml', '.yaml', '.yml', '.prn',
+                         '.data']
         self.fname = pathlib.Path(fname)
         #self._ext = fname.suffix
         self.__istext = self.__istextfile()
@@ -75,7 +76,7 @@ class Checker():
         or is in in a hidden directory (ie, any directory on the path
         starts with '.')
         '''
-        if any([x.startswith('.') for x in self.fname.parts]):
+        if any(x.startswith('.') for x in self.fname.parts):
             return True
         return False
 
