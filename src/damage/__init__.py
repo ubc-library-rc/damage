@@ -24,13 +24,15 @@ import logging
 import mimetypes
 import pathlib
 import string
+import tqdm
 
-import chardet
+#import chardet
+import charset_normalizer
 import pyreadstat
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 3, 15)
+VERSION = (0, 4, 0)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -99,10 +101,10 @@ class Checker():
     def __encoding(self) -> dict: #DONE
         '''
         Returns most likely encoding of self.fname, dict with keys
-        encoding, confidence, language (the output of chardet.detect)
+        encoding, confidence, language (the output of charset_normalizer.detect)
         and sets Checker.__is_text
         '''
-        enc = chardet.detect(self.__fobj_bin.read())
+        enc = charset_normalizer.detect(self.__fobj_bin.read())
         self.__fobj_bin.seek(0) #leave it as you found it
         if self.__istext:
             return enc
@@ -117,7 +119,7 @@ class Checker():
         '''
         self.__fobj_bin.close()
 
-    def produce_digest(self, prot: str = 'md5', blocksize: int = 2*16) -> str: #DONE
+    def produce_digest(self, prot: str = 'md5', blocksize: int = 2**16) -> str: #DONE
         '''
         Returns hex digest for object
 
