@@ -55,7 +55,7 @@ def parse() -> argparse.ArgumentParser(): #DONE
                         choices = ['md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512',
                                    'blake2b', 'blake2s'],
                         type=str.lower)
-    parser.add_argument('-a', '--no-ascii', action='store_true', dest='asctest',
+    parser.add_argument('-a', '--no-ascii', action='store_false', dest='asctest',
                         help="Don't check text files for non-ASCII characters")
     parser.add_argument('-f', '--to-file',
                         help='Output to -f [file] instead of stdout')

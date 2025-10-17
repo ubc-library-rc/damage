@@ -32,7 +32,7 @@ import pyreadstat
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 4, 0)
+VERSION = (0, 4, 2)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -63,13 +63,27 @@ class Checker():
         #self._ext = fname.suffix
         self.__istext = self.__istextfile()
         self.__text_obj = None
-        with open(self.fname, 'rb') as fil:
-            self.__fobj_bin = io.BytesIO(fil.read())
-        self.encoding = self.__encoding()
-        if self.__istext:
-            with open(self.fname, encoding=self.encoding.get('encoding')) as f:
-                self.__text_obj = io.StringIO(f.read())
 
+        with tqdm.tqdm(total=self.fname.stat().st_size,
+                       desc=f'Loading {self.fname.name}') as pbar:
+            self.__fobj_bin = io.BytesIO()
+            with open(self.fname, 'rb') as f:
+                bsize=2**16
+                fblock  = f.read(bsize)
+                pbar.update(bsize)
+                while fblock:
+                    self.__fobj_bin.write(fblock)
+                    pbar.update(bsize)
+                    fblock = f.read(bsize)
+
+
+        self.encoding = self.__encoding()
+
+        #Using RAM speeds it up by several orders of magnitude
+        if self.__istext:
+            self.__text_obj = io.StringIO(self.__fobj_bin.getvalue().decode(
+                self.encoding.get('encoding', 'utf-8')))
+            self.__fobj_bin.seek(0)
 
     @property
     def hidden(self)->bool:
@@ -245,13 +259,16 @@ class Checker():
                 asctest : bool
                    — Perform character check (assuming it is text)
         '''
-        if (kwargs.get('asctest', False)
+        if (not kwargs.get('asctest', False)#AAAGH
             or not self.__istext
             or not kwargs.get('flatfile')):
             return []
         outlist = []
+        total = self.__text_obj.getvalue().count('\n')+1
         self.__text_obj.seek(0)
-        for rown, row in enumerate(self.__text_obj):
+        for rown, row in tqdm.tqdm(enumerate(self.__text_obj),
+                                   total=total,
+                                   desc=f'Non-ASCII character check for {self.fname.name}'):
             for coln, char in enumerate(row):
                 if char not in string.printable and char != '\x00':
                     non_asc = {'row':rown+1, 'col': coln+1, 'char':char}
@@ -273,11 +290,9 @@ class Checker():
                 or not self.__istext
                 or not kwargs.get('null_chars')):
             return None
-        self.__text_obj.seek(0)
-        count = self.__text_obj.read().count('\x00')
-        if not count:
-            return None
-        return count
+        if '\x00' in self.__text_obj.getvalue():
+            return self.__text_obj.getvalue().count('\x00')
+        return None
 
     def dos(self, **kwargs) -> bool: #DONE
         '''
@@ -293,11 +308,7 @@ class Checker():
         '''
         if not kwargs.get('flatfile') or not self.__istext:
             return None
-        self.__fobj_bin.seek(0)
-        for text in self.__fobj_bin:
-            if b'\r\n' in text:
-                return True
-        return False
+        return b'\r\n' in self.__fobj_bin.getvalue()
 
     def _mime_type(self, fname:pathlib.Path)->tuple:
         '''
@@ -311,6 +322,7 @@ class Checker():
         if not out:
             out = 'application/octet-stream'
         return out
+
 
     def _report(self, **kwargs) -> dict: #DONE
         '''
@@ -347,21 +359,20 @@ class Checker():
         out = {'filename': self.fname}
         digest = kwargs.get('digest', 'md5')
         #dos = kwargs.get('dos')
+        update_these = [
+        {'digestType' : digest},
+        {'digest' : self.produce_digest(digest)}, #OK
+        self.flat_tester(**kwargs), #OK
+        {'nonascii': self.non_ascii_tester(**kwargs)}, # Slow but acceptable
+        {'encoding': self.encoding['encoding']}, #OK
+        {'null_chars': self.null_count(**kwargs)}, #Not great, but better
+        {'mimetype': self._mime_type(self.fname)}, #OK
+        {'dos': self.dos(**kwargs)}]
 
-        out.update({'digestType' : digest})
-        out.update({'digest' : self.produce_digest(digest)})
-        #out.update({'flat': self.flat_tester(**kwargs)})
-        out.update(self.flat_tester(**kwargs))
-        #out.update({'flat':'FFFFFFFFFFFF'})
-        out.update({'nonascii': self.non_ascii_tester(**kwargs)})
-        out.update({'encoding': self.encoding['encoding']})
-        out.update({'null_chars': self.null_count(**kwargs)})
-        out.update({'mimetype': self._mime_type(self.fname)})
-        #if dos:
-        #    out.update({'dos' : self.dos(**kwargs)})
-        #else:
-        #    out.update({'dos': None})
-        out.update({'dos': self.dos(**kwargs)})
+        #for upd in tqdm.tqdm(update_these, desc='Processing'):
+        for upd in update_these:
+            out.update(upd)
+
         return out
 
     def _manifest_txt(self, **kwargs)->str:
