@@ -112,7 +112,7 @@ def main(): #pylint: disable=too-many-branches
                        + '}')
             out_info = json.dumps(json.loads(outjson)) #validate
     except Exception as err: #pylint: disable=broad-exception-caught
-        print(f'Abnormal program termination {err}')
+        print(f'Abnormal program termination {err}', file=sys.stderr)
         sys.exit()
 
     if args.to_file:
