@@ -22,17 +22,22 @@ import io
 import json
 import logging
 import mimetypes
+import multiprocessing
 import pathlib
 import string
+import sys
+import time
+
+import charset_normalizer
+import pandas as pd
+import pyreadstat
 import tqdm
 
-#import chardet
-import charset_normalizer
-import pyreadstat
+
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 4, 2)
+VERSION = (0, 5, 1)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -208,14 +213,34 @@ class Checker():
         if not kwargs.get('flatfile'):
             return {'min_cols': 'N/A', 'max_cols': 'N/A', 'numrec' : 'N/A',
                     'constant': 'N/A', 'encoding': 'N/A'}
+
         options = {'.sav' : pyreadstat.read_sav,
                    '.dta' : pyreadstat.read_dta,
                    '.sas7bdat' : pyreadstat.read_sas7bdat}
-        meta = options[self.fname.suffix.lower()](self.fname)[1]
-        #self._encoding = meta.file_encoding
+
+        #Note: Pyreadstat is written in C, and the C library
+        #asks for file paths, so good luck getting it to read a BytesIO object
+        start = time.perf_counter()
+        #There is no obvious way to get a tqdm progress bar for this operation
+        #short of reprogramming the C code, and that's not going to happen.
+        #So you get this.
+        print(f'Analyzing statistical package file {self.fname}.',
+              file=sys.stderr, end=' ')
+        #--------
+        #Use multiprocessing, because no one can wait two hours to process
+        #a single large file
+        _, meta = pyreadstat.read_file_multiprocessing(
+                                read_function=options[self.fname.suffix.lower()],
+                                file_path=self.fname,
+                                num_processes=multiprocessing.cpu_count())
+        #-----------
+        finish = time.perf_counter()
+        print(f'Elapsed time: {round(finish - start, 2)} seconds.',
+              file=sys.stderr)
         self.encoding['encoding'] = meta.file_encoding
         return {'min_cols':meta.number_columns,
                 'max_cols':meta.number_columns,
+                #'numrec': len(content),
                 'numrec': meta.number_rows,
                 'constant':True,
                 'encoding': self.encoding['encoding']}
