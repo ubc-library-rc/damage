@@ -33,11 +33,9 @@ import pandas as pd
 import pyreadstat
 import tqdm
 
-
-
 LOGGER = logging.getLogger()
 
-VERSION = (0, 5, 2)
+VERSION = (0, 5, 4)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -47,12 +45,24 @@ class Checker():
     A collection of various tools attached to a file
     '''
 
-    def __init__(self, fname: str) -> None: #DONE
+    def __init__(self, fname: str, **kwargs) -> None: #DONE,
         '''
         Initializes Checker instance
 
-            fname : str
-                Path to file
+        Parameters
+        ----------
+        fname : str
+            Path to file
+        **kwargs : dict
+            Additional keyword parameters
+
+        Other parameters
+        ----------------
+        weight : bool
+            Weight towards a specific encoding
+        target_encoding : str
+            Specific target encoding, like 'cp1252'
+
         '''
         #Commercial stats files extensions
         #I am aware that extension checking is not perfect
@@ -82,8 +92,7 @@ class Checker():
                     fblock = f.read(bsize)
 
 
-        self.encoding = self.__encoding()
-
+        self.encoding = self.__encoding(**kwargs)
         #Using RAM speeds it up by several orders of magnitude
         if self.__istext:
             self.__text_obj = io.StringIO(self.__fobj_bin.getvalue().decode(
@@ -117,16 +126,48 @@ class Checker():
 
         return False
 
-    def __encoding(self) -> dict: #DONE
+    def __encoding(self, weight:bool=True,#pylint: disable=unused-argument
+                     target:str='cp1252',
+                     **kwargs:dict)-> dict:
         '''
         Returns most likely encoding of self.fname, dict with keys
-        encoding, confidence, language (the output of charset_normalizer.detect)
-        and sets Checker.__is_text
+        encoding, confidence, language
+        and sets Checker.__is_text. It will make the assumption
+        that if cp1252 (Windows-1252) is in the top 3, it *is*
+        Windows-1252. Turn off this behaviour with 'weight'
+
+        Parameters
+        ----------
+        weight : bool, default=True
+
+        target : str, default='cp1252'
+            If weight is True, if target appears in the top three encodings then the
+            encoding will be assigned as target.
+        **kwargs : dict
+            Other miscellaneous things that may have been passed. They will be ignored
+
+        Notes
+        -----
+        Defaults to cp1252 because this was written to deal largely with
+        Statistics Canada material, and that's in English or French. And apparently
+        UTF-8 is too modern for them.
         '''
-        enc = charset_normalizer.detect(self.__fobj_bin.read())
-        self.__fobj_bin.seek(0) #leave it as you found it
+        encoding = {}
+        read_position = 0
+        enc_raw = charset_normalizer.from_bytes(self.__fobj_bin.getvalue())
+        encoding['encoding'] = enc_raw.best().encoding
+        if weight:
+            if target in [x.encoding for x in enc_raw][:3]:
+                read_position = [x.encoding for x in enc_raw][:3].index(target)
+                print(f'read position:{read_position}')
+        encoding['encoding'] = enc_raw[read_position].encoding
+        encoding['language'] = enc_raw[read_position].language
+        #Ripped straight from charset_normalizer source
+        #confidence = 1.0 - r.chaos if r is not None else None
+        encoding['confidence'] = 1.0 - enc_raw[read_position].chaos
+
         if self.__istext:
-            return enc
+            return encoding
 
         return {'encoding': None,
                     'confidence': 0.0,
@@ -347,7 +388,6 @@ class Checker():
         if not out:
             out = 'application/octet-stream'
         return out
-
 
     def _report(self, **kwargs) -> dict: #DONE
         '''
