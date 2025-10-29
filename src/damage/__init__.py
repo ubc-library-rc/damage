@@ -113,7 +113,7 @@ class Checker():
     def __istextfile(self):
         '''
         Check to see if file is a text file based on mimetype.
-        Works with extensions only which is not ideal
+        It's not perfect but at least it's something.
         '''
         try:
             if ('text' in mimetypes.guess_file_type(self.fname)
@@ -144,7 +144,7 @@ class Checker():
             If weight is True, if target appears in the top three encodings then the
             encoding will be assigned as target.
         **kwargs : dict
-            Other miscellaneous things that may have been passed. They will be ignored
+            Other miscellaneous things that may have been passed. They will be ignored.
 
         Notes
         -----
@@ -183,16 +183,13 @@ class Checker():
         '''
         Returns hex digest for object
 
-            fname : str
-               Path to a file object
-
-            prot : str
-               Hash type. Supported hashes: 'sha1', 'sha224', 'sha256',
-                  'sha384', 'sha512', 'blake2b', 'blake2s', 'md5'.
-                  Default: 'md5'
-
-            blocksize : int
-               Read block size in bytes
+        Parameters
+        ----------
+        prot : str, default='md5'
+            Hash type. Supported hashes: 'sha1', 'sha224', 'sha256',
+            'sha384', 'sha512', 'blake2b', 'blake2s', 'md5'.
+        blocksize : int
+            Read block size in bytes
         '''
         ok_hash = {'sha1' : hashlib.sha1(),
                    'sha224' : hashlib.sha224(),
@@ -250,6 +247,13 @@ class Checker():
 
         These files are by definition rectanglar, at least as checked here
         by pyreadstat/pandas, so constant will always == True.
+
+        Parameters
+        ----------
+        **kwargs : dict
+
+        flatfile : bool
+            If not flatfile check will be ignored
         '''
         if not kwargs.get('flatfile'):
             return {'min_cols': 'N/A', 'max_cols': 'N/A', 'numrec' : 'N/A',
@@ -313,17 +317,27 @@ class Checker():
     def non_ascii_tester(self, **kwargs) -> list: #DONE
         '''
         Returns a list of dicts of positions of non-ASCII characters in a text file.
+        
+        Parameters
+        ----------
+        **kwargs: dict
+        
+        Other parameters
+        ----------------
+        fname : str
+            Path/filename
+        flatfile : bool
+            Boolean representing a flat ascii file
+        asctest : bool
+            Perform character check, if the file is a text file
 
+        Returns
+        -------
         `[{'row': int, 'col':int, 'char':str}...]`
 
-            fname : str
-               Path/filename
-
-            Keyword arguments:
-
-                #flatfile : bool
-                asctest : bool
-                   — Perform character check (assuming it is text)
+        Notes
+        -----
+        returns [] if not self.__istext
         '''
         if (not kwargs.get('asctest', False)#AAAGH
             or not self.__istext
@@ -347,10 +361,14 @@ class Checker():
         Returns an integer count of null characters in the file
         ('\x00') or None if skipped
 
-        Keyword arguments:
+        Parameters
+        ----------
+        **kwargs : dict
 
-                flatfile : bool
-                   — Test is useless if not a text file. If False, returns 'N/A'
+        Other parameters
+        ----------------
+        flatfile : bool
+            Test is useless if not a text file. If False, returns 'N/A'
         '''
         if (not kwargs.get('flatfile')
                 or not self.__istext
@@ -366,11 +384,15 @@ class Checker():
 
         Returns True if a carriage return ie, ord(13) is present
 
-        Keyword arguments:
+        Parameters
+        ----------
+        **kwargs : dict
 
-            flatfile : bool
-                — Perform rectangularity check. If False, returns dictionary
-                  with all values as 'N/A'
+        Other parameters
+        ----------------
+        flatfile : bool
+            Perform rectangularity check. If False, returns dictionary
+            with all values as 'N/A'
         '''
         if not kwargs.get('flatfile') or not self.__istext:
             return None
@@ -379,6 +401,11 @@ class Checker():
     def _mime_type(self, fname:pathlib.Path)->tuple:
         '''
         Returns mimetype or 'application/octet-stream'
+
+        Parameters
+        ---------
+        fname : pathlib.Path
+            pathlib.Path to file
         '''
         try:
             out = mimetypes.guess_file_type(fname, strict=False)[0]
@@ -395,8 +422,24 @@ class Checker():
         Performs each test and returns the appropriate values. A convenience
         function so that you don't have to run the tests individually.
 
-        Sample output:
+        Parameters
+        ----------
+        **kwargs : dict
+        digest : str
+            Hash algorithm. Default 'md5'
+        flat : bool
+            Flat file checking.
+        nonascii : bool
+            Check for non-ASCII characters.
+        flatfile : bool
+            Perform rectangularity check. If False, returns dictionary
+            with all values as 'N/A'
+        null_chars : bool
+            Check for null characters
 
+        Notes
+        -----
+        Sample output:
         ```
         {'filename':'/tmp/test.csv',
         'flat': True,
@@ -404,22 +447,6 @@ class Checker():
         'nonascii':False,
         'dos':False}
         ```
-        Accepted keywords and defaults:
-            digest : str
-                — Hash algorithm. Default 'md5'
-
-            flat : bool
-                — Flat file checking.
-
-            nonascii : bool
-                — Check for non-ASCII characters.
-
-            flatfile : bool
-                — Perform rectangularity check. If False, returns dictionary
-                  with all values as 'N/A'
-
-            null_chars : bool
-                - check for null characters
         '''
         out = {'filename': self.fname}
         digest = kwargs.get('digest', 'md5')
@@ -443,6 +470,10 @@ class Checker():
     def _manifest_txt(self, **kwargs)->str:
         '''
         Returns manifest as plain text
+        
+        Parameters
+        ----------
+        **kwargs : dict
         '''
         return '\n'.join([f'{k}: {v}' for k,v in kwargs['report'].items()
                           if v not in ['', None]])
@@ -450,6 +481,10 @@ class Checker():
     def _manifest_json(self, **kwargs)->str:
         '''
         Returns manifest as JSON
+        
+        Parameters
+        ----------
+        **kwargs : dict
         '''
         out = kwargs['report'].copy()
         out['filename'] = str(kwargs['report']['filename'])
@@ -458,6 +493,10 @@ class Checker():
     def _manifest_csv(self, **kwargs)->str:
         '''
         Returns manifest as [whatever]-separated value
+        
+        Parameters
+        ----------
+        **kwargs : dict
         '''
         outstr = io.StringIO(newline='')
         writer = csv.DictWriter(outstr, fieldnames=kwargs['report'].keys(),
@@ -472,39 +511,34 @@ class Checker():
     def manifest(self, **kwargs) -> str: #really as str #DONE
         '''
         Returns desired output type as string
+        
+        Parameters
+        ----------
+        **kwargs : dict
 
+        Other parameters
+        ----------------
         out : str
-            — Acceptable values are 'txt', 'json', 'csv'
-              'txt' Plain text
-              'json' JSON
-              'csv' Comma-separated value
-
-        Accepted keywords and defaults:
-
-            digest : str
-                — Hash algorithm. Default 'md5'
-
-            flat : bool
-                — Flat file checking. Default True
-
-            nonascii : bool
-                — Check for non-ASCII characters. Default True
-
-            dos : bool
-                — check for Windows CR/LF combo. Default True
-
-            flatfile : bool
-                — Perform rectangularity check. If False, returns dictionary
-                  with all values as 'N/A'
-
-            headers : bool
-               —  Include csv header (only has any effect with out='csv')
-                  Default is False
-
-            sep: str
-              —  Separator if you want a different plain text separator like a
-                tab (\t) or pipe (|). Only functional with csv output, obviously.
-
+            Acceptable values are 'txt', 'json', 'csv'
+            'txt' Plain text
+            'json' JSON
+            'csv' Comma-separated value
+        digest : str
+            Hash algorithm. Default 'md5'
+        flat : bool
+            Flat file checking. Default True
+        nonascii : bool
+            Check for non-ASCII characters. Default True
+        dos : bool
+            check for Windows CR/LF combo. Default True
+        flatfile : bool
+            Perform rectangularity check. If False, returns dictionary
+            with all values as 'N/A'
+        headers : bool, default=False
+            Include csv header (only has any effect with out='csv')
+        sep : str
+            Separator if you want a different plain text separator like a
+            tab (\t) or pipe (|). Only functional with csv output, obviously.
         '''
         report = self._report(**kwargs)
         report_type={'txt': self._manifest_txt,

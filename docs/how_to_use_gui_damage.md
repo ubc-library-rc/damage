@@ -2,9 +2,7 @@
 
 ## Installation
 
-For all versions of **Damage**, download the latest release for your platform from the [Github releases page](https://github.com/ubc-library-rc/damage/releases). Note that releases for all architectures are not available.
-
-Ironically, **Damage** could check the integrity of your download by verifying its checksum. If you wish to do so (and it's good practice to do so), you could use the **damage** command line tool or another utility such as **openssl**.
+For all versions of **Damage**, download the latest release for your platform from the [Github releases page](https://github.com/ubc-library-rc/damage/releases). Note that releases for all architectures are not available, nor will there necessarily be compiled binary releases _every time_. However, if you install via `pipx` or `pip`, you will always get the newest possible release.
 
 ## Using the precompiled binary files
 
@@ -17,8 +15,7 @@ The Windows application is a portable file; it does not require installation. Si
 
 Double-click the DMG file, and it should automatically appear in a Finder window. Drag the icon to the Applications folder. If, for some reason, you don't want to put it in the Applications folder, you can drag it somewhere else.
 
-Note that the developer(s) of **Damage** do not have an Apple developer account. This means that you may recive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions. Or whatever it is Apple decide to do, because it changes from release to release.
-
+Note that the developer(s) of **Damage** do not have an Apple developer account. This means that you may receive a warning about an unidentified developer as per this page: <https://support.apple.com/en-ca/guide/mac-help/mh40616/mac>. To start the application (for the first time only), you may have to right click on the application, select **Open** then agree to the conditions. Or whatever it is Apple decide to do, because it changes from release to release.
 
 ### For Linux
 
