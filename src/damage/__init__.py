@@ -35,7 +35,7 @@ import tqdm
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 5, 4)
+VERSION = (0, 5, 5)
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -152,9 +152,14 @@ class Checker():
         Statistics Canada material, and that's in English or French. And apparently
         UTF-8 is too modern for them.
         '''
+        null = {'encoding': None,
+                    'confidence': 0.0,
+                    'language' : ''}
         encoding = {}
         read_position = 0
         enc_raw = charset_normalizer.from_bytes(self.__fobj_bin.getvalue())
+        if not enc_raw:
+            return null
         encoding['encoding'] = enc_raw.best().encoding
         if weight:
             if target in [x.encoding for x in enc_raw][:3]:
@@ -168,10 +173,7 @@ class Checker():
 
         if self.__istext:
             return encoding
-
-        return {'encoding': None,
-                    'confidence': 0.0,
-                    'language' : ''}
+        return null
 
     def __del__(self) -> None:#DONE
         '''
@@ -317,11 +319,11 @@ class Checker():
     def non_ascii_tester(self, **kwargs) -> list: #DONE
         '''
         Returns a list of dicts of positions of non-ASCII characters in a text file.
-        
+
         Parameters
         ----------
         **kwargs: dict
-        
+
         Other parameters
         ----------------
         fname : str
@@ -470,7 +472,7 @@ class Checker():
     def _manifest_txt(self, **kwargs)->str:
         '''
         Returns manifest as plain text
-        
+
         Parameters
         ----------
         **kwargs : dict
@@ -481,7 +483,7 @@ class Checker():
     def _manifest_json(self, **kwargs)->str:
         '''
         Returns manifest as JSON
-        
+
         Parameters
         ----------
         **kwargs : dict
@@ -493,7 +495,7 @@ class Checker():
     def _manifest_csv(self, **kwargs)->str:
         '''
         Returns manifest as [whatever]-separated value
-        
+
         Parameters
         ----------
         **kwargs : dict
@@ -511,7 +513,7 @@ class Checker():
     def manifest(self, **kwargs) -> str: #really as str #DONE
         '''
         Returns desired output type as string
-        
+
         Parameters
         ----------
         **kwargs : dict
