@@ -35,7 +35,7 @@ import tqdm
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 5, 6)
+VERSION = (0, 5, '7a0')
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
