@@ -1,6 +1,6 @@
 [project]
 name = "damage"
-version = "0.5.7a0"
+version = "0.5.7a1"
 description = "File manifest generator and python package for statistical data files and documentation'"
 authors = [
     {name = "Paul Lesack",email = "paul.lesack@ubc.ca"}
