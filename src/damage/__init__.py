@@ -35,7 +35,7 @@ import tqdm
 
 LOGGER = logging.getLogger()
 
-VERSION = (0, 5, '7a1')
+VERSION = (0, 5, '7a2')
 __version__ = '.'.join([str(x) for x in VERSION])
 
 #PDB note check private variables with self._Checker__private_var
@@ -164,7 +164,6 @@ class Checker():
         if weight:
             if target in [x.encoding for x in enc_raw][:3]:
                 read_position = [x.encoding for x in enc_raw][:3].index(target)
-                print(f'read position:{read_position}')
         encoding['encoding'] = enc_raw[read_position].encoding
         encoding['language'] = enc_raw[read_position].language
         #Ripped straight from charset_normalizer source
